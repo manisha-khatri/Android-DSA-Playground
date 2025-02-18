@@ -1,0 +1,112 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+
+/build
+# Gradle files
+.gradle/
+**/build/
+**/out/
+**/captures/
+!gradle-wrapper.jar
+.gradle/**
+local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+/.idea/gradle.xml
+/.idea/misc.xml
+/.idea/vcs.xml
+/.idea/httpRequests/
+*.iml
+
+# Android Studio settings
+.idea/
+*.iws
+*.iml
+*.ipr
+**/.DS_Store
+**/*.swp
+**/*.swo
+**/*.swn
+**/*.orig
+**/*.rej
+**/*~
+
+# Keystore files
+*.keystore
+*.jks
+
+# Log files
+*.log
+
+# Gradle dependency cache (reduce size of repository)
+**/.gradle
+**/gradle/
+**/gradle-cache/
+
+# Generated files
+gen/
+bin/
+obj/
+build/
+
+# Android test reports
+**/test-results/
+**/test-output/
+**/hs_err_pid*
+
+# Lint and Log files
+lint/
+lintOutputs/
+*.lint
+**/lint-results-*.xml
+**/lint-results-*.html
+
+# ProGuard
+proguard/
+
+# NDK
+obj/
+.externalNativeBuild/
+
+# Flutter / React Native
+.pub-cache/
+.dart_tool/
+node_modules/
+android/app/debug.keystore
+
+# Miscellaneous
+*.class
+*.jar
+*.apk
+*.ap_
+*.dex
+*.so
+*.o
+*.a
+*.la
+*.lo
+*.slo
+*.Plo
+*.pyc
+*.pyo
+*.pyd
+*.swp
+
