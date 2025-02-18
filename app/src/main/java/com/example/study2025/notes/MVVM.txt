@@ -1,0 +1,39 @@
+MVVM
+- MVVM is an architectural pattern that helps in separating UI logic from business logic in an Android app.
+- It promotes separation of concern, making the code more scalable, testable and maintainable.
+    Model
+    - Represents the data and business logic.
+    - Retrieves data from APIs, databases (Room), or repositories.
+    View
+    - Represents the UI and user interactions.
+    - Displays data and observes changes from ViewModel.
+    ViewModel
+    - Acts as a bridge between the Model and View.
+    - Manages data and business logic.
+
+[View (UI)]
+    ⬆️ Observes LiveData from ViewModel
+    ⬇️ Sends user interactions to ViewModel
+[ViewModel]
+    ⬆️ Requests data from Model
+    ⬇️ Updates LiveData, which View observes
+[Model (Repository, API, Database)]
+    ⬆️ Fetches or processes data
+    ⬇️ Returns data to ViewModel
+
+
+Why using 2 LiveData?
+private val _users = MutableLiveData<List<User>>()
+val users: LiveData<List<User>> = _users
+
+1. MutableLiveData (Private)
+private val _users = MutableLiveData<List<User>>()
+    - MutableLiveData allows modifying the data (e.g., updating the list of users).
+    - It is private so that only the ViewModel can change the data.
+    - This prevents the UI (Activity/Fragment) from modifying LiveData.
+
+2.LiveData (Public)
+val users: LiveData<List<User>> = _users
+    - Exposes only LiveData (read-only) to the UI.
+    - The UI can observe changes but cannot modify the data.
+    - Ensures that Activity/Fragment doesn’t accidentally modify state.

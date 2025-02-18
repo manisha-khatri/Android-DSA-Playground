@@ -1,6 +1,0 @@
-MVVM
-- MVVM is an architectural pattern that helps in separating UI logic from business logic in an Android app.
-- It promotes separation of concern, making the code more scalable, testable and maintainable.
-Model
-View
-ViewModel
