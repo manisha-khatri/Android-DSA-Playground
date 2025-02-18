@@ -1,6 +1,4 @@
 /build
-
-/build
 # Gradle files
 .gradle/
 **/build/
@@ -24,7 +22,6 @@ local.properties
 # Android Studio settings
 .idea/
 *.iws
-*.iml
 *.ipr
 **/.DS_Store
 **/*.swp
@@ -68,7 +65,6 @@ lintOutputs/
 proguard/
 
 # NDK
-obj/
 .externalNativeBuild/
 
 # Flutter / React Native

@@ -14,8 +14,6 @@
 .cxx
 local.properties
 
-
-/build
 # Gradle files
 .gradle/
 **/build/
@@ -23,18 +21,10 @@ local.properties
 **/captures/
 !gradle-wrapper.jar
 .gradle/**
-local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
 /.idea/gradle.xml
 /.idea/misc.xml
 /.idea/vcs.xml
 /.idea/httpRequests/
-*.iml
 
 # Android Studio settings
 .idea/
@@ -83,7 +73,6 @@ lintOutputs/
 proguard/
 
 # NDK
-obj/
 .externalNativeBuild/
 
 # Flutter / React Native
