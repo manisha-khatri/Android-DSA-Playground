@@ -1,4 +1,6 @@
-package com.example.study2025.mvvm.data
+package com.example.study2025.mvvm.data.repository
+
+import com.example.study2025.mvvm.data.model.User
 
 class UserRepository {
     fun getUsers(): List<User> {

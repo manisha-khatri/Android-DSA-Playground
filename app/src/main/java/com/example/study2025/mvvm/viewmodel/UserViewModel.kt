@@ -3,8 +3,8 @@ package com.example.study2025.mvvm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.study2025.mvvm.data.User
-import com.example.study2025.mvvm.data.UserRepository
+import com.example.study2025.mvvm.data.model.User
+import com.example.study2025.mvvm.data.repository.UserRepository
 
 class UserViewModel : ViewModel() {
     private val repository = UserRepository()
