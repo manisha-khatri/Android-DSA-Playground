@@ -1,0 +1,82 @@
+Coroutines
+
+- Android Coroutines is Kotlin’s solution for handling asynchronous programming in Android in a more structured and concise way.
+- Coroutines simplify background tasks like network requests, database operations, and file I/O without blocking the main (UI) thread
+
+Key Concepts of Coroutines in Android
+
+1. Coroutine Scope – Defines the lifecycle of coroutines. Common scopes in Android:
+- viewModelScope → Tied to ViewModel, cancels when ViewModel is cleared.
+- lifecycleScope → Tied to a LifecycleOwner (like an Activity or Fragment).
+- GlobalScope → Lives throughout the app's lifecycle (use cautiously).
+
+2. Coroutine Dispatchers – Determines where the coroutine runs:
+- Dispatchers.Main → Runs on the UI thread (for UI updates).
+- Dispatchers.IO → Optimized for disk/network I/O operations.
+- Dispatchers.Default → Used for CPU-intensive tasks.
+- Dispatchers.Unconfined → Starts in the caller thread but may switch.
+
+3. Suspend Functions (suspend) – Functions that can be paused and resumed without blocking the thread.
+
+4. Launch vs Async – Ways to start coroutines:
+- launch {} → Fire-and-forget, doesn't return a result.
+- async {} → Returns a Deferred<T> (future result), can be awaited using .await().
+
+
+
+1. Dispatchers.Main (UI Thread)
+- Used for updating UI elements. If you try to run heavy operations here, the app may freeze.
+🔹 Use cases: UI updates, lightweight tasks like showing Toasts, setting text, etc.
+
+class MyViewModel : ViewModel() {
+    fun updateUI() {
+        viewModelScope.launch(Dispatchers.Main) {
+            textView.text = "Hello, Coroutines!" // Runs on the main thread
+        }
+    }
+}
+
+2. Dispatchers.IO (Background Thread for I/O operations)
+- Used for disk and network operations like database queries or API calls.
+🔹 Use cases: Fetching data from Room database, network calls, file I/O.
+
+viewModelScope.launch(Dispatchers.IO) {
+    val data = fetchFromNetwork() // Runs in the background
+    withContext(Dispatchers.Main) {
+        textView.text = data // Switches to the UI thread
+    }
+}
+
+
+3. Dispatchers.Default (Background Thread for CPU-intensive tasks)
+- Used for tasks that require heavy computation, like sorting large lists, processing images, or encrypting data.
+🔹 Use cases: Data processing, JSON parsing, complex calculations
+
+viewModelScope.launch(Dispatchers.Default) {
+    val sortedList = myList.sorted() // Runs on a background thread
+    withContext(Dispatchers.Main) {
+        textView.text = "Sorting Done!" // Switches to UI thread
+    }
+}
+
+4. Dispatchers.Unconfined (Runs on the Caller’s Thread (may change the thread))
+
+
+- Use Main for UI updates.
+- Use IO for database and network operations.
+- Use Default for CPU-intensive tasks.
+- Avoid Unconfined unless absolutely needed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

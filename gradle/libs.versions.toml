@@ -11,6 +11,12 @@ activity = "1.8.0"
 constraintlayout = "2.1.4"
 retrofit = "2.9.0"
 gson = "2.9.0"
+viewmodel = "2.6.2"
+mockito = "5.2.0"
+mockito-kotlin = "5.2.0"
+mockk = "1.13.7"
+coroutines-test = "1.7.3"
+core-testing = "2.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -23,6 +29,13 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "gson" }
+coroutine-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines-test" }
+core-testing = { module = "androidx.arch.core:core-testing", version.ref = "core-testing" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

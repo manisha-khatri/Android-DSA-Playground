@@ -21,7 +21,7 @@ class PostRepository {
         apiService = retrofit.create(ApiService::class.java)
     }
 
-    fun fetchPosts(posts: MutableLiveData<List<Post>>) {
+    /*fun fetchPosts(posts: MutableLiveData<List<Post>>) {
         apiService.getPosts().enqueue(object : Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
                 if(response.isSuccessful) {
@@ -33,6 +33,13 @@ class PostRepository {
                 posts.value = emptyList()
             }
         })
+    }*/
 
+    suspend fun fetchPosts(): List<Post> {
+        return try {
+            apiService.getPosts() // Retrofit suspend function
+        } catch (e: Exception) {
+            emptyList() // Return empty list on failure
+        }
     }
 }

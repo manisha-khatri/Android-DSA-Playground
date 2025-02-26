@@ -46,6 +46,12 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.retrofit)
     implementation(libs.gson)
+    implementation(libs.coroutine.viewmodel)
+    implementation(libs.mockito.core)
+    implementation(libs.mockito.kotlin)
+    implementation(libs.mockk)
+    implementation(libs.core.testing)
+    implementation(libs.coroutines.test)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

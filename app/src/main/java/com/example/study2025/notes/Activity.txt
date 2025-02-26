@@ -1,0 +1,102 @@
+Activity
+
+What is an Android Activity?
+- An Activity in Android represents a single screen in an app.
+- It acts as an entry point for users to interact with an application.
+- Activities handle user interfaces (UI), interactions, and navigation between different screens.
+
+Android Activity Lifecycle
+
+1. onCreate() → Activity is created
+- Called when the activity is first created.
+- Used for initializing UI components, setting up listeners, and restoring previous states if available.
+
+2. onStart() → Activity is visible to the user, but the user might not be able to interact yet.
+
+3. onResume() → Activity is in the foreground & ready for user interaction
+
+4. onPause() → Activity is partially visible, user cannot interact
+- User navigates to another activity or closes the app.
+- certain resources should be released or paused
+    - Stopping animation, videos, camera previews to avoid wasting CPU
+    - Pausing expensive background operations like fetching real-time data
+    - Saving unsaved data or preferences
+
+5. onStop() → Activity is no longer visible to the user
+
+6. onDestroy() → Activity is being destroyed
+
+7. onRestart() → Activity is being restarted
+- Called when the activity is visible to the user again after being stopped (onStop()).
+- Called before onStart()
+- Restoring UI state by refreshing data
+- Restarting stopped processes
+
+---------------------------------------------------------------------------------
+A. Navigating from Activity A to Activity B and Back
+
+Open Activity A:
+onCreate() -> onStart() -> onResume()
+
+Navigate to Activity B (A goes to background, B starts):
+Activity A: onPause() -> onStop()
+Activity B: onCreate() -> onStart() -> onResume()
+
+Press back to return to Activity A:
+Activity B: onPause() -> onStop() -> onDestroy()
+Activity A: onRestart() -> onStart() -> onResume()
+
+---------------------------------------------------------------------------------
+B. Pressing the Home Button (Minimizing the App)
+
+App in Foreground (Activity A visible)
+onCreate() -> onStart() -> onResume()
+
+Press Home Button (App goes to background, but not destroyed):
+onPause() -> onStop()
+
+Reopen the App (Bring Activity A back to Foreground):
+onRestart() -> onStart() -> onResume()
+
+---------------------------------------------------------------------------------
+C. Switching from One App to Another
+
+App A (Activity A) is Active:
+onCreate() -> onStart() -> onResume()
+
+Open App B (App A moves to background):
+App A (Activity A): onPause() -> onStop()
+App B: onCreate() -> onStart() -> onResume()
+
+Switch Back to App A:
+App B: onPause() -> onStop()
+App A: onRestart() -> onStart() -> onResume()
+
+---------------------------------------------------------------------------------
+
+- Configuration changes (i.e. Screen rotation) cause the Activity to be destroyed and recreated.
+- Use VM & savedInstanceState to retain UI related data across configuration changes.
+- LiveData
+    - Lifecycle aware data holder
+    - Manage UI updates efficiently
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
