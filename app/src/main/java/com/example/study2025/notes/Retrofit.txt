@@ -1,11 +1,54 @@
 Retrofit
 
 - Retrofit is a HTTP client for Android and java, developed by square
-- It simplifies the process of making network requests and parsing the responses, allowing you to interact with REST APIs in a more efficient and readable way
-- It then automatically maps the HTTP response to Java objects, removing much of the boilerplate code for making HTTP requests.
-- Retrofit can automatically parse JSON responses into Java objects using converters like Gson or Moshi.
-- Retrofit supports all standard HTTP methods, such as GET, POST, PUT, DELETE, and PATCH.
-- Retrofit supports both synchronous (blocking) and asynchronous (non-blocking) requests.
-- Retrofit allows customization of headers, query parameters, and request bodies.
+
+Why Use Retrofit?
+- Easy API Integration – It simplifies the process of making network requests and parsing the responses
+- Type-Safety – Converts JSON responses to Kotlin/Java objects.
+- Supports Multiple Converters – Gson, Moshi, Scalars, etc.
+- supports both synchronous (blocking) and asynchronous (non-blocking) requests.
+- Asynchronous Requests – Built-in support for Call and Coroutine suspending functions.
+- Interceptors Support – Easy to add logging, authentication, etc.
+- supports all standard HTTP methods, such as GET, POST, PUT, DELETE, and PATCH.
+- allows customization of headers, query parameters, and request bodies.
 - Error Handling: Retrofit provides clear mechanisms for handling network failures, timeouts, and other issues.
-- Support for RxJava and Coroutines: Retrofit can be used in conjunction with RxJava and Kotlin Coroutines to handle the asynchronous requests more easily.
+
+---------------------------------------------------------------------------------
+Setup Retrofit in Android
+
+1. Define API endpoints using annotations:
+interface ApiService {
+    @GET("posts")
+    suspend fun getPosts(): List<Post> // Coroutine support
+
+    @POST("posts")
+    suspend fun createPost(@Body post: Post): Post
+}
+
+2. Build Retrofit Instance
+object RetrofitInstance {
+    private val retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .addConverterFactory(GsonConverterFactory.create()) // Convert JSON to objects
+            .build()
+    }
+
+    val api: ApiService by lazy {
+        retrofit.create(ApiService::class.java)
+    }
+}
+
+
+3. Make API Calls in ViewModel
+
+
+---------------------------------------------------------------------------------
+1. Caching in Retrofit (Using OkHttp)
+- Retrofit uses OkHttp as the underlying HTTP client, which supports response caching.
+
+Why Use Caching?
+- Reduces network calls for repeated requests.
+- Improves app performance and speed.
+- Works even when offline (depending on cache control headers).
+

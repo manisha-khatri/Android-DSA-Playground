@@ -1,8 +1,9 @@
 Coroutines
 
-- Android Coroutines is Kotlin’s solution for handling asynchronous programming in Android in a more structured and concise way.
-- Coroutines simplify background tasks like network requests, database operations, and file I/O without blocking the main (UI) thread
+- Coroutines are lightweight threads used for asynchronous programming in Kotlin.
+- They help manage background tasks efficiently without blocking the main thread.
 
+---------------------------------------------------------------------------------
 Key Concepts of Coroutines in Android
 
 1. Coroutine Scope – Defines the lifecycle of coroutines. Common scopes in Android:
@@ -10,19 +11,25 @@ Key Concepts of Coroutines in Android
 - lifecycleScope → Tied to a LifecycleOwner (like an Activity or Fragment).
 - GlobalScope → Lives throughout the app's lifecycle (use cautiously).
 
-2. Coroutine Dispatchers – Determines where the coroutine runs:
+2. Coroutine Dispatchers – Determines where/which thread the coroutine runs:
 - Dispatchers.Main → Runs on the UI thread (for UI updates).
 - Dispatchers.IO → Optimized for disk/network I/O operations.
 - Dispatchers.Default → Used for CPU-intensive tasks.
 - Dispatchers.Unconfined → Starts in the caller thread but may switch.
 
-3. Suspend Functions (suspend) – Functions that can be paused and resumed without blocking the thread.
+3. Suspend Functions (suspend)
+– Functions that can be paused and resumed without blocking the thread.
+- Can only be called from another suspend function or coroutine.
 
 4. Launch vs Async – Ways to start coroutines:
 - launch {} → Fire-and-forget, doesn't return a result.
 - async {} → Returns a Deferred<T> (future result), can be awaited using .await().
 
+val job = launch { println("Launch: No result returned") }
+val result = async { 10 + 20 }
+println("Async result: ${result.await()}")
 
+---------------------------------------------------------------------------------
 
 1. Dispatchers.Main (UI Thread)
 - Used for updating UI elements. If you try to run heavy operations here, the app may freeze.
@@ -66,6 +73,98 @@ viewModelScope.launch(Dispatchers.Default) {
 - Use IO for database and network operations.
 - Use Default for CPU-intensive tasks.
 - Avoid Unconfined unless absolutely needed.
+
+---------------------------------------------------------------------------------
+Can we switch between dispatchers in a coroutine?
+- Yes, using withContext().
+
+How does structured concurrency help avoid memory leaks?
+- Coroutines are bound to a CoroutineScope, so if the scope (like viewModelScope) is canceled, all child coroutines get canceled automatically.
+
+How do you handle exceptions in coroutines?
+- Use try-catch, CoroutineExceptionHandler
+
+How can you cancel a coroutine?
+- job.cancel().
+val job = launch {
+    repeat(1000) { i ->
+        if (!isActive) return@launch
+        println("Printing $i")
+        delay(500)
+    }
+}
+delay(2000)
+job.cancel() // Cancels coroutine
+
+
+---------------------------------------------------------------------------------
+Coroutine Scope vs Supervisor Scope
+
+coroutineScope {}
+- If one child coroutine fails, all sibling coroutines are canceled.
+suspend fun fetchData() = coroutineScope {
+    launch {
+        delay(1000)
+        throw RuntimeException("Network error") // Cancels all other coroutines
+    }
+    launch {
+        delay(2000)
+        println("This won't execute if first launch fails")
+    }
+}
+
+supervisorScope {} (Independent Failures)
+- If one coroutine fails, others continue executing.
+- Use supervisorScope for independent tasks that should not affect each other.
+suspend fun fetchData() = supervisorScope {
+    launch {
+        delay(1000)
+        throw RuntimeException("Network error") // Other coroutines keep running
+    }
+    launch {
+        delay(2000)
+        println("This still executes despite failure")
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-package com.example.study2025
+package com.example.study2025.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.study2025.R
 import com.example.study2025.databinding.Fragment1Binding
 
 class Fragment1: Fragment(R.layout.fragment1) {
@@ -14,6 +15,7 @@ class Fragment1: Fragment(R.layout.fragment1) {
     private lateinit var binding: Fragment1Binding
     private lateinit var viewModel: SharedViewModel
 
+    // Method 2: callback interface
     interface OnFragmentInteractionListener {
         fun onDataReceived(data: String)
     }

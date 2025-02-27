@@ -23,6 +23,7 @@ Android Activity Lifecycle
     - Saving unsaved data or preferences
 
 5. onStop() → Activity is no longer visible to the user
+- Release resources, unregister receivers
 
 6. onDestroy() → Activity is being destroyed
 
@@ -81,9 +82,25 @@ App A: onRestart() -> onStart() -> onResume()
     - Manage UI updates efficiently
 
 
+What is the difference between onSaveInstanceState() and onRestoreInstanceState()
+- When the screen rotates, onSaveInstanceState() saves the input, and onRestoreInstanceState() restores it.
 
+onSaveInstanceState(Bundle outState)
+- Called when the activity is about to be destroyed	(e.g., configuration change)
+- To save UI state (e.g., text in EditText)
 
+onRestoreInstanceState(Bundle savedInstanceState)
+- Called After onCreate(), only if there's a saved state
+- Restore UI state
 
+---------------------------------------------------------------------------------
+
+Why AppCompatActivity?
+- Backward compatibility
+- Material Design component support
+- ActionBar support: customize the toolbar, handle navigation
+- Works seamlessly with VM, LD & lifecycle aware components
+- Support dark mode.
 
 
 

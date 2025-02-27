@@ -1,4 +1,4 @@
-package com.example.study2025
+package com.example.study2025.fragment
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -1,0 +1,130 @@
+Fragment
+
+- A Fragment is a reusable UI component that represents a portion of the user interface within an Activity.
+- Fragment lifecycle is tightly coupled with the host activity
+- Fragment can be dynamically added, replaced or removed from an activity using FragmentManager and FragmentTransaction.
+
+
+---------------------------------------------------------------------------------
+Lifecycle
+
+onAttach(Context context) – Called when the fragment is attached with the host activity.
+
+onCreate(Bundle savedInstanceState)
+- Fragment is created
+– Called to initialize essential components.
+
+onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+- Responsible for inflating the view.
+– Creates and returns the fragment’s UI view.
+
+onViewCreated(View view, Bundle savedInstanceState)
+– Called after the fragment’s view has been created.
+- Access and modify UI components (e.g., RecyclerView, TextView), set up adapters, listeners, and LiveData observers.
+
+onStart() – Called when the fragment becomes visible.
+
+onResume() – Called when the fragment becomes active and can interact with the user.
+
+onPause() – Called when the fragment is partially visible (e.g., another activity appears in front).
+
+onStop() – Called when the fragment is no longer visible.
+
+onDestroyView() – Called when the fragment’s UI is destroyed but fragment exist
+
+onDestroy() – Fragment destroyed
+
+onDetach() – Called when the fragment is detached from the activity.
+
+---------------------------------------------------------------------------------
+Fragment communicate with Activity
+
+1. SharedViewModel
+2. Callback interface
+
+---------------------------------------------------------------------------------
+How do you add a Fragment dynamically?
+
+val fragment = MyFragment()
+supportFragmentManager.beginTransaction()
+    .add(R.id.fragment_container, fragment)
+    .commit()
+
+
+To replace an existing fragment:
+supportFragmentManager.beginTransaction()
+    .replace(R.id.fragment_container, fragment)
+    .addToBackStack(null) // Allows back navigation
+    .commit()
+
+
+Without addToBackStack(null):
+- The previous fragment is destroyed and cannot be restored.
+- Pressing the Back button will exit the activity.
+
+With addToBackStack(null):
+- The previous fragment is saved in the back stack.
+- Pressing the Back button will bring back the previous fragment instead of exiting the app.
+
+---------------------------------------------------------------------------------
+How do you handle fragment transactions when the activity is recreated (e.g., screen rotation)?
+
+- Store fragment references in ViewModel.
+- Use the FragmentManager to retrieve existing fragments using findFragmentByTag().
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    if (savedInstanceState == null) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, MyFragment(), "MY_FRAGMENT_TAG")
+            .commit()
+    }
+}
+
+---------------------------------------------------------------------------------
+What is the difference between add() and replace() in Fragment Transactions?
+
+- add(fragment, tag) – Keeps the existing fragment in memory and adds a new one on top of it.
+- replace(fragment, tag) – Removes the existing fragment before adding the new one, reducing memory usage.
+
+
+---------------------------------------------------------------------------------
+How do you pass data between Fragments?
+
+using a Bundle:
+
+Sending Data:
+val fragment = MyFragment().apply {
+    arguments = Bundle().apply {
+        putString("KEY", "Hello Fragment")
+    }
+}
+
+Receiving Data:
+val data = arguments?.getString("KEY")
+
+---------------------------------------------------------------------------------
+- childFragmentManager is used to manage nested fragments inside a parent fragment
+- FragmentContainerView
+    - (introduced in AndroidX) is a recommended container for hosting fragments, replacing FrameLayout in newer implementations.
+    - It improves animations and fragment management.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -21,9 +21,34 @@ MVVM
     ⬆️ Fetches or processes data
     ⬇️ Returns data to ViewModel
 
+---------------------------------------------------------------------------------
+ViewModel
+- is designed to store and manage UI-related data in a lifecycle-conscious way.
 
+Why Use ViewModel?
+- Survives Configuration Changes
+    - Unlike Activity or Fragment, ViewModel persists data across configuration changes (e.g., screen rotation).
+- Encapsulates UI Logic
+    - Helps in separating concerns by keeping business logic separate from UI components.
+- Reduces Boilerplate Code
+    - No need to manually save and restore UI-related data during configuration changes.
+
+
+class MyViewModel : ViewModel() {
+    private val _users = MutableLiveData<List<User>>()
+    val users: LiveData<List<User>> = _users
+
+    init {
+        _users.value = 0
+    }
+
+    fun increment() {
+        _users.value = (_users.value ?: 0) + 1
+    }
+}
+----------------
 Why using 2 LiveData?
-private val _users = MutableLiveData<List<User>>()
+private val users = MutableLiveData<List<User>>()
 val users: LiveData<List<User>> = _users
 
 1. MutableLiveData (Private)
@@ -37,3 +62,14 @@ val users: LiveData<List<User>> = _users
     - Exposes only LiveData (read-only) to the UI.
     - The UI can observe changes but cannot modify the data.
     - Ensures that Activity/Fragment doesn’t accidentally modify state.
+
+----------------
+ViewModel in an Activity:-
+
+viewModel = ViewModelProvider(this)[MyViewModel::class.java]
+
+viewModel.users.observe(this) { user ->
+
+}
+
+---------------------------------------------------------------------------------

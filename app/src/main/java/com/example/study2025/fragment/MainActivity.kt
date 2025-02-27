@@ -1,9 +1,10 @@
-package com.example.study2025
+package com.example.study2025.fragment
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.study2025.R
 import com.example.study2025.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), Fragment1.OnFragmentInteractionListener {
