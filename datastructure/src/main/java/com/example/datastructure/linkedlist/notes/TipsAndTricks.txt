@@ -1,5 +1,9 @@
 🚀 Key Tricks to Solve Linked List Problems
 
+--> This will not change the value of head
+node k = head.next
+head = head.next
+
 🔹 1. Two Pointers Technique
 Use slow & fast pointers for cycle detection, middle node, and merging lists.
 
@@ -50,7 +54,6 @@ fun hasCycle(head: ListNode?): Boolean {
 - Try using two pointers instead of extra space (stack/hashmap).
 
 💡 Final Tip: Draw the linked list on paper for better visualization and debugging.
-
 
 
 

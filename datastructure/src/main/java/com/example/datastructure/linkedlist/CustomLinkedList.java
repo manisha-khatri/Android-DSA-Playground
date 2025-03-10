@@ -65,6 +65,22 @@ class CustomLinkedList {
         }
         System.out.print(temp.data + " ");
     }
+
+    void createCycle(int pos) {
+        if(pos < 0 || head == null) return;
+
+        Node newNode = null;
+        int index = 1;
+        Node temp = head;
+        while(temp.next != null) {
+            temp = temp.next;
+            index++;
+            if(pos==index) newNode = temp;
+        }
+        if(newNode!=null) {
+            temp.next = newNode;
+        }
+    }
 }
 
 class Main {

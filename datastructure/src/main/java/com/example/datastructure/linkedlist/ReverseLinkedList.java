@@ -1,29 +1,6 @@
 package com.example.datastructure.linkedlist;
 
 public class ReverseLinkedList {
-    public static void main(String[] args) {
-        CustomLinkedList list = new CustomLinkedList();
-        list.insert(10);
-        list.insert(20);
-        list.insert(30);
-        list.insert(40);
-
-        System.out.println("Original List:");
-        list.display(); // 10 -> 20 -> 30 -> 40 -> null
-        System.out.println();
-
-        System.out.println("Reversed List Iterative:");
-        list.head = reverse(list.head);
-        list.display(); // 10 -> 20 -> 30 -> 40 -> null
-        System.out.println();
-
-        System.out.println("Reversed List:");
-        list.head = reverseRec(list.head);
-        list.display(); // 10 -> 20 -> 30 -> 40 -> null
-        System.out.println();
-
-    }
-
     /**
      * Iterative Approach
      * 3 pointers (prev, cur, next)
@@ -53,5 +30,30 @@ public class ReverseLinkedList {
         return newHead;
     }
 
+    public static void main(String[] args) {
+        CustomLinkedList list = new CustomLinkedList();
+        list.insert(10);
+        list.insert(20);
+        list.insert(30);
+        list.insert(40);
+        list.insert(50);
+        list.insert(60);
+        list.insert(70);
+        list.insert(80);
 
+        System.out.println("Original List:");
+        list.display(); // 10 -> 20 -> 30 -> 40 -> null
+        System.out.println();
+
+        System.out.println("Reversed List Iterative:");
+        list.head = reverse(list.head);
+        list.display(); // 10 -> 20 -> 30 -> 40 -> null
+        System.out.println();
+
+        System.out.println("Reversed List:");
+        list.head = reverseRec(list.head);
+        list.display(); // 10 -> 20 -> 30 -> 40 -> null
+        System.out.println();
+
+    }
 }
