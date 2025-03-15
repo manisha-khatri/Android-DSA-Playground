@@ -35,6 +35,11 @@ public class MaxHeap {
         System.out.println(heap);
     }
 
+    void heapify(int ar[]) {
+
+
+    }
+
     int delete() {
         if(heap.isEmpty())
             return 0;

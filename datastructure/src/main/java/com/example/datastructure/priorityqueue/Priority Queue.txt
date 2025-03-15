@@ -1,0 +1,49 @@
+Priority Queue
+
+- A Priority Queue is a special type of queue where elements are processed based on their priority rather than their order of arrival.
+- By default it will use Min Heap: Increasing order(small >> large)
+PriorityQueue<Integer> pq = new PriorityQueue<>();
+- For Decreasing order list using Max Heap add Collections.reverseOrder()
+PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+
+Types of Priority Queues
+- Min Priority Queue
+- Max Priority Queue
+
+Implementation Approaches:
+- Binary Heap (Efficient, O(log n) for insertion and deletion)
+- Balanced Binary Search Tree (O(log n) operations)
+- Unordered List (O(1) insertion, O(n) deletion)
+- Ordered List (O(n) insertion, O(1) deletion)
+
+Use Cases:
+- Task Scheduling (OS process scheduling)
+- Dijkstra’s Algorithm (Shortest path finding)
+- A Algorithm (Pathfinding in AI)*
+- Data Compression (Huffman Coding)
+
+----------------------------------------------------------------------------
+PriorityQueue<ListNode> minHeap = new PriorityQueue<>((a, b) -> a.val - b.val);
+
+How Does (a, b) -> a.val - b.val Work in PriorityQueue<>?
+This lambda function (a, b) -> a.val - b.val takes two elements (a and b) and returns:
+- A negative value (a.val < b.val): a comes before b in the heap.
+- Zero (a.val == b.val): Order remains the same.
+- A positive value (a.val > b.val): b comes before a in the heap.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

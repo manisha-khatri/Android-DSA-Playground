@@ -1,0 +1,18 @@
+Dynamic Programming
+
+
+Identifying the dp problem, if the question states:
+- Count the total no. of ways
+- Multiple ways to do this, tell me which will give me mini. or max. output
+- Try all possible ways comes in: count, best ways
+
+shortcut trick:
+- Try to represent the problem in terms of index
+- Do all the possible stuff on that index according to the problem statement
+- Sum of all stuffs = count all ways
+- Find min (all stuff)
+
+
+
+
+
