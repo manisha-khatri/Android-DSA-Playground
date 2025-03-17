@@ -1,16 +1,34 @@
 Dynamic Programming
 
+- Dynamic Programming (DP) is an optimization technique used to solve complex problems by breaking them down into simpler
+sub-problems and storing the results of these sub-problems to avoid redundant computations.
+- It is particularly useful for problems with overlapping sub-problems and optimal substructure.
 
-Identifying the dp problem, if the question states:
-- Count the total no. of ways
-- Multiple ways to do this, tell me which will give me mini. or max. output
-- Try all possible ways comes in: count, best ways
+------------------------------------------------------------------------------
+Identify DP Problems
+
+- Identifying the dp problem, if the question states:
+    - Count the total no. of ways
+    - Multiple ways to do this, tell me which will give me mini. or max. output
+    - Try all possible ways comes in: count, best ways
+- Look for optimal substructure: Can you solve the problem by solving smaller sub problems?
+- Look for overlapping sub problems: Are the same sub problems being solved multiple times?
+- Common DP problems: Fibonacci, Knapsack, Longest Common Subsequence, Coin Change, etc.
+
+------------------------------------------------------------------------------
+Choose the Right DP Approach
+- Top-down (Memoization): Use recursion + a hash table (or array) to store already computed results.
+- Bottom-up (Tabulation): Build the solution iteratively, usually starting from base cases.
+  Tip: Start with recursion and apply memoization if it has overlapping subproblems.
+
+------------------------------------------------------------------------------
 
 shortcut trick:
 - Try to represent the problem in terms of index
 - Do all the possible stuff on that index according to the problem statement
 - Sum of all stuffs = count all ways
 - Find min (all stuff)
+
 
 
 

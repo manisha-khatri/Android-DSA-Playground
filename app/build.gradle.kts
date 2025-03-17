@@ -35,25 +35,44 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true  // ✅ Added missing Compose block
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.13" // ✅ Upgrade to a compatible version
     }
 }
 
 dependencies {
+    // Core AndroidX Libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // Networking & Serialization
     implementation(libs.retrofit)
     implementation(libs.gson)
-    implementation(libs.coroutine.viewmodel)
-    implementation(libs.mockito.core)
-    implementation(libs.mockito.kotlin)
-    implementation(libs.mockk)
-    implementation(libs.core.testing)
-    implementation(libs.coroutines.test)
 
+    // Coroutines & ViewModel
+    implementation(libs.coroutine.viewmodel)
+
+    // Jetpack Compose
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material3)
+    implementation(libs.activity.compose)
+    implementation(libs.compose.ui.tooling.preview) // Preview support
+    debugImplementation(libs.compose.ui.tooling)    // Debug-only tooling
+
+    // Unit Testing
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
+    testImplementation(libs.core.testing)
+    testImplementation(libs.coroutines.test)
+
+    // Instrumented Testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
