@@ -1,4 +1,7 @@
 package com.example.study2025.listingscreenproj.local
 
-class ProductRepository {
+interface ProductRepository {
+    suspend fun seedInitialData()
+    suspend fun getAllProducts(): List<Product>
+    suspend fun getProductsByCategory(category: String): List<Product>
 }

@@ -1,8 +1,12 @@
-package com.example.study2025.listingscreenproj
+package com.example.study2025.listingscreenproj.local
 
-@Entity(tableName = "product")
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "products")
 data class Product(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
+    val description: String,
     val category: String
 )

@@ -18,10 +18,16 @@ External Dependencies:
 4. Hilt for DI
 
 
-
 UI → ViewModel → UseCase → Repository → (Network/Database)
                           ↘         ↙
                          Mapper / DTO ↔ Entity
+
+
+Architecture Overview:
+- Tech Stack: Kotlin, MVVM, Hilt, Jetpack libraries
+- User flows: Login → Browse → Add to Cart → Checkout
+- Error Handling: Centralized via Result wrappers
+- Analytics: Firebase Analytics SDK integrated in ViewModels
 
 
 ---------------------------------------------------------------------------------

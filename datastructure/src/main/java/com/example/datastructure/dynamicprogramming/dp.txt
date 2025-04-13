@@ -5,6 +5,19 @@ sub-problems and storing the results of these sub-problems to avoid redundant co
 - It is particularly useful for problems with overlapping sub-problems and optimal substructure.
 
 ------------------------------------------------------------------------------
+
+void rec() {
+    // Base
+
+    // Cache
+
+    // Compute
+
+    // Save & Return
+}
+
+
+------------------------------------------------------------------------------
 Identify DP Problems
 
 - Identifying the dp problem, if the question states:
@@ -19,7 +32,7 @@ Identify DP Problems
 Choose the Right DP Approach
 - Top-down (Memoization): Use recursion + a hash table (or array) to store already computed results.
 - Bottom-up (Tabulation): Build the solution iteratively, usually starting from base cases.
-  Tip: Start with recursion and apply memoization if it has overlapping subproblems.
+  Tip: Start with recursion and apply memoization if it has overlapping sub problems.
 
 ------------------------------------------------------------------------------
 
@@ -28,6 +41,24 @@ shortcut trick:
 - Do all the possible stuff on that index according to the problem statement
 - Sum of all stuffs = count all ways
 - Find min (all stuff)
+
+------------------------------------------------------------------------------
+Greedy Approach
+
+The greedy approach is an algorithmic strategy that makes the locally optimal choice at each step with the hope that
+these local choices will lead to a globally optimal solution. It does not backtrack or reconsider previous choices.
+
+Use greedy algorithms when:
+✔️ You can sort the data and process it in a straightforward way.
+✔️ The problem doesn't require backtracking or dynamic programming.
+✔️ You need an approximate or quick solution, even if not the absolute best.
+
+------------------------------------------------------------------------------
+
+
+
+
+
 
 
 

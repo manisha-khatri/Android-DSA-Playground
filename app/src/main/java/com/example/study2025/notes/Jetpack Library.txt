@@ -19,3 +19,38 @@ Major Jetpack Libraries:
 4. Foundation Components
     1. AppCompat – Ensures backward compatibility for newer UI elements.
     2. Android KTX – Kotlin extensions for concise and idiomatic code.
+
+
+-----------------------------------------------------------------
+
+
+- It simplifies UI development by allowing developers to build native UIs using Kotlin.
+- Instead of defining layouts in XML, you define them in Kotlin functions using @Composable.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

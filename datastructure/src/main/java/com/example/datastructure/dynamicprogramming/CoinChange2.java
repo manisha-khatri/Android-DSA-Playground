@@ -2,36 +2,42 @@ package com.example.datastructure.dynamicprogramming;
 
 import java.util.Arrays;
 
-public class CoinChange {
-   static int coinChange(int[] coins, int amount) {
-       int[] memo = new int[amount+1];
-       Arrays.fill(memo, -1);
-       return helper(coins, amount, memo);
+public class CoinChange2 {
+   static int coinChange2(int[] coins, int amount) {
+       int[][] memo = new int[amount+1][coins.length];
+       for(int[] row: memo) {
+           Arrays.fill(row, -1);
+       }
+       return helper(coins, amount, memo, 0);
    }
 
-   static int helper(int[] coins, int amt, int[] memo) {
-       if(amt == 0) return 0;
-       if(amt < 0) return Integer.MAX_VALUE;
+   static int helper(int[] coins, int amt, int[][] memo, int i) {
+      // Base
+       if(amt == 0) return 1;
 
-       if(memo[amt] != -1) return memo[amt];
+       if(i>= coins.length) return 0;
 
-       int minCoins = Integer.MAX_VALUE;
+       // cache
+       if(memo[amt][i]!=-1)
+           return memo[amt][i];
 
-       for(int coin: coins) {
-           int res = helper(coins, amt-coin, memo);
-           if(res != Integer.MAX_VALUE) {
-               minCoins = Math.min(minCoins, res+1);
-           }
+       //Compute
+       int notTake = helper(coins, amt, memo, i+1);
+       int take=0;
+       if(amt-coins[i] >=0) {
+           take = helper(coins, amt-coins[i], memo, i);
        }
 
-       return memo[amt] = minCoins;
+       //save and return
+       return memo[amt][i] = (take + notTake);
    }
+
 
     public static void main(String[] args) {
         int[] coins = {1, 2, 5};
         int amount = 11;
-        int result = coinChange(coins, amount);
+        int result = coinChange2(coins, amount);
 
-        System.out.println(result == Integer.MAX_VALUE ? -1 : result); // Output: 3 (5+5+1)
+        System.out.println(result); // Output: 11
     }
 }
