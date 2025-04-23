@@ -2,7 +2,74 @@ Coroutines
 
 - Coroutines are lightweight threads used for asynchronous programming in Kotlin.
 - They help manage background tasks efficiently without blocking the main thread.
+- delay(2000): Internally, Kotlin uses a timer (via Dispatchers.Main.immediate) to resume the coroutine after 2 seconds.
+- Suspension in Kotlin:
+    - Saves what you were doing
+    - Sets a timer
+    - Frees the thread
+    - Later resumes right where you left off, on the same thread (main, in this case)
 
+---------------------------------------------------------------------------------
+What is lightweight threads?
+
+- Coroutine/light weight threads runs within the regular thread, Kotlin(and libraries like dispatcher) manages their scheduling so efficiently that they don't kill the app's performance.
+- They doesn't block the other thread, they suspend and resume -- so the other work can be executed while they are waiting.
+- They consume less memory and are more scalable.
+
+What Are "Lightweight Threads"?
+Explaining with an example
+- A regular thread is like hiring a full time employee - where you have to pay them for their desk, equipment, and time, even when they are not working
+- A coroutine is like hiring a highly efficient freelancer—you give them tasks only when needed, and they use your resources only while working.
+
+
+Feature	            Regular Thread	                Coroutine
+
+Memory usage	    ~1MB per thread	                ~1KB per coroutine
+Startup time	    Slow	                        Super fast
+Switching cost	    Handled by OS (heavy)	        Handled by Kotlin (light)
+Scalability	        Hundreds at most	            Thousands or even millions
+
+---------------------------------------------------------------------------------
+What are threads?
+
+- A thread is a unit of execution within a process.
+- If a process is your running app, then threads are the little worker bees doing the tasks inside it.
+- Used for performing complex/long running operation in the background making the UI/Main thread unblocked
+- Managed by the operating system
+- Each thread has its own call stack + execution flow
+- creating a thread = some memory + context switch overhead
+- Threads can run in parallel on multiple CPU core
+
+Eg. Imagine your app is a restaurant:
+- The process is the whole restaurant.
+- Each thread is a waiter taking orders, serving food, and talking to the kitchen.
+- By default, your app starts with one main thread—the head waiter, handling everything.
+- But if your head waiter (main thread) is doing everything—taking orders, cooking, serving, washing dishes—the restaurant (your app) slows down. So we bring in more waiters: extra threads.
+
+Disadvantages:
+- They are expensive(memory-side)
+- Too many threads? Hello, performance crash.
+
+main() {
+    //Main Thread
+
+    val thread = Thread {
+        // background thread
+        Thread.sleep(2000)
+    }
+}
+
+--> Thread.sleep(2000) blocks the same thread for 2s.
+--> Thread.sleep(2000) doesn’t block some other thread. It blocks the thread it’s called from.
+
+------ Contrast with coroutines (delay(2000))-----
+launch(Dispatchers.IO) {
+    delay(2000)
+    println("Done without blocking thread")
+}
+--> doesn't block the thread, coroutine just suspended
+
+---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Key Concepts of Coroutines in Android
 
@@ -22,12 +89,21 @@ Key Concepts of Coroutines in Android
 - Can only be called from another suspend function or coroutine.
 
 4. Launch vs Async – Ways to start coroutines:
-- launch {} → Fire-and-forget, doesn't return a result.
-- async {} → Returns a Deferred<T> (future result), can be awaited using .await().
+- launch {}
+        - It is a coroutine builder used to start a new coroutine
+        - Think of it like: "Hey Kotlin, go run this block of code concurrently in a coroutine, and I don’t need a result back."
+        - Fire-and-forget, doesn't return a result.
+        - It returns a Job (you can cancel it, track its status, etc.)
+        - It runs asynchronously
 
-val job = launch { println("Launch: No result returned") }
-val result = async { 10 + 20 }
-println("Async result: ${result.await()}")
+- async {}
+        - Run asynchronously
+        - Return a result, a Deferred<T> (like a future/promise)
+        - You call await() to suspend until it finishes
+        - It's non-blocking, even when you call await()
+
+        val deferred = async { getUserData() }
+        val user = deferred.await()
 
 ---------------------------------------------------------------------------------
 

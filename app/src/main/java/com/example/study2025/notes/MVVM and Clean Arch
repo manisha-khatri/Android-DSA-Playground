@@ -1,4 +1,42 @@
+MVVM + Clean Architecture
+
+- MVVM plus additional boundaries
+
+- Layered Arch.
+1. UI Layer : (View + ViewModel) : Deals only with the presentation logic
+2. Domain Layer : (Usecase + models) : Business rules and interfaces. Pure Kotlin no Android dependencies
+3. Data Layer : Repository Impl + Data sources(Local + Remote)
+
+- Highly testable : Business logic is independent of frameworks
+
+
+1. view
+- activity
+- fragment
+- viewmodel
+
+2. domain
+- usecase
+- repository
+- model
+
+3. data
+- remote
+- local
+- model (DTO)
+- repository        # Repository implementation
+
+
+
+DTO:
+- Data Transfer object
+- Used as a data holding class used to transfer data between your different parts of the app.
+
+
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
 MVVM
+- Separates UI logic from business logic
 - MVVM is an architectural pattern that helps in separating UI logic from business logic in an Android app.
 - It promotes separation of concern, making the code more scalable, testable and maintainable.
     Model
