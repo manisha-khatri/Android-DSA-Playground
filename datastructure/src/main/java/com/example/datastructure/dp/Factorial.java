@@ -1,4 +1,4 @@
-package com.example.datastructure.dynamicprogramming;
+package com.example.datastructure.dp;
 
 public class Factorial {
 
