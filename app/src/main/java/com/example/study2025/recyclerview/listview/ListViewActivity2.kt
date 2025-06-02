@@ -1,4 +1,4 @@
-package com.example.study2025.adapters
+package com.example.study2025.recyclerview.listview
 
 import android.os.Bundle
 import android.widget.ListView
