@@ -25,5 +25,7 @@ class CounterActivity: AppCompatActivity() {
         viewModel.counter.observe(this) { count ->
             //tv.text = count
         }
+
+        //increment()
     }
 }
