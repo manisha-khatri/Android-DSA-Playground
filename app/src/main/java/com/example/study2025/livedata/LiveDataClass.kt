@@ -4,9 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MyActivity
-
-
 class MyViewModel: ViewModel() {
     private val _name =  MutableLiveData<String>()
     val name: LiveData<String> = _name

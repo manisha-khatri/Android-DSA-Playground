@@ -25,7 +25,9 @@ class HomeActivity : AppCompatActivity() {
         }
 
         postViewModel.posts.observe(this) { posts ->
-            binding.tvPosts.text = posts.joinToString("\n") { it.title + " " + it.userId }
+            binding.tvPosts.text = posts.joinToString("\n") {
+                it.title + " " + it.userId
+            }
         }
 
         binding.btnFetch.setOnClickListener {

@@ -89,4 +89,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     implementation(libs.apollo.runtime)
+
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    debugImplementation(libs.compose.ui.tooling)
 }
