@@ -1,0 +1,53 @@
+# =============== Android/Java Specific ===============
+
+# Ignore Gradle wrapper cache (but keep wrapper scripts)
+.gradle/
+**/build/
+
+# Ignore signing config if accidentally created
+**/signing.properties
+
+# =============== Android Studio ===============
+
+# IntelliJ project files
+.idea/
+*.iml
+
+# User-specific run configs
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/caches
+.idea/libraries
+
+# =============== OS Generated ===============
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+
+# =============== Misc ===============
+
+# Logs
+*.log
+
+# Keystore (if any)
+*.jks
+
+
+# Crashlytics/Google Services (if using Firebase, add this)
+# Remove the below line if you want to keep google-services.json
+# app/google-services.json
+
+# =============== Node / React Native (if applicable) ===============
+node_modules/
+
+# =============== Others ===============
+/captures/
+output.json
