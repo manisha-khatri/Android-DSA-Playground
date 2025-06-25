@@ -12,11 +12,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Study2025"
+        android:theme="@style/Theme.ComposeApplication"
         tools:targetApi="31">
         <activity
-            android:name=".compose.Lecture8"
-            android:exported="true">
+            android:name=".compose.sideeffects.DerivedStateOfExample"
+            android:exported="true"
+            android:theme="@style/Theme.ComposeApplication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

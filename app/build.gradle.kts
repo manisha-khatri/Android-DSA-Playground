@@ -90,7 +90,10 @@ dependencies {
 
     implementation(libs.apollo.runtime)
 
+    // Compose
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.compose.material.icons.extended)
+    implementation(libs.androidx.compose.runtime)
 }
