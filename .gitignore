@@ -4,6 +4,9 @@
 .gradle/
 **/build/
 
+# Ignore generated local config
+local.properties
+
 # Ignore signing config if accidentally created
 **/signing.properties
 
@@ -31,6 +34,8 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+# Linux
+*~
 
 # =============== Misc ===============
 
@@ -40,6 +45,8 @@ Desktop.ini
 # Keystore (if any)
 *.jks
 
+# Local Gradle Properties (if any)
+*.properties
 
 # Crashlytics/Google Services (if using Firebase, add this)
 # Remove the below line if you want to keep google-services.json
