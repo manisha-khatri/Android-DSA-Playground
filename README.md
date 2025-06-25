@@ -1,6 +1,6 @@
 # 📱 Android + DSA Practice Playground
 
-Welcome to my personal learning project combining **Android development** and **Data Structures & Algorithms**. This repository is a hands-on journal of my journey toward mastering Android (with Jetpack Compose, MVVM, etc.) and preparing for coding interviews, especially for senior Android roles.
+Welcome to my personal learning project combining **Android development** and **Data Structures & Algorithms**. This repository is a hands-on journal of my journey toward mastering Android (with Jetpack Compose, MVVM, etc.)
 
 ---
 
@@ -12,15 +12,14 @@ This repository contains the following major sections:
 
 | Folder | Description |
 |--------|-------------|
-| `activity/` | Basic Android Activity usage (e.g., `LearningActivity`) |
+| `activity/` | Basic Android Activity usage |
 | `callbackinterface/` | Examples of callback interfaces & async patterns |
 | `compose/` | Jetpack Compose explorations including themes, UI, and side-effects |
 | `quoteapp/` | A mini Compose app showing list/detail screens using MVVM architecture |
-| `tweetsapp/` | Twitter-style UI screens built with Jetpack Compose |
 | `fragment/` | Fragment communication and `SharedViewModel` patterns |
 | `jetpackcompose/` | Dedicated Compose activity and text notes |
 | `listingscreenproj/` | Product listing screen using MVVM, Room, and Clean Architecture |
-| `livedata/` & `livedata2/` | Custom LiveData implementations and examples |
+| `livedata/`` | Custom LiveData implementations and examples |
 | `mvvm/` | A fully structured MVVM module with API, repository, ViewModel, and UI |
 | `recyclerview/` | DiffUtil, multi-view types, and ListView examples |
 | `viewmodel/` | ViewModel usage examples |
@@ -76,4 +75,4 @@ Located under `datastructure/`, organized by topic for interview prep.
 Clone the repo and open it in Android Studio Arctic Fox or higher:
 
 ```bash
-git clone https://github.com/<your-username>/<repo-name>.git
+git clone https://github.com/manisha-khatri/Android-DSA-Playground.git
