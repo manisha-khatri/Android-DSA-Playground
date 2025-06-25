@@ -9,8 +9,8 @@
 9        android:targetSdkVersion="35" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:5:5-67
-11-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:5:22-64
+11-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:5:5-67
+11-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:5:22-64
 12
 13    <permission
 13-->[androidx.core:core:1.12.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/a5e30f92d897277a086abb922df4f777/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
@@ -24,45 +24,45 @@
 17-->[androidx.core:core:1.12.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/a5e30f92d897277a086abb922df4f777/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
 18
 19    <application
-19-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:7:5-26:19
+19-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:7:5-26:19
 20        android:allowBackup="true"
-20-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:8:9-35
+20-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:8:9-35
 21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 21-->[androidx.core:core:1.12.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/a5e30f92d897277a086abb922df4f777/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
 22        android:dataExtractionRules="@xml/data_extraction_rules"
-22-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:9:9-65
+22-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:9:9-65
 23        android:debuggable="true"
 24        android:extractNativeLibs="false"
 25        android:fullBackupContent="@xml/backup_rules"
-25-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:10:9-54
+25-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:10:9-54
 26        android:icon="@mipmap/ic_launcher"
-26-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:11:9-43
+26-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:11:9-43
 27        android:label="@string/app_name"
-27-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:12:9-41
+27-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:12:9-41
 28        android:roundIcon="@mipmap/ic_launcher_round"
-28-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:13:9-54
+28-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:13:9-54
 29        android:supportsRtl="true"
-29-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:14:9-35
+29-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:14:9-35
 30        android:testOnly="true"
 31        android:theme="@style/Theme.ComposeApplication" >
-31-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:15:9-56
+31-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:15:9-56
 32        <activity
-32-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:17:9-25:20
+32-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:17:9-25:20
 33            android:name="com.example.study2025.compose.sideeffects.DerivedStateOfExample"
-33-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:18:13-70
+33-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:18:13-70
 34            android:exported="true"
-34-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:19:13-36
+34-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:19:13-36
 35            android:theme="@style/Theme.ComposeApplication" >
-35-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:20:13-60
+35-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:20:13-60
 36            <intent-filter>
-36-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:21:13-24:29
+36-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:21:13-24:29
 37                <action android:name="android.intent.action.MAIN" />
-37-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:22:17-69
-37-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:22:25-66
+37-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:22:17-69
+37-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:22:25-66
 38
 39                <category android:name="android.intent.category.LAUNCHER" />
-39-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:23:17-77
-39-->/Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:23:27-74
+39-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:23:17-77
+39-->/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:23:27-74
 40            </intent-filter>
 41        </activity>
 42        <activity

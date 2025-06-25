@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:2:1-28:12
+ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:2:1-28:12
 MERGED from [androidx.databinding:viewbinding:8.8.1] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/3e1d43dd0647d0eb71d996afdaaaecd1/transformed/viewbinding-8.8.1/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.10.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/e3de0a03f31a9924b5356372e82933be/transformed/material-1.10.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/c106b80d7097b147af64629d6d2c16d4/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
@@ -79,22 +79,22 @@ MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/manishakhatri/.gra
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/e5b9c558ec772b5c85e6c3fb4bf7c6e9/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/9e71635184ffcb0b222755e0ea38699e/transformed/print-1.0.0/AndroidManifest.xml:17:1-22:12
 	package
-		INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml
 	android:versionName
-		INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml
 	xmlns:tools
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:3:5-51
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:3:5-51
 	android:versionCode
-		INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:2:11-69
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:2:11-69
 uses-permission#android.permission.INTERNET
-ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:5:5-67
+ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:5:5-67
 	android:name
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:5:22-64
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:5:22-64
 application
-ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:7:5-26:19
-INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:7:5-26:19
+ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:7:5-26:19
+INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:7:5-26:19
 MERGED from [com.google.android.material:material:1.10.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/e3de0a03f31a9924b5356372e82933be/transformed/material-1.10.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.10.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/e3de0a03f31a9924b5356372e82933be/transformed/material-1.10.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/c106b80d7097b147af64629d6d2c16d4/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -116,49 +116,49 @@ MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/manishakha
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/fe8ff9b3cbe32375185149192e143d6c/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/fe8ff9b3cbe32375185149192e143d6c/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 	android:extractNativeLibs
-		INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.12.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/a5e30f92d897277a086abb922df4f777/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:14:9-35
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:14:9-35
 	android:label
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:12:9-41
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:12:9-41
 	android:fullBackupContent
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:10:9-54
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:10:9-54
 	android:roundIcon
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:13:9-54
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:13:9-54
 	tools:targetApi
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:16:9-29
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:16:9-29
 	android:icon
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:11:9-43
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:11:9-43
 	android:allowBackup
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:8:9-35
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:8:9-35
 	android:theme
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:15:9-56
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:15:9-56
 	android:dataExtractionRules
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:9:9-65
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:9:9-65
 activity#com.example.study2025.compose.sideeffects.DerivedStateOfExample
-ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:17:9-25:20
+ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:17:9-25:20
 	android:exported
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:19:13-36
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:19:13-36
 	android:theme
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:20:13-60
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:20:13-60
 	android:name
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:18:13-70
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:18:13-70
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:21:13-24:29
+ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:21:13-24:29
 action#android.intent.action.MAIN
-ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:22:17-69
+ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:22:17-69
 	android:name
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:22:25-66
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:22:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:23:17-77
+ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:23:17-77
 	android:name
-		ADDED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml:23:27-74
+		ADDED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml:23:27-74
 uses-sdk
-INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml
-INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml
+INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml
+INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml
 MERGED from [androidx.databinding:viewbinding:8.8.1] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/3e1d43dd0647d0eb71d996afdaaaecd1/transformed/viewbinding-8.8.1/AndroidManifest.xml:5:5-44
 MERGED from [androidx.databinding:viewbinding:8.8.1] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/3e1d43dd0647d0eb71d996afdaaaecd1/transformed/viewbinding-8.8.1/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.material:material:1.10.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/e3de0a03f31a9924b5356372e82933be/transformed/material-1.10.0/AndroidManifest.xml:20:5-44
@@ -308,9 +308,9 @@ MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/
 MERGED from [androidx.print:print:1.0.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/9e71635184ffcb0b222755e0ea38699e/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/9e71635184ffcb0b222755e0ea38699e/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
 	android:targetSdkVersion
-		INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/manishakhatri/Documents/Android/Study2/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/AndroidManifest.xml
 activity#androidx.compose.ui.tooling.PreviewActivity
 ADDED from [androidx.compose.ui:ui-tooling-android:1.6.1] /Users/manishakhatri/.gradle/caches/8.10.2/transforms/cb4b766bef05ae0afaa2e0c1b8561975/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
 	android:exported

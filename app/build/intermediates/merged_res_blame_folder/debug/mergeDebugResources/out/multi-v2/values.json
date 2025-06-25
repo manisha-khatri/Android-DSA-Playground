@@ -57,40 +57,6 @@
                     }
                 },
                 {
-                    "source": "/Users/manishakhatri/Documents/Android/Study2/app/src/main/res/values/themes.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "95",
-                        "endOffsets": "146"
-                    },
-                    "to": {
-                        "startLines": "6453",
-                        "startColumns": "4",
-                        "startOffsets": "451395",
-                        "endColumns": "94",
-                        "endOffsets": "451485"
-                    }
-                },
-                {
-                    "source": "/Users/manishakhatri/Documents/Android/Study2/app/src/main/res/values/colors.xml",
-                    "from": {
-                        "startLines": "2,4,5,3",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,139,178,97",
-                        "endColumns": "41,38,39,41",
-                        "endOffsets": "92,173,213,134"
-                    },
-                    "to": {
-                        "startLines": "640,641,699,961",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "32798,32840,36869,56555",
-                        "endColumns": "41,38,39,41",
-                        "endOffsets": "32835,32874,36904,56592"
-                    }
-                },
-                {
                     "source": "/Users/manishakhatri/.gradle/caches/8.10.2/transforms/e8d1695f57581df9f997f20192d59bf9/transformed/activity-1.8.2/res/values/values.xml",
                     "from": {
                         "startLines": "2,3",
@@ -160,6 +126,23 @@
                         "endLines": "470,634,635,650,651,939,940,1048,1049,1050,1051,1052,1053,1054,1734,1735,1736,1737,1738,1739,1740,1741,1742,1743,1744,1745,1746,1747,1748,1759,1760,1761,1809,1810,1840,1841,1842,1843,1844,1845,1846,1847,1848,1849,1850,1851,1852,1853,1854,1862,1944,1985,1986,1987,1988,1989,1990,1991,2199,6133,6137,6138,6142,6143,7259,7260,10203,10571,11437,11458,11506,11512",
                         "endColumns": "59,71,87,64,65,68,62,69,67,71,69,60,73,72,60,60,61,63,61,60,67,99,59,65,72,68,56,51,61,71,75,64,34,34,54,62,54,57,57,60,62,56,50,49,60,56,65,33,34,34,69,66,71,68,68,73,71,87,70,116,12,109,12,128,71,66,24,24,24,24,24,24",
                         "endOffsets": "24144,32386,32474,33580,33646,55081,55144,62401,62469,62541,62611,62672,62746,62819,115972,116033,116095,116159,116221,116282,116350,116450,116510,116576,116649,116718,116775,116827,116889,117691,117767,117832,120573,120608,122214,122277,122332,122390,122448,122509,122572,122629,122680,122730,122791,122848,122914,122948,122983,123365,128596,132218,132290,132359,132428,132502,132574,132662,156503,431353,431554,431664,431865,431994,512458,512525,674690,687345,722611,723292,724518,724685"
+                    }
+                },
+                {
+                    "source": "/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/res/values/themes.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "95",
+                        "endOffsets": "146"
+                    },
+                    "to": {
+                        "startLines": "6453",
+                        "startColumns": "4",
+                        "startOffsets": "451395",
+                        "endColumns": "94",
+                        "endOffsets": "451485"
                     }
                 },
                 {
@@ -275,20 +258,20 @@
                     }
                 },
                 {
-                    "source": "/Users/manishakhatri/Documents/Android/Study2/app/src/main/res/values/strings.xml",
+                    "source": "/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/res/values/colors.xml",
                     "from": {
-                        "startLines": "1",
-                        "startColumns": "4",
-                        "startOffsets": "16",
-                        "endColumns": "46",
-                        "endOffsets": "58"
+                        "startLines": "2,4,5,3",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,139,178,97",
+                        "endColumns": "41,38,39,41",
+                        "endOffsets": "92,173,213,134"
                     },
                     "to": {
-                        "startLines": "1977",
-                        "startColumns": "4",
-                        "startOffsets": "130870",
-                        "endColumns": "46",
-                        "endOffsets": "130912"
+                        "startLines": "640,641,699,961",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "32798,32840,36869,56555",
+                        "endColumns": "41,38,39,41",
+                        "endOffsets": "32835,32874,36904,56592"
                     }
                 },
                 {
@@ -323,6 +306,23 @@
                         "startOffsets": "120423,121571",
                         "endColumns": "53,66",
                         "endOffsets": "120472,121633"
+                    }
+                },
+                {
+                    "source": "/Users/manishakhatri/Documents/Android/Android-DSA-Playground/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "46",
+                        "endOffsets": "58"
+                    },
+                    "to": {
+                        "startLines": "1977",
+                        "startColumns": "4",
+                        "startOffsets": "130870",
+                        "endColumns": "46",
+                        "endOffsets": "130912"
                     }
                 },
                 {
