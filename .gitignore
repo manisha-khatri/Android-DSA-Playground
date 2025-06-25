@@ -1,60 +1,59 @@
-# =============== Android/Java Specific ===============
+# ================== Android Build Files ==================
+**/build/                # Exclude all module build directories
+.gradle/                 # Gradle local cache
+/local.properties        # Local machine-specific properties (e.g., SDK path)
+.cxx/                    # Native build cache (NDK)
 
-# Ignore Gradle wrapper cache (but keep wrapper scripts)
-.gradle/
-**/build/
-
-# Ignore generated local config
-local.properties
-
-# Ignore signing config if accidentally created
-**/signing.properties
-
-# =============== Android Studio ===============
-
-# IntelliJ project files
-.idea/
-*.iml
-
-# User-specific run configs
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/dictionaries
+# ================== Android Studio/IDE ===================
+.idea/                   # IntelliJ/Android Studio project files
+*.iml                    # Module settings
+*.ipr
+*.iws
 .idea/caches
 .idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+.idea/assetWizardSettings.xml
+.idea/navEditor.xml
+.idea/gradle.xml
 
-# =============== OS Generated ===============
-
-# macOS
-.DS_Store
-
-# Windows
-Thumbs.db
+# ================== OS-Specific Files ====================
+.DS_Store                # macOS
+Thumbs.db                # Windows
 ehthumbs.db
 Desktop.ini
+*~                      # Unix backup files
 
-# Linux
-*~
+# ================== Output Artifacts =====================
+*.apk
+*.ap_                   # APK intermediate file
+*.aab                   # Android App Bundle
+*.dex
+*.class
+*.log                   # Log files
+output.json             # Lint/report outputs
 
-# =============== Misc ===============
 
-# Logs
-*.log
+# ================== Keystore Files =========================
+*.jks                   # Java KeyStore - keep secure, never commit!
 
-# Keystore (if any)
-*.jks
+# ================== Misc Gradle / Dependency Config =========
+**/gradle-app.setting
+**/.gradle
+!gradle-wrapper.jar
 
-# Local Gradle Properties (if any)
-*.properties
 
-# Crashlytics/Google Services (if using Firebase, add this)
-# Remove the below line if you want to keep google-services.json
-# app/google-services.json
-
-# =============== Node / React Native (if applicable) ===============
+# ================== Node/React Native =======================
 node_modules/
 
-# =============== Others ===============
-/captures/
-output.json
+# ================== Testing Output ==========================
+*.ec                    # JaCoCo exec files
+*.hprof                 # Memory dumps
+
+# ================== Kotlin ================================
+*.kotlin_module
+
+# ================== Jetpack Compose Compiler =================
+*.snap
+*.cach
+
