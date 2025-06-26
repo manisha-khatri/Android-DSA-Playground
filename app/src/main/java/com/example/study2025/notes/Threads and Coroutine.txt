@@ -1,0 +1,257 @@
+Coroutines
+
+- Coroutines are lightweight threads used for asynchronous programming in Kotlin.
+- They help manage background tasks efficiently without blocking the main thread.
+- delay(2000): Internally, Kotlin uses a timer (via Dispatchers.Main.immediate) to resume the coroutine after 2 seconds.
+- Suspension in Kotlin:
+    - Saves what you were doing
+    - Sets a timer
+    - Frees the thread
+    - Later resumes right where you left off, on the same thread (main, in this case)
+
+---------------------------------------------------------------------------------
+What is lightweight threads?
+
+- Coroutine/light weight threads runs within the regular thread, Kotlin(and libraries like dispatcher) manages their scheduling so efficiently that they don't kill the app's performance.
+- They doesn't block the other thread, they suspend and resume -- so the other work can be executed while they are waiting.
+- They consume less memory and are more scalable.
+
+What Are "Lightweight Threads"?
+Explaining with an example
+- A regular thread is like hiring a full time employee - where you have to pay them for their desk, equipment, and time, even when they are not working
+- A coroutine is like hiring a highly efficient freelancer—you give them tasks only when needed, and they use your resources only while working.
+
+
+Feature	            Regular Thread	                Coroutine
+
+Memory usage	    ~1MB per thread	                ~1KB per coroutine
+Startup time	    Slow	                        Super fast
+Switching cost	    Handled by OS (heavy)	        Handled by Kotlin (light)
+Scalability	        Hundreds at most	            Thousands or even millions
+
+---------------------------------------------------------------------------------
+What are threads?
+
+- A thread is a unit of execution within a process.
+- If a process is your running app, then threads are the little worker bees doing the tasks inside it.
+- Used for performing complex/long running operation in the background making the UI/Main thread unblocked
+- Managed by the operating system
+- Each thread has its own call stack + execution flow
+- creating a thread = some memory + context switch overhead
+- Threads can run in parallel on multiple CPU core
+
+Eg. Imagine your app is a restaurant:
+- The process is the whole restaurant.
+- Each thread is a waiter taking orders, serving food, and talking to the kitchen.
+- By default, your app starts with one main thread—the head waiter, handling everything.
+- But if your head waiter (main thread) is doing everything—taking orders, cooking, serving, washing dishes—the restaurant (your app) slows down. So we bring in more waiters: extra threads.
+
+Disadvantages:
+- They are expensive(memory-side)
+- Too many threads? Hello, performance crash.
+
+main() {
+    //Main Thread
+
+    val thread = Thread {
+        // background thread
+        Thread.sleep(2000)
+    }
+}
+
+--> Thread.sleep(2000) blocks the same thread for 2s.
+--> Thread.sleep(2000) doesn’t block some other thread. It blocks the thread it’s called from.
+
+------ Contrast with coroutines (delay(2000))-----
+launch(Dispatchers.IO) {
+    delay(2000)
+    println("Done without blocking thread")
+}
+--> doesn't block the thread, coroutine just suspended
+
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Key Concepts of Coroutines in Android
+
+1. Coroutine Scope – Defines the lifecycle of coroutines. Common scopes in Android:
+- viewModelScope → Tied to ViewModel, cancels when ViewModel is cleared.
+- lifecycleScope → Tied to a LifecycleOwner (like an Activity or Fragment).
+- GlobalScope → Lives throughout the app's lifecycle (use cautiously).
+
+2. Coroutine Dispatchers – Determines where/which thread the coroutine runs:
+- Dispatchers.Main → Runs on the UI thread (for UI updates).
+- Dispatchers.IO → Optimized for disk/network I/O operations.
+- Dispatchers.Default → Used for CPU-intensive tasks.
+- Dispatchers.Unconfined → Starts in the caller thread but may switch.
+
+3. Suspend Functions (suspend)
+– Functions that can be paused and resumed without blocking the thread.
+- Can only be called from another suspend function or coroutine.
+
+4. Launch vs Async – Ways to start coroutines:
+- launch {}
+        - It is a coroutine builder used to start a new coroutine
+        - Think of it like: "Hey Kotlin, go run this block of code concurrently in a coroutine, and I don’t need a result back."
+        - Fire-and-forget, doesn't return a result.
+        - It returns a Job (you can cancel it, track its status, etc.)
+        - It runs asynchronously
+
+- async {}
+        - Run asynchronously
+        - Return a result, a Deferred<T> (like a future/promise)
+        - You call await() to suspend until it finishes
+        - It's non-blocking, even when you call await()
+
+        val deferred = async { getUserData() }
+        val user = deferred.await()
+
+---------------------------------------------------------------------------------
+
+1. Dispatchers.Main (UI Thread)
+- Used for updating UI elements. If you try to run heavy operations here, the app may freeze.
+🔹 Use cases: UI updates, lightweight tasks like showing Toasts, setting text, etc.
+
+class MyViewModel : ViewModel() {
+    fun updateUI() {
+        viewModelScope.launch(Dispatchers.Main) {
+            textView.text = "Hello, Coroutines!" // Runs on the main thread
+        }
+    }
+}
+
+2. Dispatchers.IO (Background Thread for I/O operations)
+- Used for disk and network operations like database queries or API calls.
+🔹 Use cases: Fetching data from Room database, network calls, file I/O.
+
+viewModelScope.launch(Dispatchers.IO) {
+    val data = fetchFromNetwork() // Runs in the background
+    withContext(Dispatchers.Main) {
+        textView.text = data // Switches to the UI thread
+    }
+}
+
+
+3. Dispatchers.Default (Background Thread for CPU-intensive tasks)
+- Used for tasks that require heavy computation, like sorting large lists, processing images, or encrypting data.
+🔹 Use cases: Data processing, JSON parsing, complex calculations
+
+viewModelScope.launch(Dispatchers.Default) {
+    val sortedList = myList.sorted() // Runs on a background thread
+    withContext(Dispatchers.Main) {
+        textView.text = "Sorting Done!" // Switches to UI thread
+    }
+}
+
+4. Dispatchers.Unconfined (Runs on the Caller’s Thread (may change the thread))
+
+
+- Use Main for UI updates.
+- Use IO for database and network operations.
+- Use Default for CPU-intensive tasks.
+- Avoid Unconfined unless absolutely needed.
+
+---------------------------------------------------------------------------------
+Can we switch between dispatchers in a coroutine?
+- Yes, using withContext().
+
+How does structured concurrency help avoid memory leaks?
+- Coroutines are bound to a CoroutineScope, so if the scope (like viewModelScope) is canceled, all child coroutines get canceled automatically.
+
+How do you handle exceptions in coroutines?
+- Use try-catch, CoroutineExceptionHandler
+
+How can you cancel a coroutine?
+- job.cancel().
+val job = launch {
+    repeat(1000) { i ->
+        if (!isActive) return@launch
+        println("Printing $i")
+        delay(500)
+    }
+}
+delay(2000)
+job.cancel() // Cancels coroutine
+
+
+---------------------------------------------------------------------------------
+Coroutine Scope vs Supervisor Scope
+
+coroutineScope {}
+- If one child coroutine fails, all sibling coroutines are canceled.
+suspend fun fetchData() = coroutineScope {
+    launch {
+        delay(1000)
+        throw RuntimeException("Network error") // Cancels all other coroutines
+    }
+    launch {
+        delay(2000)
+        println("This won't execute if first launch fails")
+    }
+}
+
+supervisorScope {} (Independent Failures)
+- If one coroutine fails, others continue executing.
+- Use supervisorScope for independent tasks that should not affect each other.
+suspend fun fetchData() = supervisorScope {
+    launch {
+        delay(1000)
+        throw RuntimeException("Network error") // Other coroutines keep running
+    }
+    launch {
+        delay(2000)
+        println("This still executes despite failure")
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,113 @@
+MVVM + Clean Architecture
+
+- MVVM plus additional boundaries
+
+- Layered Arch.
+1. UI Layer : (View + ViewModel) : Deals only with the presentation logic
+2. Domain Layer : (Usecase + models) : Business rules and interfaces. Pure Kotlin no Android dependencies
+3. Data Layer : Repository Impl + Data sources(Local + Remote)
+
+- Highly testable : Business logic is independent of frameworks
+
+
+1. view
+- activity
+- fragment
+- viewmodel
+
+2. domain
+- usecase
+- repository
+- model
+
+3. data
+- remote
+- local
+- model (DTO)
+- repository        # Repository implementation
+
+
+
+DTO:
+- Data Transfer object
+- Used as a data holding class used to transfer data between your different parts of the app.
+
+
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+MVVM
+- Separates UI logic from business logic
+- MVVM is an architectural pattern that helps in separating UI logic from business logic in an Android app.
+- It promotes separation of concern, making the code more scalable, testable and maintainable.
+    Model
+    - Represents the data and business logic.
+    - Retrieves data from APIs, databases (Room), or repositories.
+    View
+    - Represents the UI and user interactions.
+    - Displays data and observes changes from ViewModel.
+    ViewModel
+    - Acts as a bridge between the Model and View.
+    - Manages data and business logic.
+
+[View (UI)]
+    ⬆️ Observes LiveData from ViewModel
+    ⬇️ Sends user interactions to ViewModel
+[ViewModel]
+    ⬆️ Requests data from Model
+    ⬇️ Updates LiveData, which View observes
+[Model (Repository, API, Database)]
+    ⬆️ Fetches or processes data
+    ⬇️ Returns data to ViewModel
+
+---------------------------------------------------------------------------------
+ViewModel
+- is designed to store and manage UI-related data in a lifecycle-conscious way.
+
+Why Use ViewModel?
+- Survives Configuration Changes
+    - Unlike Activity or Fragment, ViewModel persists data across configuration changes (e.g., screen rotation).
+- Encapsulates UI Logic
+    - Helps in separating concerns by keeping business logic separate from UI components.
+- Reduces Boilerplate Code
+    - No need to manually save and restore UI-related data during configuration changes.
+
+
+class MyViewModel : ViewModel() {
+    private val _users = MutableLiveData<List<User>>()
+    val users: LiveData<List<User>> = _users
+
+    init {
+        _users.value = 0
+    }
+
+    fun increment() {
+        _users.value = (_users.value ?: 0) + 1
+    }
+}
+----------------
+Why using 2 LiveData?
+private val users = MutableLiveData<List<User>>()
+val users: LiveData<List<User>> = _users
+
+1. MutableLiveData (Private)
+private val _users = MutableLiveData<List<User>>()
+    - MutableLiveData allows modifying the data (e.g., updating the list of users).
+    - It is private so that only the ViewModel can change the data.
+    - This prevents the UI (Activity/Fragment) from modifying LiveData.
+
+2.LiveData (Public)
+val users: LiveData<List<User>> = _users
+    - Exposes only LiveData (read-only) to the UI.
+    - The UI can observe changes but cannot modify the data.
+    - Ensures that Activity/Fragment doesn’t accidentally modify state.
+
+----------------
+ViewModel in an Activity:-
+
+viewModel = ViewModelProvider(this)[MyViewModel::class.java]
+
+viewModel.users.observe(this) { user ->
+
+}
+
+---------------------------------------------------------------------------------

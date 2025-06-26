@@ -1,0 +1,22 @@
+Priority Queue
+
+- A Priority Queue in Java is a special type of queue where elements are ordered based on their priority rather than the order in which they are added.
+
+
+Key Features of PriorityQueue in Java:
+
+1. Elements are ordered based on priority
+- By default, the natural ordering (ascending order for numbers, alphabetical for strings) is used.
+- A custom comparator can be provided to define a different priority order.
+
+2. Implements Queue interface
+- It follows FIFO (First-In-First-Out) for elements with equal priority.
+
+
+
+
+
+
+
+
+

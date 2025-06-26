@@ -1,0 +1,103 @@
+Linked List
+
+1. Basic Operations
+- [ ] Reverse a Linked List (Iterative & Recursive)
+- [ ] Detect a Cycle in a Linked List (Floyd’s Cycle Detection Algorithm)
+- [ ] Find the Middle of a Linked List (Slow and Fast Pointer)
+- [ ] Merge Two Sorted Linked Lists (Merge in sorted order)
+- [ ] Remove Duplicates from a Sorted List (Remove adjacent duplicates)
+- [ ] Delete a Node in a Linked List (Given Only That Node) (In-place delete)
+
+
+2. Two-Pointer / Fast-Slow Pointer Techniques
+- [ ] Find the Nth Node from the End (Using fast-slow pointer)
+- [ ] Find Intersection Point of Two Linked Lists (Using difference in length)
+- [ ] Check if Two Linked Lists are Identical
+
+3. Advanced Manipulation
+- [ ] Reverse Nodes in k-Group (Hard, but frequently asked)
+- [ ] Swap Nodes in Pairs (In-place swapping)
+- [ ] Flatten a Multilevel Doubly Linked List (Recursion or iterative approach)
+- [ ] Rotate a Linked List (Handling rotations efficiently)
+
+4. Cycles and Complex Structures
+- [ ] Remove Loop from a Linked List
+- [ ] Find the Starting Node of a Cycle (Floyd’s Algorithm)
+- [ ] Clone a Linked List with Random Pointers (Using HashMap or O(1) space trick)
+
+5. Sorting and Merging
+- [ ] Sort a Linked List (Merge Sort approach) (Divide & Conquer)
+- [ ] Merge K Sorted Linked Lists (Heap or Merge Sort)
+- [ ] Partition a Linked List Around a Given Value (Reordering nodes)
+
+6. Palindrome and Rearrangement
+- [ ] Check if a Linked List is a Palindrome (Using slow-fast pointer and stack)
+- [ ] Reorder a Linked List (L0 → Ln → L1 → Ln-1 …) (Split & Merge)
+
+7. Miscellaneous & Hard Problems
+- [ ] Add Two Numbers Represented by Linked Lists (Digit-by-digit sum)
+- [ ] Subtract Two Numbers in Linked List Form
+- [ ] LRU Cache Implementation Using Linked List + HashMap (Least Recently Used Cache)
+- [ ] Convert a Sorted Linked List to a Balanced BST (Divide & Conquer)
+
+How to Prepare?
+- [ ] Master the Two-Pointer and Recursion techniques.
+- [ ] Practice Linked List pattern problems (merging, cycle detection, reversal).
+
+
+
+
+---------------------------------------------------------------------------------
+Imp. interview questions of linked list
+
+
+Beginner Level
+--------------
+Reverse a Linked List (Iterative & Recursive)
+Find the Middle of a Linked List (Fast & Slow Pointer Approach)
+Detect a Cycle in a Linked List (Floyd’s Cycle Detection Algorithm)
+Remove Duplicates from a Sorted Linked List
+Delete a Node Without Head Pointer (Given Only the Node to be Deleted)
+Find the Length of a Linked List (Iterative & Recursive)
+Merge Two Sorted Linked Lists
+Find Nth Node from the End (Two-Pointer Approach)
+Check if a Linked List is Palindrome
+Intersection of Two Linked Lists
+
+
+Intermediate Level
+------------------
+Flatten a Multilevel Linked List
+Rotate a Linked List by K Nodes
+Delete Every Kth Node in a Circular Linked List
+Sort a Linked List (Merge Sort Approach)
+Segregate Even and Odd Nodes in a Linked List
+Swap Nodes in Pairs (Without Swapping Data, Swap Pointers)
+Remove Nth Node from End of List (Leetcode Hard)
+Reverse Nodes in K-Group
+Partition List Around a Given Value
+Rearrange a Linked List (Odd-Even Index Nodes Together)
+
+
+Advanced Level
+--------------
+LRU (Least Recently Used) Cache Implementation Using Doubly Linked List
+Clone a Linked List with Random Pointers
+Reverse a Doubly Linked List
+Convert a Binary Tree to a Doubly Linked List
+Add Two Numbers Represented by Linked Lists
+Multiply Two Numbers Represented by Linked Lists
+Merge K Sorted Linked Lists (Using Min-Heap or Divide & Conquer)
+Find the First Node in a Cycle (Floyd’s Algorithm - Slow & Fast Pointers)
+Flatten a Linked List with Next and Child Pointers
+Copy List with Random Pointer (Deep Copy Using HashMap / O(1) Space Solution)
+
+
+Bonus: System Design Using Linked List
+------------------------------------------
+Implement a Custom Memory Allocator Using Linked List
+Design a Cache System (LRU, LFU)
+Implement Undo/Redo Operations Using Doubly Linked List
+
+
+

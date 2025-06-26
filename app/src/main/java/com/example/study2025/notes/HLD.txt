@@ -1,0 +1,63 @@
+Android app example — something like an E-commerce Shopping App built with MVVM, Retrofit, and Room.
+
+High-Level Design (HLD)
+
+Goal: Build an app where user can browse products, add to cart and place orders
+Modules:
+1. UI Layer (Jetpack compose/XML + Kotlin)
+2. View Model Layer (MVVM pattern)
+3. Domain Layer (Use Cases + models)
+4. Data Layer (Repositories)
+5. Network Layer (Retrofit)
+6. Database Layer (Room)
+
+External Dependencies:
+1. Firebase Auth
+2. Retrofit for REST API
+3. Room for local DB
+4. Hilt for DI
+
+
+UI → ViewModel → UseCase → Repository → (Network/Database)
+                          ↘         ↙
+                         Mapper / DTO ↔ Entity
+
+
+Architecture Overview:
+- Tech Stack: Kotlin, MVVM, Hilt, Jetpack libraries
+- User flows: Login → Browse → Add to Cart → Checkout
+- Error Handling: Centralized via Result wrappers
+- Analytics: Firebase Analytics SDK integrated in ViewModels
+
+
+---------------------------------------------------------------------------------
+Business Logic
+
+- Not Draw UI component
+- Not Talk to API5
+
+- Business logic is the part of your codebase that answers the question: “What should happen when a user does X?”
+Validations, Rules & Policies, Calculations, Decision-making
+
+class PlaceOrderUseCase @Inject constructor(
+    private val cartRepository: CartRepository,
+    private val paymentService: PaymentService
+) {
+    suspend operator fun invoke(userId: String): Result<OrderConfirmation> {
+        val cart = cartRepository.getCart(userId)
+
+        if (cart.items.isEmpty()) return Result.Error("Cart is empty")
+
+        val total = cart.items.sumOf { it.price * it.quantity }
+
+        val isPaymentSuccess = paymentService.charge(userId, total)
+        if (!isPaymentSuccess) return Result.Error("Payment failed")
+
+        return Result.Success(OrderConfirmation(cart.id, total))
+    }
+}
+- This use case contains business logic:
+    - Validates that cart is not empty
+    - Calculates the total price
+    - Attempts to process payment
+    - Returns a domain result

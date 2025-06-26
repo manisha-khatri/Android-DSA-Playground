@@ -1,0 +1,19 @@
+Queue
+
+- A Queue is a data structure that follows the FIFO (First In, First Out) principle.
+- Think of it like a line at a movie theater:
+    - The first person in line gets their ticket first.
+    - The last person has to wait for their turn
+
+How to Use Queue in Java?
+- In Java, Queue is an **interface** in the java.util package. It is implemented by classes like:
+    - LinkedList (Most commonly used)
+    - PriorityQueue (For priority-based ordering)
+    - ArrayDeque (Faster than LinkedList)
+
+Basic Queue Operations:
+- add()
+- remove() / poll()
+- peek()
+- isEmpty()
+
