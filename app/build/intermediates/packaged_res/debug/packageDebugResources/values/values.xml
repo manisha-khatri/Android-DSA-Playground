@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="black">#FF000000</color>
-    <color name="blue">#008080</color>
-    <color name="green">#0000FF</color>
-    <color name="white">#FFFFFFFF</color>
-    <string name="app_name">Study2025</string>
-    <style name="Theme.ComposeApplication" parent="android:Theme.Material.Light.NoActionBar"/>
-</resources>

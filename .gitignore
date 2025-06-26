@@ -1,59 +1,24 @@
-# ================== Android Build Files ==================
-**/build/                # Exclude all module build directories
-.gradle/                 # Gradle local cache
-/local.properties        # Local machine-specific properties (e.g., SDK path)
-.cxx/                    # Native build cache (NDK)
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
 
-# ================== Android Studio/IDE ===================
-.idea/                   # IntelliJ/Android Studio project files
-*.iml                    # Module settings
-*.ipr
-*.iws
-.idea/caches
-.idea/libraries
-.idea/modules.xml
-.idea/workspace.xml
-.idea/assetWizardSettings.xml
-.idea/navEditor.xml
-.idea/gradle.xml
+.gradle/*
+error.log
+app/build/*
+**/zip-cache
+*/zip-cache
+.idea/
 
-# ================== OS-Specific Files ====================
-.DS_Store                # macOS
-Thumbs.db                # Windows
-ehthumbs.db
-Desktop.ini
-*~                      # Unix backup files
-
-# ================== Output Artifacts =====================
-*.apk
-*.ap_                   # APK intermediate file
-*.aab                   # Android App Bundle
-*.dex
-*.class
-*.log                   # Log files
-output.json             # Lint/report outputs
-
-
-# ================== Keystore Files =========================
-*.jks                   # Java KeyStore - keep secure, never commit!
-
-# ================== Misc Gradle / Dependency Config =========
-**/gradle-app.setting
-**/.gradle
-!gradle-wrapper.jar
-
-
-# ================== Node/React Native =======================
-node_modules/
-
-# ================== Testing Output ==========================
-*.ec                    # JaCoCo exec files
-*.hprof                 # Memory dumps
-
-# ================== Kotlin ================================
-*.kotlin_module
-
-# ================== Jetpack Compose Compiler =================
-*.snap
-*.cach
 
