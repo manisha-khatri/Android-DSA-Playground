@@ -1,5 +1,3 @@
-import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -107,4 +105,6 @@ dependencies {
 
     // Optional: If you're using Hilt with Compose Navigation
     implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.lifecycle.runtime.compose)
 }

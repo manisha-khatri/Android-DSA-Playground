@@ -17,6 +17,10 @@ class MainFragment: Fragment() {
     @FirebaseQualifier
     lateinit var userRepository: UserRepository
 
+/*    @Inject
+    @Named("sql")
+    lateinit var userRepository: UserRepository*/
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
