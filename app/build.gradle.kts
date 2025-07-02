@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.parcelize)
 }
 
 android {
@@ -40,10 +41,10 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        compose = true  // ✅ Added missing Compose block
+        compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.13" // ✅ Upgrade to a compatible version
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 }
 
@@ -60,14 +61,40 @@ dependencies {
     implementation(libs.gson)
 
     // Coroutines & ViewModel
-    implementation(libs.coroutine.viewmodel)
+    implementation(libs.coroutine.viewmodel) // androidx.lifecycle:lifecycle-viewmodel-ktx
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.lifecycle.runtime.compose) // lifecycle-runtime-compose
 
     // Jetpack Compose
     implementation(libs.compose.ui)
     implementation(libs.compose.material3)
     implementation(libs.activity.compose)
-    implementation(libs.compose.ui.tooling.preview) // Preview support
-    debugImplementation(libs.compose.ui.tooling)    // Debug-only tooling
+    implementation(libs.compose.ui.tooling.preview)
+    debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.compose.material.icons.extended)
+    implementation(libs.compose.runtime.livedata)
+
+    // Navigation Compose
+    implementation(libs.compose.navigation) // androidx.navigation:navigation-compose
+    implementation(libs.androidx.navigation.fragment) // This is for fragments, might not be needed if solely Compose Navigation.
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler) // KSP for Dagger Hilt
+    implementation(libs.androidx.hilt.navigation.compose) // For hiltViewModel() in Compose
+    ksp(libs.androidx.hilt.compiler) // ✅ KSP for androidx.hilt compiler
+
+    // DataStore
+    implementation(libs.datastore.preferences)
+
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler) // KSP for Room
+
+    // Apollo GraphQL
+    implementation(libs.apollo.runtime)
 
     // Unit Testing
     testImplementation(libs.junit)
@@ -81,30 +108,5 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.javafx)
-
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler) // ✅ Use KSP instead of kapt
-
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-
-    implementation(libs.apollo.runtime)
-
-    // Compose
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
-    debugImplementation(libs.compose.ui.tooling)
-    implementation(libs.compose.material.icons.extended)
-    implementation(libs.androidx.compose.runtime)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler) // ✅ Using KSP, not kapt
-
-    // Optional: If you're using Hilt with Compose Navigation
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.javafx) // Consider if this is truly needed for Android. Typically not.
 }

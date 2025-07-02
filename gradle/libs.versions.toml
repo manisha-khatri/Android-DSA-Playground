@@ -1,6 +1,6 @@
 [versions]
 agp = "8.8.1"
-kotlin = "1.9.23"  # ✅ Downgrade to a compatible version
+kotlin = "1.9.23"
 coreKtx = "1.10.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -17,30 +17,35 @@ mockito-kotlin = "5.2.0"
 mockk = "1.13.7"
 coroutines-test = "1.7.3"
 core-testing = "2.2.0"
-compose = "1.6.1"
+compose = "1.6.1" # This is Compose BOM version
 material3 = "1.2.1"
 activityCompose = "1.8.2"
-javafx = "17.0.2"
+javafx = "17.0.2" # Unsure if this is actually needed in an Android app
 room = "2.6.1"
 kotlinx-coroutines = "1.7.3"
 apollo = "4.0.0"
-compose-runtime = "runtime"
-hilt = "2.48"
-hilt-androidx = "1.0.0"
+hilt = "2.51.1"
+hilt-androidx = "1.2.0"
 lifecycle = "2.6.2"
+datastore = "1.0.0"
+navigationFragment = "2.9.0"
+nav-compose = "2.7.7"
+material-compose = "1.6.5"
+ksp = "1.9.23-1.0.20"
+composeCompiler = "1.5.11"
 
 [libraries]
-
 lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
-
-#Hilt
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" } # This is for Dagger Hilt's own KSP
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-androidx" }
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-androidx" } # ✅ NEW: KSP compiler for androidx.hilt
+compose-material = {module="androidx.compose.material:material", version.ref = "material-compose"}
+compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav-compose" }
+compose-runtime-livedata = "androidx.compose.runtime:runtime-livedata:1.6.1"
 
-# Optional for ViewModel injection
-androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.1.0" }
-
-androidx-compose-runtime = {group = "androidx.compose.runtime", name= "runtime", version.ref = "compose-runtime"}
+# androidx-compose-runtime = {group = "androidx.compose.runtime", name= "runtime", version.ref = "compose-runtime"} # DELETE THIS LINE
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -64,24 +69,25 @@ room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 apollo-runtime = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "apollo" }
 
-# Optional: for coroutines, if not already defined
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" } # Using BOM for compose
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" } # Using compose BOM indirectly
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 
-# Preview dependencies
-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" } # Using BOM
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" } # Using BOM
+androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-ksp = "com.google.devtools.ksp:1.9.21-1.0.15" # if you're using KSP
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" } # ✅ Define KSP plugin from versions.ref
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 
 #Hilt
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize" } # ✅ Correct ID for Parcelize plugin

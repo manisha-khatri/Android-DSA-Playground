@@ -1,4 +1,4 @@
-package com.example.study2025
+package com.example.study2025.navigationxml
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.fragment.findNavController
+import com.example.study2025.R
 
 class FragmentA : Fragment() {
 
