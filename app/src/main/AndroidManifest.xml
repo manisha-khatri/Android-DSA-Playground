@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:name=".navigationcompose.ComposeNavigationApp"
@@ -21,7 +25,7 @@
         android:theme="@style/Theme.MyApp"
         tools:targetApi="31">
         <activity
-            android:name=".service.worker.MainActivity"
+            android:name=".broadcastreceiver.sms.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApp">
             <intent-filter>
@@ -38,6 +42,16 @@
             android:exported="false"
             android:foregroundServiceType="dataSync"
             android:enabled="true" />
+
+        <!-- SMS Broadcast Receiver here -->
+        <receiver
+            android:name=".broadcastreceiver.sms.SmsReceiver"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

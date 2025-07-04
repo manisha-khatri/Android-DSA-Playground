@@ -2,4 +2,7 @@
     <string name="app_name">Study2025</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="waiting_for_sms">Waiting for SMS..!</string>
+
+
 </resources>
