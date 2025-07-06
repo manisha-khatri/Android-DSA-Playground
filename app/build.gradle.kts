@@ -51,6 +51,7 @@ android {
 dependencies {
     // Work Manager
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.work.runtime)
 
     // Core AndroidX Libraries
     implementation(libs.androidx.core.ktx)

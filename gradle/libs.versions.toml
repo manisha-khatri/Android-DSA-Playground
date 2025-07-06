@@ -33,9 +33,11 @@ nav-compose = "2.7.7"
 material-compose = "1.6.5"
 ksp = "1.9.23-1.0.20"
 composeCompiler = "1.5.11"
-workmanager = "2.9.0"
+workmanager = "2.10.2"
+jetbrainsKotlinJvm = "1.9.23"
 
 [libraries]
+work-runtime = { module = "androidx.work:work-runtime", version.ref = "workmanager" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
 lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
@@ -92,4 +94,5 @@ apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 
 #Hilt
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize" } # ✅ Correct ID for Parcelize plugin
+parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" } # ✅ Correct ID for Parcelize plugin

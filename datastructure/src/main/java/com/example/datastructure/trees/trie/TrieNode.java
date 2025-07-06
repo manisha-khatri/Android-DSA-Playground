@@ -1,4 +1,4 @@
-package com.example.datastructure.trie;
+package com.example.datastructure.trees.trie;
 
 public class TrieNode {
     TrieNode[] children = new TrieNode[26];
@@ -23,6 +23,34 @@ class Trie {
             node = node.children[index];
         }
         node.isEndOfWord = true;
+    }
+
+    boolean searchWordWithComma(String word) {
+        return searchWithComma(word, 0, root);
+    }
+
+    private boolean searchWithComma(String word, int i, TrieNode node) {
+        if(word.length() == i) {
+            return node.isEndOfWord;
+        }
+
+        char ch = word.charAt(i);
+
+        if(ch == '.') {
+           for(TrieNode child : node.children) {
+               if(child!=null && searchWithComma(word, i+1, child)) {
+                   return true;
+               }
+           }
+        } else {
+            int indx = ch - 'a';
+
+            if(node.children[indx] == null) return false;
+            node = node.children[indx];
+
+            return searchWithComma(word, i+1, node);
+        }
+        return false;
     }
 
     // Search
@@ -53,7 +81,6 @@ class Trie {
         return true;
     }
 
-
     public static void main(String[] args) {
         Trie trie = new Trie();
 
@@ -69,5 +96,7 @@ class Trie {
         System.out.println("Search 'batman': " + trie.search("batman")); // true
         System.out.println("StartsWith 'bat': " + trie.startsWith("bat")); // true
         System.out.println("Search 'battle': " + trie.search("battle")); // false
+
+        System.out.println("searchWordWithComma : " + trie.searchWordWithComma("..ple"));
     }
 }

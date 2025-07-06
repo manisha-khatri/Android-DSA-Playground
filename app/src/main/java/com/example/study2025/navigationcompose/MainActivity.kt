@@ -17,8 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import androidx.navigation.compose.composable
 
-@HiltAndroidApp
-class ComposeNavigationApp() : Application()
+/*@HiltAndroidApp
+class ComposeNavigationApp() : Application()*/
 
 @AndroidEntryPoint
 class MainActivity: ComponentActivity() {
