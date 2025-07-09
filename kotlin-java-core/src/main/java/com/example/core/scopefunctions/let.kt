@@ -1,4 +1,4 @@
-package com.example.kotlin_java_core.scopefunctions
+package com.example.core.scopefunctions
 
 fun let() {
     /**

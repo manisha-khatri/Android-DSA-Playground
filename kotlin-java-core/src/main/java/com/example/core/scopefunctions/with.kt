@@ -1,6 +1,4 @@
-package com.example.kotlin_java_core.scopefunctions
-
-import java.awt.Rectangle
+package com.example.core.scopefunctions
 
 fun with() {
     /**

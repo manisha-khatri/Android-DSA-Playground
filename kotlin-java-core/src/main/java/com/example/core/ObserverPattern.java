@@ -1,4 +1,4 @@
-package com.example.kotlin_java_core;
+package com.example.core;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.kotlin_java_core
+package com.example.core
 
 fun filter() {
     var list = listOf(1,2,3,4,5,6,7,8)

@@ -1,4 +1,4 @@
-package com.example.kotlin_java_core.scopefunctions
+package com.example.core.scopefunctions
 
 fun also() {
     val person = Person("Manisha", 29).also {
