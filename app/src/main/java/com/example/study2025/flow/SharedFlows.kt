@@ -1,4 +1,4 @@
-package com.example.study2025.coroutine
+package com.example.study2025.flow
 
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +8,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class SharedFlows: AppCompatActivity() {

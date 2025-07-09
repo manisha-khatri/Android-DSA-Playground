@@ -1,4 +1,4 @@
-package com.example.study2025.livedata2
+package com.example.study2025.livedata
 
 import android.os.Bundle
 import android.util.Log

@@ -1,4 +1,4 @@
-package com.example.study2025.stateflow.sealedstateflow
+package com.example.study2025.flow.stateflow.sealedstateflow
 
 sealed class UiState<out T> {
     object Loading: UiState<Nothing>()

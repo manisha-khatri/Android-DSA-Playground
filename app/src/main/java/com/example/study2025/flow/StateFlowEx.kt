@@ -1,10 +1,9 @@
-package com.example.study2025.coroutine
+package com.example.study2025.flow
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
-import com.example.study2025.coroutine.FlowFunctionsActivity.Companion.TAG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -22,7 +21,7 @@ class StateFlowEx: AppCompatActivity() {
             val result = producers()
             delay(6500)
             result.collect {
-                Log.d(TAG, "Item - $it")
+                Log.d(FlowFunctionsActivity.Companion.TAG, "Item - $it")
             }
         }
     }

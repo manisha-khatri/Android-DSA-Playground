@@ -1,9 +1,8 @@
-package com.example.study2025.coroutine
+package com.example.study2025.flow
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.study2025.coroutine.FlowFunctionsActivity.Companion.TAG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -32,10 +31,10 @@ class NotesActivity: AppCompatActivity() {
                     .buffer(3)
                     .collect {
                         delay(1500)
-                        Log.d(TAG, it.toString())
+                        Log.d(FlowFunctionsActivity.Companion.TAG, it.toString())
                     }
             }
-            Log.d(TAG, "time = $time")
+            Log.d(FlowFunctionsActivity.Companion.TAG, "time = $time")
 
         }
     }

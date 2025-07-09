@@ -1,4 +1,4 @@
-package com.example.study2025.stateflow
+package com.example.study2025.flow.stateflow
 
 import android.os.Bundle
 import android.widget.Button

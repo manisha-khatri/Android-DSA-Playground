@@ -1,4 +1,4 @@
-package com.example.study2025.stateflow
+package com.example.study2025.flow.stateflow
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +11,4 @@ class MainViewModel: ViewModel() {
     fun increment() {
         _counter.value += 1
     }
-
-
 }

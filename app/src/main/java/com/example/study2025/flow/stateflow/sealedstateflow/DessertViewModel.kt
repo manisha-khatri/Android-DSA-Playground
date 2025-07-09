@@ -1,4 +1,4 @@
-package com.example.study2025.stateflow.sealedstateflow
+package com.example.study2025.flow.stateflow.sealedstateflow
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
