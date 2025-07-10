@@ -34,7 +34,7 @@ import com.example.study2025.R
 
 
 
-class MainActivity: ComponentActivity() {
+class MainActivity20: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

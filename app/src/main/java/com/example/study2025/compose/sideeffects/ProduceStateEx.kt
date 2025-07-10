@@ -79,7 +79,7 @@ class ProduceStateEx: ComponentActivity() {
         val state = produceState(initialValue = 0) {
             for(i in 1..10) {
                 delay(1000)
-                value ++
+                value = value + 1
             }
         }
 
@@ -130,43 +130,5 @@ class ProduceStateEx: ComponentActivity() {
             }
         )
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

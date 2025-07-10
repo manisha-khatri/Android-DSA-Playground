@@ -9,7 +9,7 @@ import android.widget.Toast
 class MyCustomBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent) {
-        if (intent.action != null && intent.action == MainActivity.ACTION_CUSTOM_BROADCAST) {
+        if (intent.action != null && intent.action == MainActivity2.ACTION_CUSTOM_BROADCAST) {
             Log.d(TAG, "Custom broadcast received!")
 
             val message = intent.getStringExtra("message_key")

@@ -26,7 +26,7 @@ class LongRunningTask(private val activity: DownloadCallback) {
     }
 }
 
-class MainActivity: AppCompatActivity(), DownloadCallback {
+class MainActivity4: AppCompatActivity(), DownloadCallback {
     lateinit var tv: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {

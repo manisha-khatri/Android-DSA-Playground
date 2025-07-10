@@ -3,7 +3,7 @@ package com.example.study2025.lifecycle
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity: AppCompatActivity() {
+class MainActivity14: AppCompatActivity() {
 
     private val observer = MyObserver()
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.study2025.databinding.ActivityWorkManagerBinding
 
-class MainActivity: AppCompatActivity() {
+class MainActivity22: AppCompatActivity() {
     private lateinit var binding: ActivityWorkManagerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

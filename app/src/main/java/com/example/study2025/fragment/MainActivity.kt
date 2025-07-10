@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.study2025.R
 import com.example.study2025.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), Fragment1.OnFragmentInteractionListener {
+class MainActivity11 : AppCompatActivity(), Fragment1.OnFragmentInteractionListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: SharedViewModel
 

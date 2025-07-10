@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity: ComponentActivity() {
+class MainActivity10: ComponentActivity() {
 
     val viewModel: DessertViewModel by viewModels()
 

@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.example.composeapplication.ui.theme.ComposeApplicationTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity5 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

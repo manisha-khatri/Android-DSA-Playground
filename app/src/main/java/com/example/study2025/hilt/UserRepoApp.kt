@@ -82,7 +82,7 @@ object UserRepositoryModule {
 }
 
 @HiltViewModel
-class MyViewModel @Inject constructor(
+class MyViewModel5 @Inject constructor(
     @FirebaseQualifier private val firebaseRepo: UserRepository,
     @SQLQualifier private val sqlRepo: UserRepository
 ): ViewModel() {
@@ -96,9 +96,9 @@ class MyViewModel @Inject constructor(
 }
 
 @AndroidEntryPoint
-class MainActivity: ComponentActivity() {
+class MainActivity1: ComponentActivity() {
 
-    private val viewModel: MyViewModel by viewModels()
+    private val viewModel: MyViewModel5 by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,7 +111,7 @@ class MainActivity: ComponentActivity() {
 }
 
 @Composable
-fun AppContent(viewModel: MyViewModel) {
+fun AppContent(viewModel: MyViewModel5) {
     Column(
         modifier = Modifier
             .fillMaxSize()

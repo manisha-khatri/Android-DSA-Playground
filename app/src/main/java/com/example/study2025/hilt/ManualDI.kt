@@ -15,7 +15,7 @@ class MainViewModel(val repository: Repository) {
     fun loadData(): String = repository.getData()
 }
 
-class MainActivity: AppCompatActivity() {
+class MainActivity13: AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

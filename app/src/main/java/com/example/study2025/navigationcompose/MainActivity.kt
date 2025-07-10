@@ -21,7 +21,7 @@ import androidx.navigation.compose.composable
 class ComposeNavigationApp() : Application()*/
 
 @AndroidEntryPoint
-class MainActivity: ComponentActivity() {
+class MainActivity15: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

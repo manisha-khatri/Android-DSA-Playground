@@ -39,7 +39,7 @@ class StateFlowEx: AppCompatActivity() {
     }
 }
 
-class MyViewModel : ViewModel() {
+class MyViewModel3 : ViewModel() {
 
     private val _counter = MutableStateFlow(0)   // Mutable for internal updates
     val counter: StateFlow<Int> = _counter       // Expose as read-only

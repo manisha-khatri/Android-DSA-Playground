@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.study2025.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity3 : AppCompatActivity() {
 
     private lateinit var smsContentTextView: TextView
     private lateinit var smsDisplayReceiver: SmsDisplayReceiver

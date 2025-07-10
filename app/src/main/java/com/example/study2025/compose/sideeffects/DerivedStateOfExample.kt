@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
@@ -35,7 +36,7 @@ class DerivedStateOfExample: ComponentActivity() {
                 ) { innerPadding ->
                     App(Modifier.padding(innerPadding))
                     //TextChange()
-                    calculateTable()
+                    CalculateTable()
                 }
             }
         }
@@ -67,27 +68,28 @@ class DerivedStateOfExample: ComponentActivity() {
     }
 
     @Composable
-    fun calculateTable() {
+    fun CalculateTable() {
         val table = remember { mutableStateOf(5) }
-        val index = produceState(initialValue = 0) {
-            repeat(9) {
-                delay(1000)
-                value++
+
+        val index by produceState(initialValue = 0, key1 = table.value) {
+            for (i in 0..10) {
+                value = i
+                delay(1000L)
             }
         }
 
-        val result = remember {
+        val result by remember(table.value, index) {
             derivedStateOf {
-                "${table.value} * ${index.value} = ${table.value * index.value}"
+                "${table.value} * $index = ${table.value * index}"
             }
         }
 
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize(1f)
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = result.value,
+                text = result,
                 style = MaterialTheme.typography.titleLarge
             )
         }

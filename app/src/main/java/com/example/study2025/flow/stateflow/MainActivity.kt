@@ -11,7 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.study2025.R
 import kotlinx.coroutines.launch
 
-class MainActivity: AppCompatActivity() {
+class MainActivity9: AppCompatActivity() {
 
     val viewModel: MainViewModel by viewModels()
 

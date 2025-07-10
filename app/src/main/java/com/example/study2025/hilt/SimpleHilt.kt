@@ -24,13 +24,13 @@ class MyRepository @Inject constructor(val apiService: ApiService2) {
 }
 
 @HiltViewModel
-class MyViewModel @Inject constructor(val repository: MyRepository): ViewModel() {
+class MyViewModel1 @Inject constructor(val repository: MyRepository): ViewModel() {
     fun loadData(): String = repository.getData()
 }
 
 @AndroidEntryPoint
 class MainActivity2: AppCompatActivity() {
-    private val viewModel: MyViewModel by viewModels()
+    private val viewModel: MyViewModel1 by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

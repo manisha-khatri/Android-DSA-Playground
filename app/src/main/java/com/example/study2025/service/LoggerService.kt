@@ -41,7 +41,7 @@ class LoggerService: Service() {
     }
 
     fun getPendingIntent(): PendingIntent { //On click of activity redirect to main activity
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity19::class.java)
         return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
     }
 

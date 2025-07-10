@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.study2025.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
 
     private lateinit var messageEditText: EditText
     private lateinit var valueEditText: EditText
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         // Register receiver
         IntentFilter(ACTION_CUSTOM_BROADCAST).apply {
-            LocalBroadcastManager.getInstance(this@MainActivity).registerReceiver(myReceiver, this)
+            LocalBroadcastManager.getInstance(this@MainActivity2).registerReceiver(myReceiver, this)
         }
         Toast.makeText(this, "Receiver registered!", Toast.LENGTH_SHORT).show()
     }
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         Intent(ACTION_CUSTOM_BROADCAST).apply {
             putExtra("message_key", message)
             putExtra("value_key", value)
-            LocalBroadcastManager.getInstance(this@MainActivity).sendBroadcast(this)
+            LocalBroadcastManager.getInstance(this@MainActivity2).sendBroadcast(this)
         }
 
         Toast.makeText(this, "Custom broadcast sent!", Toast.LENGTH_SHORT).show()

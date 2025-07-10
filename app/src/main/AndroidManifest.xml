@@ -25,7 +25,7 @@
         android:theme="@style/Theme.MyApp"
         tools:targetApi="31">
         <activity
-            android:name=".hilt.MainActivity"
+            android:name=".hilt.MainActivity1"
             android:exported="true"
             android:theme="@style/Theme.MyApp">
             <intent-filter>

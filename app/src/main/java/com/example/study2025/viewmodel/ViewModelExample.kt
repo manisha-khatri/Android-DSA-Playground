@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-class MyViewModel: ViewModel() {
+class MyViewModel4: ViewModel() {
     var counter = MutableLiveData<Int>()
 
     fun increment() {
@@ -16,11 +16,11 @@ class MyViewModel: ViewModel() {
 }
 
 class CounterActivity: AppCompatActivity() {
-    lateinit var viewModel: MyViewModel
+    lateinit var viewModel: MyViewModel4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MyViewModel4::class.java)
 
         viewModel.counter.observe(this) { count ->
             //tv.text = count

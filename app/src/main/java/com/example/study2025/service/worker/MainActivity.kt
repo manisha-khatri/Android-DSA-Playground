@@ -9,7 +9,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.example.study2025.R
 
-class MainActivity: AppCompatActivity() {
+class MainActivity21: AppCompatActivity() {
 
     private val workManager = WorkManager.getInstance(this)
 

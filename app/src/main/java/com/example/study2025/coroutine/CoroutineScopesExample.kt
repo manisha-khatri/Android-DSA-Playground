@@ -41,7 +41,7 @@ class CoroutineScopesExample: AppCompatActivity() {
     }
 }
 
-class MyViewModel: ViewModel() {
+class MyViewModel2: ViewModel() {
     fun update() {
         viewModelScope.launch{
 

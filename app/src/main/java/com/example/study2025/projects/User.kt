@@ -94,7 +94,7 @@ fun UserScreen(viewModel: UserViewModel = hiltViewModel()) {
 }
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity17 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
