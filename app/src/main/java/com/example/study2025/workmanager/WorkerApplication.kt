@@ -6,6 +6,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
+/*
 
 class WorkerApplication: Application() {
 
@@ -31,3 +32,4 @@ class WorkerApplication: Application() {
         )
     }
 }
+*/
