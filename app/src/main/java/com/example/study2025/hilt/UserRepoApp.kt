@@ -134,7 +134,7 @@ fun AppContent(viewModel: MyViewModel5) {
         }
     }
 }
-
+/*
 @HiltAndroidApp
-class MyApplication: Application()
+class MyApplication: Application()*/
 

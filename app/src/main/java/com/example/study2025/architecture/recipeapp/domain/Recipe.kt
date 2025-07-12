@@ -1,4 +1,4 @@
-package com.example.study2025.architecture.cleanarchitecture.domain
+package com.example.study2025.architecture.recipeapp.domain
 
 data class Recipe(
     val id: Int,
