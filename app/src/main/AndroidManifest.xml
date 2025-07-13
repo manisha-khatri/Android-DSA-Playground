@@ -25,7 +25,7 @@
         android:theme="@style/Theme.MyApp"
         tools:targetApi="31">
         <activity
-            android:name=".architecture.BundleRecipeActivity"
+            android:name=".unittests.quotify.QuotifyMainActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApp">
             <intent-filter>

@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.activity.compose)
     implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.androidx.junit.ktx)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.runtime.livedata)
@@ -109,8 +110,17 @@ dependencies {
     testImplementation(libs.coroutines.test)
 
     // Instrumented Testing
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.rules)
 
-    implementation(libs.javafx) // Consider if this is truly needed for Android. Typically not.
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.espresso.contrib)
+    androidTestImplementation(libs.espresso.intents)
+
+    androidTestImplementation(libs.ui.automator)
+
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    debugImplementation(libs.compose.ui.test.manifest)
+    androidTestImplementation(libs.hamcrest)
 }
