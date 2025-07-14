@@ -13,9 +13,8 @@ class SecondActivity : AppCompatActivity() {
 
         val tvNote = findViewById<TextView>(R.id.tvNote)
 
-        val title = intent.getStringExtra("title")
-        val description = intent.getStringExtra("description")
+        val key = intent.getStringExtra("KEY")
 
-        tvNote.text = "Title: $title\n\nDescription: $description"
+        tvNote.text = key
     }
 }

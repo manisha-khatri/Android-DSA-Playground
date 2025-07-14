@@ -41,6 +41,7 @@ androidx-test-rules = "1.5.0"
 ui-automator = "2.2.0"
 jetbrainsKotlinJvm = "1.9.23"
 hamcrest = "2.2"
+mockito-inline = "5.2.0"
 
 [libraries]
 
@@ -99,6 +100,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito-inline" }
 
 # Navigation
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }

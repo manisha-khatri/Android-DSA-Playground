@@ -18,12 +18,10 @@ class FirstActivity : AppCompatActivity() {
         val btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
         btnSubmit.setOnClickListener {
-            val title = etTitle.text.toString()
-            val description = etDescription.text.toString()
+            val msg = "Title: ${etTitle.text}\n\nDescription: ${etDescription.text}"
 
             val intent = Intent(this, SecondActivity::class.java).apply {
-                putExtra("title", title)
-                putExtra("description", description)
+                putExtra("KEY", msg)
             }
             startActivity(intent)
         }
