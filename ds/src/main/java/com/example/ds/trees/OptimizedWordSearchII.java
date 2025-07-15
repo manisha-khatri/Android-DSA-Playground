@@ -21,7 +21,10 @@ public class OptimizedWordSearchII {
 
         for(int i=0; i<row; i++) {
             for(int j=0; j<col; j++) {
-                dfs(i, j, board, res, root);
+                // Only start DFS if the first character exists in Trie
+                if (root.next[board[i][j] - 'a'] != null) {
+                    dfs(i, j, board, res, root);
+                }
             }
         }
 
@@ -47,8 +50,10 @@ public class OptimizedWordSearchII {
     }
 
     static void dfs(int i, int j, char[][] board, Set<String> res, Trie node) {
-        if(i<0 || i>=board.length || j<0 || j>=board[0].length || node.next[board[i][j] - 'a'] == null || board[i][j] == '#')
+        if(i<0 || i>=board.length || j<0 || j>=board[0].length || board[i][j] == '#')
             return;
+
+        if(node.next[board[i][j] - 'a'] == null) return; // Imp: Keep this after # check, as # is a special character
 
         Trie curNode = node.next[board[i][j] - 'a'];
         if(curNode.word != null) {
