@@ -42,9 +42,9 @@ ui-automator = "2.2.0"
 jetbrainsKotlinJvm = "1.9.23"
 hamcrest = "2.2"
 mockito-inline = "5.2.0"
+turbine = "1.1.0"
 
 [libraries]
-
 # Activity & Appcompat
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -128,6 +128,9 @@ hamcrest = { group = "org.hamcrest", name = "hamcrest", version.ref = "hamcrest"
 # WorkManager
 work-runtime = { module = "androidx.work:work-runtime", version.ref = "workmanager" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
+
+#Flow Testing Lib
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

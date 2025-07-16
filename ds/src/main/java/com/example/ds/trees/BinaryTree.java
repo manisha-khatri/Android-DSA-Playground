@@ -24,7 +24,6 @@ public class BinaryTree {
         this.root = buildTree();
     }
 
-
     public void printLevelOrder(Node root) {
         if (root == null) return;
 

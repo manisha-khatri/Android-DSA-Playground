@@ -125,4 +125,8 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)
     androidTestImplementation(libs.hamcrest)
+
+    // Flow testing library
+    testImplementation(libs.turbine)
+    androidTestImplementation(libs.turbine)
 }
