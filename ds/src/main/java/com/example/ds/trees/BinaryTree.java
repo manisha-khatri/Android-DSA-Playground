@@ -45,7 +45,6 @@ public class BinaryTree {
         }
     }
 
-
     private Node buildTree() {
         // Let's build this tree:
         //         A

@@ -8,7 +8,6 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 class MainCoroutineRule: TestWatcher() {
-
     val testDispatcher = StandardTestDispatcher()
 
     override fun starting(description: Description?) {
@@ -20,5 +19,4 @@ class MainCoroutineRule: TestWatcher() {
         super.finished(description)
         Dispatchers.resetMain()
     }
-
 }
