@@ -18,14 +18,15 @@ class ButtonMemLeakActivity : AppCompatActivity() {
             println("Button clicked!")
         }
 
-        SomeSingleton.setListener(button) // BIG mistake
+        //SomeSingleton.setListener(button) // BIG mistake
     }
 }
 
+/*
 @SuppressLint("StaticFieldLeak")
 object SomeSingleton {
     var listener: View? = null  // now it matches
     fun setListener(l: View) {
         listener = l
     }
-}
+}*/

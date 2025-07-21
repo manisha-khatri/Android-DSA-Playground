@@ -44,9 +44,9 @@ class ProduceStateEx: ComponentActivity() {
                 ) { innerPadding ->
                     App(Modifier.padding(innerPadding))
                     //Counters()
-                    //ProduceStateCounter()
+                    ProduceStateCounter()
                     //MyScreen()
-                    Loader()
+                    //Loader()
                 }
             }
 

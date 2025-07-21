@@ -1,99 +1,106 @@
 package com.example.ds.heap;
 
-import java.util.ArrayList;
-
 public class MaxHeap {
-    private ArrayList<Integer> heap;
+    private int[] heap;
+    private int size;
+    private int capacity;
 
-    public MaxHeap() {
-        heap = new ArrayList<>();
+    public MaxHeap(int capacity) {
+        this.capacity = capacity;
+        this.size = 0;
+        this.heap = new int[capacity];
     }
 
-    void insert(int value) {
-        heap.add(value);
-        int index = heap.size()-1;
-        bubbleUp(index);
+    // Get parent and children indices
+    private int parent(int i) { return (i - 1) / 2; }
+    private int leftChild(int i) { return 2 * i + 1; }
+    private int rightChild(int i) { return 2 * i + 2; }
+
+    // Insert a new value into the heap
+    public void insert(int value) {
+        if (size == capacity) {
+            throw new IllegalStateException("Heap is full");
+        }
+        heap[size] = value;
+        size++;
+        bubbleUp(size - 1);  // Maintain max-heap property
     }
 
-    void bubbleUp(int index) {
-        int parentIndex = (index-1)/2;
+    // Get max (root)
+    public int getMax() {
+        if (size == 0) throw new IllegalStateException("Heap is empty");
+        return heap[0];
+    }
 
-        while(index>0 && heap.get(index) > heap.get(parentIndex)) {
-            swap(index, parentIndex);
-            index = parentIndex;
-            parentIndex = (index-1)/2;
+    // Remove max (root)
+    public int extractMax() {
+        if (size == 0) throw new IllegalStateException("Heap is empty");
+        int max = heap[0];
+        heap[0] = heap[size - 1]; // Move the last element to the root
+        size--;
+        heapify(0); // Restore max-heap property
+        return max;
+    }
+
+    // Bubble up the element at index i
+    private void bubbleUp(int i) {
+        while (i > 0 && heap[i] > heap[parent(i)]) {
+            swap(i, parent(i));
+            i = parent(i);
         }
     }
 
-    void swap(int i, int j) {
-        int temp = heap.get(i);
-        heap.set(i, heap.get(j));
-        heap.set(j, temp);
+    // Heapify (bubble down) at index i
+    private void heapify(int i) {
+        int largest = i;
+        int left = leftChild(i);
+        int right = rightChild(i);
+
+        if (left < size && heap[left] > heap[largest]) {
+            largest = left;
+        }
+
+        if (right < size && heap[right] > heap[largest]) {
+            largest = right;
+        }
+
+        if (largest != i) {
+            swap(i, largest);
+            heapify(largest);
+        }
     }
 
+    private void swap(int i, int j) {
+        int temp = heap[i];
+        heap[i] = heap[j];
+        heap[j] = temp;
+    }
+
+    // Print the heap array
     public void printHeap() {
-        System.out.println(heap);
-    }
-
-    void heapify(int ar[]) {
-
-
-    }
-
-    int delete() {
-        if(heap.isEmpty())
-            return 0;
-
-        int n = heap.size()-1;
-        int root = heap.get(0);
-
-        // Replace root with last element
-        heap.set(0, heap.get(n));
-        heap.remove(n); // Actually remove the last element
-
-        int i = 0;
-
-        /**
-         * - Ensuring left child exists otherwise Index Out of Bounds
-         * - checking all the children
-         */
-        while(2 * i + 1 < heap.size()) { //
-            int leftChild = 2 * i + 1;
-            int rightChild = 2 * i + 2;
-            int biggest = leftChild;
-
-            if(rightChild < heap.size() && heap.get(rightChild) > heap.get(leftChild)) {
-                biggest = rightChild;
-            }
-
-            if(heap.get(i) >= heap.get(biggest))
-                break;
-
-            swap(i, biggest);
-            i = biggest;
+        for (int i = 0; i < size; i++) {
+            System.out.print(heap[i] + " ");
         }
-        return root;
+        System.out.println();
     }
 
+    // Main method to test
     public static void main(String[] args) {
-        MaxHeap maxHeap = new MaxHeap();
+        MaxHeap maxHeap = new MaxHeap(10);
         maxHeap.insert(10);
         maxHeap.insert(20);
-        maxHeap.insert(15);
-        maxHeap.insert(30);
-        maxHeap.insert(40);
         maxHeap.insert(5);
+        maxHeap.insert(30);
+        maxHeap.insert(15);
 
-        maxHeap.printHeap(); // Output: [40, 30, 15, 10, 20, 5]
-
-        maxHeap.insert(90);
-
-        maxHeap.printHeap(); // Output: [40, 30, 15, 10, 20, 5]
-
-        System.out.println("deleted: " + maxHeap.delete());
+        System.out.print("Max Heap: ");
         maxHeap.printHeap();
 
-        System.out.println("deleted: " + maxHeap.delete());
+        System.out.println("Max Element: " + maxHeap.getMax()); // Returns the max element (root) without removing it.
+        System.out.println("Extracted Max: " + maxHeap.extractMax()); // Returns the max element (root) and removes it from the heap.
+
+        System.out.print("Heap after extraction: ");
         maxHeap.printHeap();
     }
 }
+

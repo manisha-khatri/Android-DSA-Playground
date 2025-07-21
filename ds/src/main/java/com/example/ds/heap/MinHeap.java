@@ -1,85 +1,88 @@
 package com.example.ds.heap;
 
-import java.util.ArrayList;
-
 public class MinHeap {
-    private ArrayList<Integer> heap;
+    int capacity;
+    int size;
+    int[] heap;
 
-    MinHeap() {
-        heap = new ArrayList<>();
+    int parent(int i) { return (i-1)/2; }
+    int left(int i) { return 2*i + 1; }
+    int right(int i) { return 2*i + 2; }
+
+    void swap(int i, int j) {
+        int temp = heap[i];
+        heap[i] = heap[j];
+        heap[j] = temp;
+    }
+
+    MinHeap(int capacity) {
+        this.capacity = capacity;
+        size = 0;
+        heap = new int[capacity];
     }
 
     void insert(int value) {
-        heap.add(value);
-        int index = heap.size()-1;
-        bubbleUp(index);
+        heap[size] = value;
+        size++;
+        bubbleUp(size-1);
     }
 
-    void bubbleUp(int index) {
-        int parentIndex = (index-1)/2;
-
-        while(index>0 && heap.get(index) < heap.get(parentIndex)) {
-            swap(index, parentIndex);
-            index = parentIndex;
-            parentIndex = (index-1)/2;
+    void bubbleUp(int i) {
+        while(i>0 && heap[i] < heap[parent(i)]) { //only when inserted element is smaller than the parent then get swap
+            swap(i, parent(i));
+            i = parent(i);
         }
     }
 
-    void swap(int i, int j) {
-        int temp = heap.get(i);
-        heap.set(i, heap.get(j));
-        heap.set(j, temp);
+    int extractMin() {
+        int min = heap[0];
+        heap[0] = heap[size-1];
+        size--;
+        heapify(0);
+        return min;
+    }
+
+    void heapify(int i) {
+        int min = i;
+        int left = left(i);
+        int right = right(i);
+
+        if(left<size && heap[left]<heap[min]) {
+            min = left;
+        }
+        if(right<size && heap[right]<heap[min]) {
+            min = right;
+        }
+
+        if(min!=i) {
+            swap(min, i);
+            heapify(min);
+        }
     }
 
     public void printHeap() {
-        System.out.println(heap);
-    }
-
-    int delete() {
-        if(heap.isEmpty())
-            return 0;
-
-        int n = heap.size()-1;
-        int root = heap.get(0);
-
-        // Replace root with last element
-        heap.set(0, heap.get(n));
-        heap.remove(n); // Actually remove the last element
-
-        int i = 0;
-        while(2 * i + 1 < heap.size()) { // Ensure left child exists otherwise Index Out of Bounds
-            int leftChild = 2 * i + 1;
-            int rightChild = 2 * i + 2;
-            int smallest = leftChild;
-
-            if(rightChild < heap.size() && heap.get(rightChild) < heap.get(leftChild)) {
-                smallest = rightChild;
-            }
-
-            if(heap.get(i) <= heap.get(smallest))
-                break;
-
-            swap(i, smallest);
-            i = smallest;
+        for (int i = 0; i < size; i++) {
+            System.out.print(heap[i] + " ");
         }
-        return root;
+        System.out.println();
     }
 
     public static void main(String[] args) {
-        MinHeap minHeap = new MinHeap();
-        minHeap.insert(10);
-        minHeap.insert(20);
-        minHeap.insert(15);
-        minHeap.insert(30);
-        minHeap.insert(40);
-        minHeap.insert(5);
+        MinHeap heap = new MinHeap(10);
 
-        minHeap.printHeap(); // Output: [5, 20, 10, 30, 40, 15]
+        heap.insert(10);
+        heap.insert(20);
+        heap.insert(5);
+        heap.insert(30);
+        heap.insert(15);
 
-        System.out.println("deleted: " + minHeap.delete());
-        minHeap.printHeap();
+        System.out.print("Max Heap: ");
+        heap.printHeap();
 
-        System.out.println("deleted: " + minHeap.delete());
-        minHeap.printHeap();
+        System.out.println("Extracted Max: " + heap.extractMin()); // Returns the max element (root) and removes it from the heap.
+
+        System.out.print("Heap after extraction: ");
+        heap.printHeap();
+
     }
 }

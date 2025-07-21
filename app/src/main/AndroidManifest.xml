@@ -25,7 +25,7 @@
         android:theme="@style/Theme.MyApp"
         tools:targetApi="31">
         <activity
-            android:name=".unittests.notesapp.FirstActivity"
+            android:name=".compose.sideeffects.ProduceStateEx"
             android:exported="true"
             android:theme="@style/Theme.MyApp">
             <intent-filter>
