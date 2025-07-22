@@ -1,4 +1,4 @@
-package com.example.ds.graph;
+package com.example.ds.graph.impl;
 
 public class GraphAdjacencyMatrix {
 
