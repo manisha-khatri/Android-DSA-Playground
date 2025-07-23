@@ -115,7 +115,7 @@ class CoroutineScopeWithJob2 {
     }
 
     fun doWork2() {
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             println("Added delay")
             //delay(5000)
             Thread.sleep(5000)
