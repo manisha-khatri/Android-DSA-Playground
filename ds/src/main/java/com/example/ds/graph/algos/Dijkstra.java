@@ -1,4 +1,4 @@
-package com.example.ds.graph;
+package com.example.ds.graph.algos;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +34,7 @@ public class Dijkstra {
     }
 
     static int[] dijkstra(List<List<Edge>> graph, int source) {
-        int dist[] = new int[graph.size()];
+        int[] dist = new int[graph.size()];
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[source] = 0;
 

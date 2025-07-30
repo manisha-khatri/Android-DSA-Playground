@@ -30,7 +30,6 @@ class Lecture8: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             NotificationScreen()
         }
     }
@@ -45,7 +44,6 @@ class Lecture8: ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize(1f)
         ) {
-
             NotificationCounter(count.value, { count.value++ })
             MessageBar(count.value)
         }
@@ -79,9 +77,7 @@ class Lecture8: ComponentActivity() {
                     contentDescription = "",
                     Modifier.padding(8.dp)
                 )
-                Text(
-                    text = "Message sent so far - $value"
-                )
+                Text(text = "Message sent so far - $value")
             }
         }
     }

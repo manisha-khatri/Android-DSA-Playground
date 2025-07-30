@@ -1,4 +1,4 @@
-package com.example.ds.graph;
+package com.example.ds.graph.algos;
 
 import java.util.ArrayList;
 import java.util.List;

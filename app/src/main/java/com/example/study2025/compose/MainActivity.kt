@@ -32,8 +32,6 @@ import androidx.compose.ui.unit.sp
 import com.apollographql.apollo.api.label
 import com.example.study2025.R
 
-
-
 class MainActivity20: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

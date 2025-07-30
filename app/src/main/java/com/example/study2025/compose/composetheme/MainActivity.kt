@@ -24,7 +24,7 @@ class MainActivity5 : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // ✅ Makes sure system bars (status/nav) are respected
-        WindowCompat.setDecorFitsSystemWindows(window, true)
+       // WindowCompat.setDecorFitsSystemWindows(window, true)
 
         setContent {
             ComposeApplicationTheme {

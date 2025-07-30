@@ -1,6 +1,4 @@
-package com.example.ds.graph;
-
-import org.jetbrains.annotations.NotNull;
+package com.example.ds.graph.algos;
 
 import java.util.ArrayList;
 import java.util.List;

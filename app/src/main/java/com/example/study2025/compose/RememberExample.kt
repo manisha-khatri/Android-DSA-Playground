@@ -15,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.composeapplication.ui.theme.ComposeApplicationTheme
 
 class RememberExample: ComponentActivity() {
@@ -60,7 +61,6 @@ fun RegularCounter() {
         Text("Clicked times $count") // prints 0 everytime, as onClick Compose recomposes and reset value to 0
     }
 }
-
 
 @Composable
 fun RememberCounter(modifier: Modifier) {
