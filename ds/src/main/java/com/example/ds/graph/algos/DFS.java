@@ -3,11 +3,11 @@ package com.example.ds.graph.algos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DFSGraph {
+public class DFS {
     private int V;
     private List<List<Integer>> adjList;
 
-    public DFSGraph(int V) {
+    public DFS(int V) {
         this.V = V;
         adjList = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class DFSGraph {
     }
 
     public static void main(String[] args) {
-        DFSGraph graph = new DFSGraph(5);
+        DFS graph = new DFS(5);
 
         graph.addEdge(0, 1);
         graph.addEdge(0, 2);

@@ -16,7 +16,6 @@ public class TopologicalSort {
             }
         }
 
-
         if(!stack.isEmpty()) {
             while (!stack.isEmpty()) {
                 System.out.print(stack.pop() + " ");

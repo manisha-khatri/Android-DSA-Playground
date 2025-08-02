@@ -5,11 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class BFSGraph {
+public class BFS {
     int V;
     List<List<Integer>> adjList;
 
-    BFSGraph(int V) {
+    BFS(int V) {
         this.V = V;
         adjList = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class BFSGraph {
     }
 
     public static void main(String[] args) {
-        BFSGraph graph = new BFSGraph(5);
+        BFS graph = new BFS(5);
 
         graph.addEdge(0, 1);
         graph.addEdge(0, 2);

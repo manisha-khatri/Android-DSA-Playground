@@ -1,7 +1,5 @@
 package com.example.ds.graph.algos;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,27 +7,22 @@ import java.util.PriorityQueue;
 
 public class Dijkstra {
     static class Edge {
-        int vertex;
+        int destination;
         int weight;
 
-        Edge(int vertex, int weight) {
-            this.vertex = vertex;
+        Edge(int destination, int weight) {
+            this.destination = destination;
             this.weight = weight;
         }
     }
 
-    static class Node implements Comparable<Node> {
-        int destination;
+    static class Node {
+        int source;
         int distance;
 
-        Node(int destination, int distance) {
-            this.destination = destination;
+        Node(int source, int distance) {
+            this.source = source;
             this.distance = distance;
-        }
-
-        @Override
-        public int compareTo(@NotNull Node other) {
-            return Integer.compare(this.distance, other.distance);
         }
     }
 
@@ -38,15 +31,15 @@ public class Dijkstra {
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[source] = 0;
 
-        PriorityQueue<Node> pq = new PriorityQueue<>();
+        PriorityQueue<Node> pq = new PriorityQueue<>((a,b) -> a.distance - b.distance);
         pq.offer(new Node(source, 0));
 
         while(!pq.isEmpty()) {
             Node node = pq.poll();
-            int u = node.destination;
+            int u = node.source;
 
             for(Edge edge: graph.get(u)) {
-                int v = edge.vertex;
+                int v = edge.destination;
                 int sum = dist[u] + edge.weight;
 
                 if(dist[v] > sum) {

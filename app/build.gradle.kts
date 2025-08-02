@@ -63,6 +63,7 @@ dependencies {
     // Networking & Serialization
     implementation(libs.retrofit)
     implementation(libs.gson)
+    implementation(libs.okhttp.logging.interceptor)
 
     // Coroutines & ViewModel
     implementation(libs.coroutine.viewmodel) // androidx.lifecycle:lifecycle-viewmodel-ktx
