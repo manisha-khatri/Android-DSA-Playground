@@ -33,7 +33,7 @@ public class UnionFind {
         } else if (rank[x]<rank[y]) {
             parent[x] = y;
         } else {
-            parent[y] = parent[x];
+            parent[y] = x;
             rank[x] = rank[x] + 1;
         }
     }
@@ -41,8 +41,6 @@ public class UnionFind {
     boolean isConnected(int x, int y) {
         return parent[x] == parent[y];
     }
-
-
 
     public static void main(String[] args) {
         UnionFind uf = new UnionFind(5);

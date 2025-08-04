@@ -3,7 +3,7 @@ package com.example.ds.graph.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraphAdjacencyList {
+public class AdjacencyList {
 
     public static void printGraph(List<List<Integer>> adjList) {
         System.out.println("Adjacency List:");

@@ -1,6 +1,6 @@
 package com.example.ds.graph.impl;
 
-public class GraphAdjacencyMatrix {
+public class AdjacencyMatrix {
 
     // Method to add an edge (for undirected graph)
     public static void addEdge(int[][] matrix, int i, int j) {

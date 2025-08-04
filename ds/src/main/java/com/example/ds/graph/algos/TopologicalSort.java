@@ -1,5 +1,10 @@
 package com.example.ds.graph.algos;
 
+/**
+ * Topological Sort is a linear ordering of vertices in a Directed Acyclic Graph (DAG) such that for
+ * every directed edge u → v, vertex u comes before v in the ordering.
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;

@@ -3,7 +3,7 @@ package com.example.ds.graph.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraphUsingNode {
+public class UsingNode {
 
     static class Edge {
         int destination;
