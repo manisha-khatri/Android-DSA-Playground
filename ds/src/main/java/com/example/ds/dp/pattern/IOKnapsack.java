@@ -1,4 +1,4 @@
-package com.example.ds.dp;
+package com.example.ds.dp.pattern;
 
 import java.util.Arrays;
 
