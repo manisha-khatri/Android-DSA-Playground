@@ -42,7 +42,7 @@ public class UberInterview {
                minVal = Math.min(pos, minVal);
            }
         }
-        return minVal!=Integer.MIN_VALUE ? minVal-1: 0;
+        return minVal!=Integer.MAX_VALUE ? minVal-1: 0;
     }
 
     public static void main(String[] args) {
