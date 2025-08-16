@@ -16,28 +16,30 @@ public class LevelOrderTraversal {
         }
     }
 
-    static List<Integer> levelOrderTraversal(TreeNode root) {
-        if (root == null) return null;
+    static List<List<Integer>> levelOrderTraversal(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
 
-        List<Integer> res = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
 
         while(!queue.isEmpty()) {
             int size = queue.size();
+            List<Integer> level = new ArrayList<>();
 
             for(int i=0; i<size; i++) {
                 TreeNode node = queue.poll();
-                res.add(node.data);
+                level.add(node.data);
 
                 if(node.left!=null)
                     queue.offer(node.left);
                 if(node.right!=null)
                     queue.offer(node.right);
             }
+            result.add(level);
         }
 
-        return res;
+        return result;
     }
 
     public static void main(String[] args) {
@@ -48,8 +50,15 @@ public class LevelOrderTraversal {
         root.left.right = new TreeNode(5);
         root.right.right = new TreeNode(6);
 
-        for(int i: levelOrderTraversal(root)) {
+        for(List<Integer> i: levelOrderTraversal(root)) {
             System.out.print(i + " ");
+            System.out.println();
+
+            /**
+             * [1]
+             * [2, 3]
+             * [4, 5, 6]
+             */
         }
     }
 }
