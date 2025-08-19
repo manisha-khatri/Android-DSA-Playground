@@ -34,17 +34,17 @@ public class Dijkstra {
         PriorityQueue<Node> pq = new PriorityQueue<>((a,b) -> a.distance - b.distance);
         pq.offer(new Node(source, 0));
 
-        while(!pq.isEmpty()) {
-            Node node = pq.poll();
+        while(!pq.isEmpty()) { // O(V+E)
+            Node node = pq.poll(); // O(logV)
             int u = node.source;
 
-            for(Edge edge: graph.get(u)) {
+            for(Edge edge: graph.get(u)) { // E
                 int v = edge.destination;
                 int sum = dist[u] + edge.weight;
 
                 if(dist[v] > sum) {
                     dist[v] = sum;
-                    pq.offer(new Node(v, dist[v]));
+                    pq.offer(new Node(v, dist[v])); // O(logV)
                 }
             }
         }

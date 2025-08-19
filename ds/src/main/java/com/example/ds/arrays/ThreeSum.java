@@ -44,7 +44,7 @@ public class ThreeSum {
       for(int i=0; i<n; i++) {
           for(int j=i; j<n; j++) {
               for(int k=j; k<n; k++) {
-                  if(i != j && i != k && j != k && nums[i]+nums[j]+nums[k]==0)
+                  if(i != j && j != k && nums[i] + nums[j] + nums[k] == 0)
                   {
                       List<Integer> elements = Arrays.asList(nums[i], nums[j], nums[k]);
                       Collections.sort(elements);
