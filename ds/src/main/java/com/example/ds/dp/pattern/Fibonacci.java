@@ -24,7 +24,7 @@ public class Fibonacci {
         if(n<=1) return n;
         if(memo.containsKey(n)) return memo.get(n);
 
-        int res = fibonacciRec(n-1) + fibonacciRec(n-2);
+        int res = fibonacciRecOptimized(n-1) + fibonacciRecOptimized(n-2);
         memo.put(n, res);
         return res;
     }
@@ -64,9 +64,9 @@ public class Fibonacci {
     }
 
     public static void main(String[] args) {
-        System.out.println("fibonacci = " + fibonacciRec(6));
-        System.out.println("fibonacci = " + fibonacciRecOptimized(6));
-        System.out.println("fibonacci = " + fibonacciItr(6));
-        System.out.println("fibonacci = " + fibonacciItrOptimized(6));
+        System.out.println("fibonacciRec = " + fibonacciRec(6));
+        System.out.println("fibonacciRecOptimized = " + fibonacciRecOptimized(6));
+        System.out.println("fibonacciItr = " + fibonacciItr(6));
+        System.out.println("fibonacciItrOptimized = " + fibonacciItrOptimized(6));
     }
 }
