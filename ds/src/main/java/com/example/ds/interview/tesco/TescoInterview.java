@@ -1,18 +1,55 @@
-package com.example.ds.interview;
+package com.example.ds.interview.tesco;
 
 public class TescoInterview {
     public static void main(String[] args) {
-        int[] nums1 = {3,1,2,5,1,1,2,3};
-        int[] nums = {13,11,12,15,11,11,12,13};
-
-        int k=6;
+        int[] nums1 = {1,2,1,0,1,1,0};
+        int k=4;
 
         int[] subArr = findLongestSubArrOpt(nums1, k);
+        System.out.println("Method 1:-");
+        for(int i: subArr) {
+            System.out.print(i + " ");
+        }
 
+        System.out.println();
+
+        subArr = longestSubArrayAtMostK(nums1, k);
+        System.out.println("Method 2:-");
         for(int i: subArr) {
             System.out.print(i + " ");
         }
     }
+
+    /**
+     *
+     */
+    static int[] longestSubArrayAtMostK(int[] nums, int k) {
+        int n = nums.length;
+        int left=0, sum=0, right;
+        int maxLen = Integer.MIN_VALUE;
+        int bestStart=0;
+
+        for(right=0; right<n; right++) {
+            sum += nums[right];
+            while(sum>k && left<=right) {
+                sum-=nums[left];
+                left++;
+            }
+            if(right-left+1> maxLen) {
+                maxLen = right - left + 1;
+                bestStart = left;
+            }
+        }
+
+        int[] result = new int[maxLen];
+        for(int i=0; i<maxLen; i++) {
+            result[i] = nums[bestStart];
+            bestStart++;
+        }
+
+        return result;
+    }
+
 
     /**
      *  Chatgpt solution: Sliding window optimized:
