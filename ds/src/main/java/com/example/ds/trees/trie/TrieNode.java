@@ -1,7 +1,7 @@
 package com.example.ds.trees.trie;
 
 public class TrieNode {
-    TrieNode[] children = new TrieNode[26];
+    TrieNode[] children = new TrieNode[26]; // a-z
     boolean isEndOfWord = false;
 }
 
