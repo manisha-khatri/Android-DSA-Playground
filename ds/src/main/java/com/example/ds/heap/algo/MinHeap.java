@@ -1,4 +1,4 @@
-package com.example.ds.heap;
+package com.example.ds.heap.algo;
 
 public class MinHeap {
     int capacity;

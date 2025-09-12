@@ -1,0 +1,54 @@
+
+data class CategoryStack(
+    val categoryId: Int,
+    val suggestion: List<ProductSuggestion>
+)
+
+// UiState
+sealed class SearchUiState {
+    object Idle: SearchUiState()
+    object Loading: SearchUiState()
+    data class Success(val result: List<CategoryStack>): SearchUiState()
+    data class Error(val msg: String): SearchUiState()
+}
+
+// UseCase
+class SearchProductUseCase @Inject constructor(
+    private val repository: ProductRepository
+) {
+    suspend operator fun invoke(): List<CategoryStack> {
+        return if(query.isNullOrBlank()) {
+            repository.getCachedSuggestions(maxLimit=7)
+        } else {
+            val cached = repository.searchLocal(query)
+            val remote = repository.searchRemote(query)
+
+            if(cached.isEmpty() && remote.isEmpty()) {
+                return emptyList();
+            }
+
+            val combinedResult = if(cached.isEmpty()) {
+                remote
+            } else if(remote.isEmpty()) {
+                cached
+            } else {
+                (cached + remote).distinctBy{ it.id }.take(7)
+            }
+
+            return combinedResult
+            .groupBy{ it.category }
+            .map{ (category, suggestions) ->
+                CategoryStack(category, suggestions)
+            }
+        }
+    }
+}
+
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    private val searchProductUseCase: SearchProductUseCase
+): ViewModel() {
+    private val _uiState = MutableStateFlow<SearchUiState>(SearchUiState.Idle)
+
+}
+
