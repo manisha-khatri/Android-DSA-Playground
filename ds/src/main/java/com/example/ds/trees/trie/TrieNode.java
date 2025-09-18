@@ -1,11 +1,10 @@
 package com.example.ds.trees.trie;
 
-public class TrieNode {
-    TrieNode[] children = new TrieNode[26]; // a-z
-    boolean isEndOfWord = false;
-}
-
 class Trie {
+    static class TrieNode {
+        TrieNode[] children = new TrieNode[26]; // a-z
+        boolean isEndOfWord = false;
+    }
     TrieNode root;
 
     Trie() {
