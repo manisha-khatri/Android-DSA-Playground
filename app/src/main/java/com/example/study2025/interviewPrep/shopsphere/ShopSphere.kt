@@ -181,7 +181,19 @@ sealed class SearchEvent {
 }
 
 
+class SearchViewModel @Inject constructor(
+    val getSuggestionUseCase: GetSuggestionUseCase,
+    val getProductUseCase: GetProductUseCase
+): ViewModel() {
 
+    private val _uiState = MutableStateFlow(SearchUiState())
+    val uiState: StateFlow<SearchUiState> = _uiState
+
+    fun onEvent() {
+
+    }
+
+}
 
 
 
