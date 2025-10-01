@@ -1,0 +1,71 @@
+package com.example.study2025.paging
+
+
+// paging -> QuotePagingSource
+
+class QuotePagingSource(val api: QuoteApiService): PagingSource<Int, Result> {
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Result> {
+        try {
+            val position = params.key ?: 1
+            val response = api.getQuotes(position)
+            LoadResult.Page(
+                data = response.results,
+                prevKey = if(position == 1) null else position-1,
+                nextKey = if(position == response.totalPages) null else position+1
+            )
+        } catch(e: Exception) {
+            LoadResult.Error(e)
+        }
+    }
+
+    override suspend fun getRefreshKey(state: PagingState<Int, Result>): Int? {
+        if(state.anchorPosition != null) {
+            val anchorPage = state.closestPageToPosition(state.anchorPosition)
+            if(anchorPage?.prevKey != null) {
+                return anchorPage.prevKey.plus(1)
+            } else if(anchorPage?.nextPosition != null) {
+                return anchorPage.nextKey.plus(1)
+            } else
+                return null
+        } else {
+            return null
+        }
+    }
+}
+
+// repository --> QuoteRepositoryImp
+
+class QuoteRepositoryImp @Inject constructor(val api: QuoteApi) {
+
+    fun getQuotes(): Flow<PagingData<Product>> {
+        return Pager(
+            config = PagingConfig(pageSize = 10, maxSize = 100),
+            pagingSourceFactory = { QuotePagingSource(api) }
+        ).flow
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
