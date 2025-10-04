@@ -1,3 +1,4 @@
+/*
 package com.example.study2025.retrofit.withhilt
 
 import dagger.Module
@@ -30,4 +31,4 @@ object AppModule {
     @Provides
     @Singleton
     fun providesRemoteDataSource(api: ApiService) = RemoteDataSource(api)
-}
+}*/

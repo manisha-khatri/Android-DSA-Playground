@@ -1,4 +1,4 @@
-package com.example.ds.interview;
+package com.example.ds.interview.sixt;
 
 /**
  * Odd Case:

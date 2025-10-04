@@ -1,9 +1,10 @@
-package com.example.study2025.interviewPrep.shopsphere
+package com.example.study2025.systemdesign
+
+/*
 
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -33,7 +34,6 @@ import androidx.room.RoomDatabase
 import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -43,14 +43,11 @@ import javax.inject.Inject
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.*
-import androidx.compose.material.icons.Icons.AutoMirrored.Outlined
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.room.OnConflictStrategy
 import androidx.room.Room
 import androidx.room.Transaction
-import com.example.study2025.interviewPrep.shopsphere.SearchRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -392,3 +389,6 @@ object AppModule {
         return SearchRepositoryImpl(dao, api)
     }
 }
+
+
+ */

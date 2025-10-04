@@ -1,4 +1,4 @@
-package com.example.ds.interview;
+package com.example.ds.interview.uber;
 
 /**
  * sounds like a "Word Matching with Wildcards" problem

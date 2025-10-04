@@ -1,4 +1,4 @@
-package com.example.ds.interview;
+package com.example.ds.interview.uber;
 
 import java.util.ArrayList;
 import java.util.Arrays;

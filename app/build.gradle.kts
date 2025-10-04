@@ -63,6 +63,7 @@ dependencies {
     // Networking & Serialization
     implementation(libs.retrofit)
     implementation(libs.gson)
+    implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
 
     // Coroutines & ViewModel
@@ -100,6 +101,13 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler) // KSP for Room
 
+    // Glide
+    implementation(libs.glide)
+    ksp(libs.glide.compiler) // if using Kotlin annotation processing
+
+    implementation(libs.coil.compose)
+
+
     // Apollo GraphQL
     implementation(libs.apollo.runtime)
 
@@ -130,4 +138,9 @@ dependencies {
     // Flow testing library
     testImplementation(libs.turbine)
     androidTestImplementation(libs.turbine)
+
+    // Paging
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
+
 }
