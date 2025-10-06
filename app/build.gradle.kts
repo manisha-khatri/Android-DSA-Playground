@@ -143,4 +143,7 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
 
+    implementation(libs.androidx.biometric)
+    implementation(libs.androidx.security.crypto)
+
 }

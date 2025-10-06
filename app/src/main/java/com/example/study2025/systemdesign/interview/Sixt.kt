@@ -1,4 +1,4 @@
-package com.example.study2025.systemdesign
+package com.example.study2025.systemdesign.interview
 
 /*
 import android.app.Application
@@ -43,9 +43,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton

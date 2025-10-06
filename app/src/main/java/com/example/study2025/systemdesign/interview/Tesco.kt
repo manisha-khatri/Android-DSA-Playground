@@ -1,4 +1,4 @@
-package com.example.study2025.systemdesign
+package com.example.study2025.systemdesign.interview
 
 /*
 

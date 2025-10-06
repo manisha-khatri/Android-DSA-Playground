@@ -1,5 +1,6 @@
-package com.example.study2025.systemdesign
+package com.example.study2025.systemdesign.interview
 
+/**
 import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -258,3 +259,5 @@ object ImagesAppModule {
     @Singleton
     fun providesImageRepository(api: ImageApiService): ImageRepository = ImageRepositoryImpl(api)
 }
+
+*/
