@@ -1,6 +1,5 @@
 package com.example.study2025.systemdesign.interview
 
-/**
 import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -55,16 +54,6 @@ import kotlin.jvm.java
 /**
 Share the code and design where you need to make  call Network call to get 10 images each time UI and  show image in a
 form of list by its index  0 image, 1 image, 2 image.. etc
-
- data
-- Api
-- Repository
-
- domain
- -
-
-
- presentation
 
  */
 
@@ -260,4 +249,3 @@ object ImagesAppModule {
     fun providesImageRepository(api: ImageApiService): ImageRepository = ImageRepositoryImpl(api)
 }
 
-*/
