@@ -1,6 +1,6 @@
-package com.example.study2025.mvvm.data.repository
+package com.example.study2025.architecture.mvvm.model.repository
 
-import com.example.study2025.mvvm.data.model.User
+import com.example.study2025.architecture.mvvm.model.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -1,11 +1,7 @@
-package com.example.study2025.mvvm.data.repository
+package com.example.study2025.architecture.mvvm.model.repository
 
-import androidx.lifecycle.MutableLiveData
-import com.example.study2025.mvvm.data.api.ApiService
-import com.example.study2025.mvvm.data.model.Post
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.study2025.architecture.mvvm.model.api.ApiService
+import com.example.study2025.architecture.mvvm.model.model.Post
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

@@ -1,7 +1,6 @@
-package com.example.study2025.mvvm.data.api
+package com.example.study2025.architecture.mvvm.model.api
 
-import com.example.study2025.mvvm.data.model.Post
-import retrofit2.Call
+import com.example.study2025.architecture.mvvm.model.model.Post
 import retrofit2.http.GET
 
 interface ApiService {

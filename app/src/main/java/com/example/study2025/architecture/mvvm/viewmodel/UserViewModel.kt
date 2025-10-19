@@ -1,14 +1,12 @@
-package com.example.study2025.mvvm.viewmodel
+package com.example.study2025.architecture.mvvm.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.study2025.mvvm.data.model.User
-import com.example.study2025.mvvm.data.repository.UserRepository
-import kotlinx.coroutines.Dispatchers
+import com.example.study2025.architecture.mvvm.model.model.User
+import com.example.study2025.architecture.mvvm.model.repository.UserRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class UserViewModel : ViewModel() {
     private val repository = UserRepository()

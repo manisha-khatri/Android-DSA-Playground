@@ -1,4 +1,4 @@
-package com.example.study2025.mvvm.data.model
+package com.example.study2025.architecture.mvvm.model.model
 
 data class Post(
     val userId: Int,

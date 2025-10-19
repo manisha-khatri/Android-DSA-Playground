@@ -1,11 +1,11 @@
-package com.example.study2025.mvvm.ui
+package com.example.study2025.architecture.mvvm.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.study2025.databinding.ActivityUsersBinding
-import com.example.study2025.mvvm.viewmodel.PostViewModel
-import com.example.study2025.mvvm.viewmodel.UserViewModel
+import com.example.study2025.architecture.mvvm.viewmodel.PostViewModel
+import com.example.study2025.architecture.mvvm.viewmodel.UserViewModel
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var userViewModel: UserViewModel

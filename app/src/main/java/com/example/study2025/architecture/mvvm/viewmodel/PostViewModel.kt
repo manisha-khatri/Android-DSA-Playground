@@ -1,11 +1,11 @@
-package com.example.study2025.mvvm.viewmodel
+package com.example.study2025.architecture.mvvm.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.study2025.mvvm.data.model.Post
-import com.example.study2025.mvvm.data.repository.PostRepository
+import com.example.study2025.architecture.mvvm.model.model.Post
+import com.example.study2025.architecture.mvvm.model.repository.PostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

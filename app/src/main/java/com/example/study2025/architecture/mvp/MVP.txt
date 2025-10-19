@@ -1,0 +1,13 @@
+com.example.mvpapp/
+│
+├── model/
+│   └── CounterModel.kt
+│
+├── presenter/
+│   └── CounterPresenter.kt
+│
+├── view/
+│   └── MainActivity.kt
+│
+└── contract/
+    └── CounterContract.kt
