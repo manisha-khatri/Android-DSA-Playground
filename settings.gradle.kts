@@ -26,3 +26,4 @@ rootProject.name = "Study2025"
 include(":app")
 include(":core")
 include(":ds")
+include(":systemdesign")
