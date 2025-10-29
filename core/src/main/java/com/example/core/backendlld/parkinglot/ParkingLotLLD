@@ -1,0 +1,34 @@
+ Design a Parking Lot System
+
+ Driver(vehicle) --> Parking Lot entry --> Park Vehicle --> Parking Lot exit
+
+ Parking Lot entry
+ 1. User Input = createTicket(licencePlate, vehicleType) --> Ticket(id, entry_time, vehicleType)
+    - process : on basis of vehicleType --> check available ParkingSlot --> create a Parking slot
+            --> create a Ticket --> send Ticket to the driver
+
+
+
+
+ Parking Lot exit
+ - exit_time
+
+
+
+ Interviewer Possible Questions?
+
+    Q1. For parking lot LLD system Design, why we need a licencePlateNumber?
+
+    1. Unique Identification of a Vehicle
+    - The **licensePlateNumber** acts as a **unique key** to identify each vehicle.
+    - Without it, if two white hatchbacks park at the same time, you’d have no idea which one belongs to which ticket.
+    - Think of it as the `primary key` for your `Vehicle` entity.
+
+    2. Integration with Real Systems
+    - Cameras capture license plates automatically.
+    - The system opens gates or calculates fees automatically.
+
+    3. Fraud Prevention and Enforcement
+    - Imagine someone loses their ticket and claims, I came just 5 minutes ago!” 😇
+    - Your system can check: > “Actually, your license plate entered 3 hours ago.” ⏰
+    -  It also helps detect **blacklisted vehicles**, **stolen cars**, or track **violations**.
