@@ -1,13 +1,25 @@
-com.example.mvpapp/
+com.example.notesapp
 │
-├── model/
-│   └── CounterModel.kt
+├── data
+│   ├── model
+│   │   └── Note.kt
+│   ├── repository
+│   │   └── NotesRepository.kt
+│   └── datasource
+│       └── NotesLocalDataSource.kt
 │
-├── presenter/
-│   └── CounterPresenter.kt
+├── ui
+│   ├── addnote
+│   │   ├── AddNoteActivity.kt
+│   │   ├── AddNoteContract.kt
+│   │   └── AddNotePresenter.kt
+│   │
+│   ├── noteslist
+│   │   ├── NotesListActivity.kt
+│   │   ├── NotesListContract.kt
+│   │   └── NotesListPresenter.kt
 │
-├── view/
-│   └── MainActivity.kt
+├── utils
+│   └── Constants.kt
 │
-└── contract/
-    └── CounterContract.kt
+└── MainApplication.kt

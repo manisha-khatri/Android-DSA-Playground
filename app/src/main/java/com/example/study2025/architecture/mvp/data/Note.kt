@@ -1,4 +1,8 @@
 package com.example.study2025.architecture.mvp.data
 
-class Notes {
-}
+data class Note(
+    val id: Int,
+    val title: String,
+    val content: String,
+    val timestamp: Long = System.currentTimeMillis()
+)
