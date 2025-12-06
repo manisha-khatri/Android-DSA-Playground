@@ -275,5 +275,5 @@ object NetworkModule {
     fun provideSecureStorage(@ApplicationContext context: Context): SecureStorage = SecureStorage(context)
 }
 
-@HiltAndroidApp
-class SecurePaymentScreenApp: Application()
+/*@HiltAndroidApp
+class SecurePaymentScreenApp: Application()*/

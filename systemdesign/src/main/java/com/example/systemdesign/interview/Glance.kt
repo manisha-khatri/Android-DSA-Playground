@@ -1,6 +1,6 @@
 package com.example.systemdesign.interview
 
-import android.app.Application
+/*
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -207,12 +207,11 @@ class ImagesMainActivity : ComponentActivity() {
     }
 }
 
-@HiltAndroidApp
-class ImagesApp: Application()
+/*@HiltAndroidApp
+class ImagesApp: Application()*/
 
 
 // ---------------- di ----------------
-
 @Module
 @InstallIn(SingletonComponent::class)
 object ImagesAppModule {
@@ -249,3 +248,4 @@ object ImagesAppModule {
     fun providesImageRepository(api: ImageApiService): ImageRepository = ImageRepositoryImpl(api)
 }
 
+*/

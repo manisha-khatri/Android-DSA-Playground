@@ -1,0 +1,31 @@
+
+suspend fun loadProducts(): List<Product> = supervisorScope {
+    val p1 = async { fetchProduct1() }
+    val p1 = async { fetchProduct1() }
+    val p1 = async { fetchProduct1() }
+
+    listOf(p1.await(), p2.await(), p3.await())
+}
+
+// Error Handling
+
+suspend fun getProducts(): List<Product> = supervisorScope {
+    val p1 = async { runCatching { fetchProduct1() }.getOrNull() }
+    val p2 = async { runCatching { fetchProduct2() }.getOrNull() }
+    val p3 = async { runCatching { fetchProduct3() }.getOrNull() }
+
+    listOf(p1.await(), p2.await(), p3.await())
+}
+
+suspend fun insertProducts(dao: Dao) = coroutineScope {
+    val job1 = async(Dispatchers.IO) { dao.insertA("A") }
+    val job2 = async(Dispatchers.IO) { dao.insertA("A") }
+    val job3 = async(Dispatchers.IO) { dao.insertA("A") }
+
+    listOf(
+        async(Dispatchers.IO) { dao.insertA("A") }
+        async(Dispatchers.IO) { dao.insertB("A") }
+        async(Dispatchers.IO) { dao.insertC("A") }
+        ).awaitAll()
+
+}

@@ -49,7 +49,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":systemdesign"))
     // Work Manager
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.work.runtime)

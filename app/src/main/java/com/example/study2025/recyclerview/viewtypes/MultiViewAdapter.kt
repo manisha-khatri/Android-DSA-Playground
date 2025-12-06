@@ -40,13 +40,18 @@ class MultiViewAdapter(val list: List<ListItem>): RecyclerView.Adapter<RecyclerV
         when(val item = list[position]) {
             is ListItem.TextItem -> (holder as TextViewHolder).bind(item)
             is ListItem.ImageItem -> (holder as ImageViewHolder).bind(item)
-            ListItem.Header -> TODO()
+            is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
         }
     }
-
 }
 
-class HeaderViewHolder(val view: View): RecyclerView.ViewHolder(view)
+class HeaderViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+   // private val textView = view.findViewById<TextView>(R.id.textView)
+
+    fun bind(item: ListItem.Header) {
+        val hh = "some data"
+    }
+}
 
 class TextViewHolder(val view: View): RecyclerView.ViewHolder(view) {
     private val textView = view.findViewById<TextView>(R.id.textView)
