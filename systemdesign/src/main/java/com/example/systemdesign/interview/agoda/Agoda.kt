@@ -1,4 +1,6 @@
-package com.example.systemdesign.interview
+package com.example.systemdesign.interview.agoda
+
+/**
 
 import android.app.Application
 import android.os.Bundle
@@ -371,3 +373,5 @@ class MainActivity: ComponentActivity() {
 
 @HiltAndroidApp
 class ProductApp: Application()
+
+**/
