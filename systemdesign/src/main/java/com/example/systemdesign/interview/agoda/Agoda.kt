@@ -1,7 +1,5 @@
 package com.example.systemdesign.interview.agoda
 
-/**
-
 import android.app.Application
 import android.os.Bundle
 import androidx.compose.foundation.lazy.items
@@ -22,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -42,8 +41,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -175,13 +178,27 @@ data class ListUiState(
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(): ViewModel() {
-    fun onNavigateToListScreen(onNavigate: () -> Unit) = onNavigate()
+    private val _navigateToList = MutableSharedFlow<Unit>()
+    val navigateToList = _navigateToList.asSharedFlow()
+
+    fun onViewProductsClicked() {
+        viewModelScope.launch {
+            _navigateToList.emit(Unit)
+        }
+    }
+}
+
+sealed interface ListUiEffect {
+    data class NavigateToDetail(val productId: Int) : ListUiEffect
 }
 
 @HiltViewModel
 class ListViewModel @Inject constructor(val getProductsUseCase: GetProductsUseCase): ViewModel() {
     private val _uiState = MutableStateFlow(ListUiState())
     val uiState = _uiState.asStateFlow()
+
+    private val _uiEffect = MutableSharedFlow<ListUiEffect>()
+    val uiEffect: SharedFlow<ListUiEffect> = _uiEffect.asSharedFlow()
 
     init {
         loadProducts()
@@ -202,8 +219,10 @@ class ListViewModel @Inject constructor(val getProductsUseCase: GetProductsUseCa
         }
     }
 
-    fun onProductSelected(id: Int, onNavigate: (Int) -> Unit) {
-        onNavigate(id)
+    fun onProductSelected(id: Int) {
+        viewModelScope.launch {
+            _uiEffect.emit(ListUiEffect.NavigateToDetail(id))
+        }
     }
 }
 
@@ -249,6 +268,12 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onNavigateToList: () -> Unit
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.navigateToList.collect {
+            onNavigateToList()
+        }
+    }
+
     Scaffold(
         topBar = { TopAppBar(title = { Text("Home Page") } ) })
     { padding ->
@@ -259,7 +284,7 @@ fun HomeScreen(
         ) {
             Text(text =  "Welcome to the Product App")
             Spacer(modifier = Modifier.height(32.dp))
-            Button(onClick = { viewModel.onNavigateToListScreen(onNavigateToList) }) {
+            Button(onClick = { viewModel.onViewProductsClicked() }) {
                 Text("View Products List")
             }
         }
@@ -273,6 +298,16 @@ fun ListScreen(
     onNavigateToDetail: (id: Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                is ListUiEffect.NavigateToDetail -> {
+                    onNavigateToDetail(effect.productId)
+                }
+            }
+        }
+    }
 
     Scaffold(topBar = {TopAppBar(title = {Text("List Screen")})}) { padding ->
         Column(
@@ -290,7 +325,7 @@ fun ListScreen(
                                 Column(
                                     modifier = Modifier
                                         .clickable(onClick = {
-                                            viewModel.onProductSelected(product.id, {id -> onNavigateToDetail(id)})
+                                            viewModel.onProductSelected(product.id)
                                         })
                                 ) {
                                     Text(text = product.title)
@@ -373,5 +408,3 @@ class MainActivity: ComponentActivity() {
 
 @HiltAndroidApp
 class ProductApp: Application()
-
-**/

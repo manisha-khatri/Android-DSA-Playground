@@ -1,5 +1,7 @@
 package com.example.systemdesign.interview.agoda
 
+/**
+
 import android.app.Application
 import android.os.Bundle
 import androidx.compose.foundation.lazy.items
@@ -372,3 +374,5 @@ class AppContainer {
     val getProductsUseCase = GetProductsUseCase(repository)
     val getProductDetailsUseCase = GetProductDetailsUseCase(repository)
 }
+
+**/
