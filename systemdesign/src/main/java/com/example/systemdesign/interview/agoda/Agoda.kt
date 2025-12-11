@@ -60,6 +60,12 @@ import javax.inject.Singleton
 
 /**
  Home --> ProductList --> ProductDetail
+
+ "How does Clean Architecture fit into designing an app with three screens
+ — Home, List, and Details?
+ Explain how you would structure the app, what modules you would create,
+ and how you'd apply MVVM and theming. Just outline the interfaces and modules;
+ no need for full implementation. We can discuss the details later."
 */
 
 // ====================================================================================

@@ -89,7 +89,7 @@ class UserViewModel: ViewModel() {
 @Composable
 fun UserScreenLiveData(
     vm: UserViewModel = viewModel(),
-    navigation: () -> Unit
+    navigation: () -> Unit // callback function
 ) {
     val userState by vm.user.observeAsState("Tap Button")
     val navEvent by vm.navigateEvent.observeAsState()
