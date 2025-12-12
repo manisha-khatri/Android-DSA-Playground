@@ -1,5 +1,6 @@
 package com.example.systemdesign.interview.agoda
 
+/**
 import android.app.Application
 import android.os.Bundle
 import androidx.compose.foundation.lazy.items
@@ -414,3 +415,5 @@ class MainActivity: ComponentActivity() {
 
 @HiltAndroidApp
 class ProductApp: Application()
+
+**/

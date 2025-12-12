@@ -1,7 +1,6 @@
-package com.example.systemdesign.interview
+package com.example.systemdesign.interview.tesco
 
-/*
-
+/**
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
@@ -60,9 +59,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 import kotlin.String
 
-// data
-
-// network
 interface SearchApiService {
     @GET("suggestion")
     suspend fun getSearchSuggestions(@retrofit2.http.Query("keyword") text: String): List<SearchSuggestionDto>
@@ -162,11 +158,6 @@ data class Product(
     val imageUrl: String
 )
 
-sealed class Result<out T> {
-    data class Success<out T>(val data: T): Result<T>()
-    data class Failure(val e: Throwable): Result<Nothing>()
-}
-
 interface SuggestionRepository {
     suspend fun fetchSuggestion(keyword: String): List<SearchSuggestion>
     suspend fun getProducts(suggestion: String): List<Product>
@@ -195,11 +186,10 @@ sealed class SearchEvent() {
 }
 
 @HiltViewModel
-class SearchViewModel(
+class SearchViewModel @Inject constructor(
     val getSuggestionUseCase: GetSuggestionUseCase,
     val getProductUseCase: GetProductUseCase
 ): ViewModel() {
-
     val _uiState = MutableStateFlow(SearchUiState())
     val uiState: StateFlow<SearchUiState> = _uiState
 
@@ -299,21 +289,16 @@ fun SearchBar(query: String, onQueryChange:(String) -> Unit) {
 fun SuggestionList(suggestions: List<SearchSuggestion>, onClick:(String) -> Unit) {
     Box {
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(suggestions) {
-                SuggestionItem(it, onClick)
+            items(suggestions) { suggestion ->
+                Text(
+                    text = suggestion.suggestion,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .clickable{ onClick(suggestion.suggestion) }
+                )
             }
         }
     }
-}
-
-@Composable
-fun SuggestionItem(suggestion: SearchSuggestion, onClick: (String) -> Unit) {
-    Text(
-        text = suggestion.suggestion,
-        modifier = Modifier
-            .padding(16.dp)
-            .clickable{ onClick(suggestion.suggestion) }
-    )
 }
 
 @Composable
@@ -389,6 +374,4 @@ object AppModule {
         return SearchRepositoryImpl(dao, api)
     }
 }
-
-
- */
+ **/
