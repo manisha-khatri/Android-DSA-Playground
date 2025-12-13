@@ -8,6 +8,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -55,6 +57,7 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import coil.compose.rememberAsyncImagePainter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -66,7 +69,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
@@ -79,8 +81,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -189,24 +189,12 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiService(client: OkHttpClient): ProductApiService =
+    fun provideApiService(): ProductApiService =
         Retrofit.Builder()
             .baseUrl("https://api.mockfly.dev/mocks/afc70459-bddc-4d16-b6b3-1b649eec78bc/")
-            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ProductApiService::class.java)
-
-    @Provides
-    @Singleton
-    fun provideOkHttp(): OkHttpClient {
-        val logging = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-        return OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .build()
-    }
 
     @Singleton
     @Provides
@@ -286,7 +274,7 @@ class SearchViewModel @Inject constructor(
     val repository: ProductRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SearchUiState())
-    val uiState: StateFlow<SearchUiState> = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
     private val queryFlow = MutableStateFlow("")
 
@@ -378,7 +366,7 @@ class SearchViewModel @Inject constructor(
         productJob = viewModelScope.launch {
             repository.getProducts(query)
                 .onStart {
-                    _uiState.update { it.copy(isProductLoading = true) }
+                    _uiState.update { it.copy(isProductLoading = true,  suggestions = emptyList()) }
                 }
                 .catch { e ->
                     _uiState.update {
@@ -533,29 +521,6 @@ fun SuggestionsList(
 }
 
 @Composable
-fun SimpleCard(name: String) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(2.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Card(
-            modifier = Modifier.padding(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-        ) {
-            Column(
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text(
-                    text = name,
-                    modifier = Modifier.padding(8.dp)
-                )
-            }
-        }
-    }
-}
-
-@Composable
 fun ProductGrid(products: List<Product>) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
@@ -583,6 +548,15 @@ fun ProductCard(product: Product) {
             modifier = Modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Image(
+                painter = rememberAsyncImagePainter(product.imageUrl),
+                contentDescription = product.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+            )
+
             // Product Name
             Text(
                 text = product.name.orEmpty(),
