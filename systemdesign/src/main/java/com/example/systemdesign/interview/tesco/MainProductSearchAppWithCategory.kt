@@ -1,9 +1,11 @@
 package com.example.systemdesign.interview.tesco
 
+/**
 import android.app.Application
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.runtime.*
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -36,7 +38,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -78,7 +79,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
@@ -86,101 +86,74 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.String
-import kotlin.collections.map
-import kotlin.collections.take
 
 /**
-com.example.productsearch
-│
-├── data
-│   ├── local
-│   │   ├── dao
-│   │   │   └── SearchHistoryDao.kt
-│   │   ├── db
-│   │   │   └── AppDatabase.kt
-│   │   └── entity
-│   │       └── SearchHistoryEntity.kt
-│   │
-│   ├── remote
-│   │   └── api
-│   │       └── ProductApiService.kt
-│   │
-│   ├── repository
-│   │   └── ProductRepositoryImpl.kt
-│   │
-│   └── di
-│       └── DataModule.kt
-│
-└── domain
-└── model
-├── Product.kt
-├── SearchSuggestion.kt
-└── SearchHistory.kt
-
+ * Design the business logic for a product search feature that supports multiple categories.
+ * When a user comes back to the search screen and does not type anything, the system should
+ * show their previous search suggestions.
+ * Also handle ambiguous search terms, for example the word “apple”, which can refer to a
+ * fruit or a mobile phone brand, and return results for both types appropriately.
  */
 
-
 // ====================================================================================
-// DATA LAYER
+// Data LAYER
 // ====================================================================================
 
-//local
-@Entity(tableName = "search_history")
-data class SearchHistoryEntity(
-    @PrimaryKey
-    val suggestion: String,
+// local
+@Entity(tableName = "search_suggestion")
+data class SearchHistoryEntity (
+    @PrimaryKey val suggestion: String,
     val timestamp: Long = System.currentTimeMillis()
 )
 
 @Dao
 interface SearchHistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSuggestions(entry: SearchHistoryEntity)
+    suspend fun insertSearchHistory(history: SearchHistoryEntity)
 
-    @Query("SELECT * FROM search_history ORDER BY timestamp DESC LIMIT 10")
-    fun getRecentSearches(): Flow<List<SearchHistoryEntity>>
+    @Query("SELECT * FROM search_suggestion ORDER BY timestamp DESC LIMIT 10")
+    fun fetchSearchHistory(): Flow<List<SearchHistoryEntity>>
 }
 
 @Database(
     entities = [SearchHistoryEntity::class],
-    version = 1
+    version = 4
 )
-abstract class AppDatabase : RoomDatabase() {
+abstract class SearchDatabase: RoomDatabase() {
     abstract fun searchHistoryDao(): SearchHistoryDao
 }
 
 //remote
-interface ProductApiService {
+interface SearchApiService {
     @GET("suggestions")
-    suspend fun getSuggestions(
+    suspend fun fetchSuggestions(
         @retrofit2.http.Query("text") query: String = ""
     ): List<SearchSuggestion>
 
     @GET("products")
-    suspend fun getProducts(
+    suspend fun fetchProducts(
         @retrofit2.http.Query("query") query: String = ""
-    ): ProductResponse
+    ): CategorizedProductResponse
 }
 
-class ProductRepositoryImpl @Inject constructor(
-    private val api: ProductApiService,
-    private val dao: SearchHistoryDao
-) : ProductRepository {
+class SearchRepositoryImpl @Inject constructor(
+    val api: SearchApiService,
+    val dao: SearchHistoryDao
+): SearchRepository {
+    override fun fetchSearchSuggestion(query: String): Flow<List<SearchSuggestion>> =
+        flow { emit(api.fetchSuggestions(query).take(5)) }
 
-    override fun getSearchSuggestions(query: String): Flow<List<SearchSuggestion>> =
-        flow { emit(api.getSuggestions(query).take(5)) }
-
-    override fun getProducts(query: String): Flow<List<Product>> =
-        flow {
-            dao.insertSuggestions(SearchHistoryEntity(query))
-            emit(api.getProducts(query).products)
+    override fun fetchRecentSearches(): Flow<List<SearchSuggestion>> =
+        dao.fetchSearchHistory().map { list ->
+            list.map {
+                SearchSuggestion(text = it.suggestion)
+            }
         }
 
-    override fun getRecentSearchHistory(): Flow<List<SearchSuggestion>> =
-        dao.getRecentSearches().map { list ->
-            list.map { SearchSuggestion(text = it.suggestion) }
-        }.take(5)
+    override fun fetchProducts(query: String): Flow<List<CategoryData>> = flow {
+        dao.insertSearchHistory(SearchHistoryEntity(suggestion = query))
+        emit(api.fetchProducts(query).categories)
+    }
 }
 
 @Module
@@ -189,45 +162,45 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiService(): ProductApiService =
+    fun providesApiService(): SearchApiService =
         Retrofit.Builder()
             .baseUrl("https://api.mockfly.dev/mocks/afc70459-bddc-4d16-b6b3-1b649eec78bc/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ProductApiService::class.java)
+            .create(SearchApiService::class.java)
 
     @Singleton
     @Provides
     fun providesDatabase(@ApplicationContext context: Context) =
         Room.databaseBuilder(
             context,
-            AppDatabase::class.java,
-            "product_db"
-        ).build()
+            SearchDatabase::class.java,
+            "search_db"
+        ).fallbackToDestructiveMigration()
+            .build()
 
     @Provides
-    fun provideHistoryDao(db: AppDatabase) =
+    fun provideHistory(db: SearchDatabase) =
         db.searchHistoryDao()
-
 
     @Singleton
     @Provides
     fun providesRepository(
-        api: ProductApiService,
+        api: SearchApiService,
         dao: SearchHistoryDao
-    ): ProductRepository = ProductRepositoryImpl(api, dao)
+    ): SearchRepository = SearchRepositoryImpl(api, dao)
 }
 
-
 // ====================================================================================
-// DOMAIN LAYER
+// Domain LAYER
 // ====================================================================================
-
-data class ProductResponse(
-    val page: Int,
-    val limit: Int,
-    val total: Int,
+data class CategoryData(
+    val category: String,
     val products: List<Product>
+)
+
+data class CategorizedProductResponse(
+    val categories: List<CategoryData>
 )
 
 data class Product(
@@ -235,18 +208,19 @@ data class Product(
     val name: String = "",
     val price: Double = 0.0,
     val imageUrl: String = "",
-    val category: String = ""    // JSON does NOT have category → must have default
+    val category: String
 )
 
 data class SearchSuggestion(
     val text: String
 )
 
-interface ProductRepository {
-    fun getSearchSuggestions(query: String): Flow<List<SearchSuggestion>>
-    fun getProducts(query: String): Flow<List<Product>>
-    fun getRecentSearchHistory(): Flow<List<SearchSuggestion>>
+interface SearchRepository {
+    fun fetchSearchSuggestion(query: String): Flow<List<SearchSuggestion>>
+    fun fetchRecentSearches(): Flow<List<SearchSuggestion>>
+    fun fetchProducts(query: String): Flow<List<CategoryData>>
 }
+
 
 // ====================================================================================
 // UI LAYER
@@ -255,31 +229,27 @@ interface ProductRepository {
 data class SearchUiState(
     val query: String = "",
     val suggestions: List<SearchSuggestion> = emptyList(),
-    val isSuggestionLoading: Boolean = false,
-    val error: String? = null,
-    val isProductLoading: Boolean = false,
     val products: List<Product> = emptyList(),
+    val isProductLoading: Boolean = false,
+    val isSuggestionLoading: Boolean = false,
+    val error: String? = null
 )
 
 sealed class SearchEvent {
-    data class QueryChanged(val query: String) : SearchEvent()
-    data class SuggestionClicked(val suggestion: String) : SearchEvent()
-    object ClearQuery : SearchEvent()
-    object RetrySearch : SearchEvent()
-    object SearchBarFocused : SearchEvent()
+    data class QueryChanged(val query: String): SearchEvent()
+    data class SuggestionClicked(val suggestion: String): SearchEvent()
+    object SearchBarFocused: SearchEvent()
 }
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
-    val repository: ProductRepository
-) : ViewModel() {
+class SearchViewModel @Inject constructor(val repository: SearchRepository): ViewModel() {
     private val _uiState = MutableStateFlow(SearchUiState())
     val uiState = _uiState.asStateFlow()
 
     private val queryFlow = MutableStateFlow("")
 
     private var suggestionJob: Job? = null
-    private var productJob: Job? = null
+    private var productsJob: Job? = null
 
     init {
         observeQueryChanges()
@@ -287,49 +257,48 @@ class SearchViewModel @Inject constructor(
 
     private fun observeQueryChanges() {
         queryFlow
-            .debounce(300L)
+            .debounce(300)
             .distinctUntilChanged()
             .onEach { query ->
-                if (query.isNotBlank()) {
+                if(query.isNotBlank()) {
                     fetchSuggestions(query)
+                } else {
+                    _uiState.update { it.copy(suggestions = emptyList(), isSuggestionLoading = false)}
                 }
             }
             .launchIn(viewModelScope)
     }
 
     fun onEvent(event: SearchEvent) {
-        when (event) {
+        when(event) {
             is SearchEvent.QueryChanged -> onQueryChanged(event.query)
             is SearchEvent.SuggestionClicked -> onSuggestionClicked(event.suggestion)
-            is SearchEvent.ClearQuery -> onClearQuery()
-            is SearchEvent.RetrySearch -> onRetrySearch()
             is SearchEvent.SearchBarFocused -> onSearchBarFocused()
         }
     }
 
-    private fun onSearchBarFocused() {
-        if (_uiState.value.query.isBlank()) {
-            fetchRecentSearchHistory()
+    fun onSearchBarFocused() {
+        if(_uiState.value.query.isBlank()) {
+            fetchRecentHistory()
         }
     }
 
-    private fun onQueryChanged(newQuery: String) {
-        _uiState.update { it.copy(query = newQuery, suggestions = emptyList(), isSuggestionLoading = false, error = null) }
+    fun onQueryChanged(newQuery: String) {
+        _uiState.update { it.copy(query = newQuery, suggestions = emptyList())}
         queryFlow.value = newQuery
     }
 
-    private fun onSuggestionClicked(suggestion: String) {
-        _uiState.update { it.copy(query = suggestion, suggestions = emptyList(), isSuggestionLoading = false, error = null) }
-        //queryFlow.value = suggestion
-        performProductSearch(suggestion)
+    fun onSuggestionClicked(suggestion: String) {
+        _uiState.update { it.copy(query = suggestion, suggestions = emptyList(), isSuggestionLoading = false)}
+        fetchProducts(suggestion)
     }
 
     private fun fetchSuggestions(query: String) {
         suggestionJob?.cancel()
         suggestionJob = viewModelScope.launch {
-            repository.getSearchSuggestions(query)
+            repository.fetchSearchSuggestion(query)
                 .onStart {
-                    _uiState.update { it.copy(isSuggestionLoading = true) }
+                    _uiState.update { it.copy(isSuggestionLoading = true, suggestions = emptyList()) }
                 }
                 .catch { e ->
                     _uiState.update { it.copy(isSuggestionLoading = false, error = e.message) }
@@ -342,40 +311,37 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun fetchRecentSearchHistory() {
+    private fun fetchProducts(suggestion: String) {
+        productsJob?.cancel()
+        productsJob = viewModelScope.launch {
+            repository.fetchProducts(suggestion)
+                .onStart {
+                    _uiState.update { it.copy(isProductLoading = true, suggestions = emptyList()) }
+                }
+                .catch { e ->
+                    _uiState.update { it.copy(isProductLoading = false, error = e.message) }
+                }
+                .collect { products ->
+                    _uiState.update {
+                        it.copy(products = products, isProductLoading = false)
+                    }
+                }
+        }
+    }
+
+    private fun fetchRecentHistory() {
         suggestionJob?.cancel()
         suggestionJob = viewModelScope.launch {
-            repository.getRecentSearchHistory()
+            repository.fetchRecentSearches()
                 .onStart {
                     _uiState.update { it.copy(isSuggestionLoading = true, suggestions = emptyList()) }
                 }
                 .catch { e ->
                     _uiState.update { it.copy(isSuggestionLoading = false, error = e.message) }
                 }
-                .collect { recent ->
+                .collect { suggestions ->
                     _uiState.update {
-                        it.copy(suggestions = recent, isSuggestionLoading = false)
-                    }
-                }
-        }
-    }
-
-    private fun performProductSearch(query: String) {
-        productJob?.cancel()
-
-        productJob = viewModelScope.launch {
-            repository.getProducts(query)
-                .onStart {
-                    _uiState.update { it.copy(isProductLoading = true,  suggestions = emptyList()) }
-                }
-                .catch { e ->
-                    _uiState.update {
-                        it.copy(isProductLoading = false, error = e.message)
-                    }
-                }
-                .collect { products ->
-                    _uiState.update {
-                        it.copy(products = products, isProductLoading = false)
+                        it.copy(suggestions = suggestions, isSuggestionLoading = false)
                     }
                 }
         }
@@ -397,13 +363,14 @@ class SearchViewModel @Inject constructor(
         val currentQuery = uiState.value.query
         if (currentQuery.isNotBlank()) {
             queryFlow.value = currentQuery
-            performProductSearch(currentQuery)
+            fetchProducts(currentQuery)
         } else {
-            fetchRecentSearchHistory()
+            fetchRecentHistory()
         }
     }
 }
 
+// UI
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
@@ -415,57 +382,59 @@ fun SearchScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // ---------------------- SEARCH BAR ----------------------------
+        //searchBar
         SearchBar(
             query = state.query,
             onQueryChange = { newQuery ->
                 viewModel.onEvent(SearchEvent.QueryChanged(newQuery))
             },
-            onSearch = { viewModel.onEvent(SearchEvent.SuggestionClicked(state.query)) },
-            onFocus = { viewModel.onEvent(SearchEvent.SearchBarFocused) }
+            onSearch = {
+                viewModel.onEvent(SearchEvent.SuggestionClicked(state.query))
+            },
+            onFocus = {
+                viewModel.onEvent(SearchEvent.SearchBarFocused)
+            }
         )
 
         Spacer(Modifier.height(12.dp))
 
-        // ---------------------- SUGGESTION PROGRESS --------------------
-        if (state.isSuggestionLoading) {
+        //Suggestion Progress
+        if(state.isSuggestionLoading) {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
         }
 
-        // ---------------------- SUGGESTIONS LIST ------------------------
-        if (!state.isSuggestionLoading && state.suggestions.isNotEmpty()) {
+        //Suggestions List
+        if(!state.isSuggestionLoading && state.suggestions.isNotEmpty()) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             ) {
                 SuggestionsList(
                     suggestions = state.suggestions,
-                    onSuggestionClick = { suggestion ->
+                    onSuggestionClicked = { suggestion ->
                         viewModel.onEvent(SearchEvent.SuggestionClicked(suggestion))
                     }
                 )
             }
         }
 
-        // ---------------------- PRODUCT LOADING -------------------------
-        if (state.isProductLoading) {
+        //Product Loading
+        if(state.isProductLoading) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+            ) { CircularProgressIndicator() }
         }
 
-        // ---------------------- PRODUCT GRID ----------------------------
-        if (!state.isProductLoading && state.products.isNotEmpty()) {
-            ProductGrid(products = state.products)
+        //ProductList
+        if(!state.isProductLoading && state.products.isNotEmpty()) {
+            ProductList(products = state.products)
         }
 
-        // ---------------------- ERROR MESSAGE ----------------------------
-        state.error?.let { error ->
+        // Error Message
+        state.error?.let {
             Text(
-                text = error,
+                text = it,
                 color = Color.Red,
                 modifier = Modifier.padding(top = 12.dp)
             )
@@ -486,7 +455,7 @@ fun SearchBar(
         modifier = Modifier
             .fillMaxWidth()
             .onFocusChanged { focusState ->
-                if (focusState.isFocused) {
+                if(focusState.isFocused) {
                     onFocus()
                 }
             },
@@ -504,15 +473,15 @@ fun SearchBar(
 @Composable
 fun SuggestionsList(
     suggestions: List<SearchSuggestion>,
-    onSuggestionClick: (String) -> Unit
+    onSuggestionClicked: (String) -> Unit
 ) {
     LazyColumn {
         items(suggestions) { suggestion ->
             Text(
-                text = suggestion.text,
+                text =  suggestion.text,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onSuggestionClick(suggestion.text) }
+                    .clickable{ onSuggestionClicked(suggestion.text) }
                     .padding(12.dp),
                 style = MaterialTheme.typography.bodyMedium
             )
@@ -521,7 +490,7 @@ fun SuggestionsList(
 }
 
 @Composable
-fun ProductGrid(products: List<Product>) {
+fun ProductList(products: List<Product>) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
         columns = GridCells.Fixed(2),
@@ -548,6 +517,7 @@ fun ProductCard(product: Product) {
             modifier = Modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            //image
             Image(
                 painter = rememberAsyncImagePainter(product.imageUrl),
                 contentDescription = product.name,
@@ -579,7 +549,7 @@ fun ProductCard(product: Product) {
 }
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -593,5 +563,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @HiltAndroidApp
-class TescoApplication : Application()
+class TescoApplication: Application()
 
+
+**/
