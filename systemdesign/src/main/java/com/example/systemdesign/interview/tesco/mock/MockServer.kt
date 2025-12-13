@@ -22,7 +22,6 @@ class JsonAssetReader @Inject constructor(
 class MockSearchApiService @Inject constructor(
     private val jsonReader: JsonAssetReader
 ) : SearchApiService {
-
     private val gson = Gson()
 
     override suspend fun fetchSuggestions(query: String): List<SearchSuggestion> {

@@ -4,7 +4,6 @@ import com.example.systemdesign.BuildConfig
 import android.app.Application
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.*
 import android.content.Context
 import android.os.Bundle
@@ -15,17 +14,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -95,11 +90,11 @@ import javax.inject.Qualifier
 import javax.inject.Singleton
 
 /**
- * Design the business logic for a product search feature that supports multiple categories.
- * When a user comes back to the search screen and does not type anything, the system should
- * show their previous search suggestions.
- * Also handle ambiguous search terms, for example the word “apple”, which can refer to a
- * fruit or a mobile phone brand, and return results for both types appropriately.
+Design the business logic for a product search feature that supports multiple categories.
+When a user comes back to the search screen and does not type anything, the system should
+show their previous search suggestions.
+Also handle ambiguous search terms, for example the word “apple”, which can refer to a
+fruit or a mobile phone brand, and return results for both types appropriately.
  */
 
 // ====================================================================================
@@ -147,6 +142,10 @@ class SearchRepositoryImpl @Inject constructor(
     val api: SearchApiService,
     val dao: SearchHistoryDao
 ): SearchRepository {
+    override suspend fun saveSearchHistory(query: String) {
+        dao.insertSearchHistory(SearchHistoryEntity(suggestion = query.trim()))
+    }
+
     override fun fetchSearchSuggestion(query: String): Flow<List<SearchSuggestion>> =
         flow {
             emit(api.fetchSuggestions(query).take(5))
@@ -154,15 +153,12 @@ class SearchRepositoryImpl @Inject constructor(
 
     override fun fetchRecentSearches(): Flow<List<SearchSuggestion>> =
         dao.fetchSearchHistory().map { list ->
-            list.map {
-                SearchSuggestion(text = it.suggestion)
-            }.take(5)
+            list.map { SearchSuggestion(text = it.suggestion) }.take(5)
         }
 
     override fun fetchProducts(query: String): Flow<List<CategoryData>> = flow {
-        dao.insertSearchHistory(SearchHistoryEntity(suggestion = query))
         emit(api.fetchProducts(query).categories)
-    }.flowOn(Dispatchers.IO)
+    }
 }
 
 @Qualifier
@@ -238,17 +234,16 @@ object AppModule {
         SearchRepositoryImpl(api, dao)
 }
 
-
 // ====================================================================================
 // Domain LAYER
 // ====================================================================================
+data class CategorizedProductResponse(
+    val categories: List<CategoryData>
+)
+
 data class CategoryData(
     val category: String,
     val products: List<Product>
-)
-
-data class CategorizedProductResponse(
-    val categories: List<CategoryData>
 )
 
 data class Product(
@@ -267,8 +262,8 @@ interface SearchRepository {
     fun fetchSearchSuggestion(query: String): Flow<List<SearchSuggestion>>
     fun fetchRecentSearches(): Flow<List<SearchSuggestion>>
     fun fetchProducts(query: String): Flow<List<CategoryData>>
+    suspend fun saveSearchHistory(query: String)
 }
-
 
 // ====================================================================================
 // UI LAYER
@@ -337,7 +332,7 @@ class SearchViewModel @Inject constructor(val repository: SearchRepository): Vie
     }
 
     fun onSuggestionClicked(suggestion: String) {
-        // saveSearchHistory(suggestion)
+        saveSearchQuery(suggestion)
         _uiState.update { it.copy(query = suggestion, suggestions = emptyList(), isSuggestionLoading = false)}
         fetchProducts(suggestion)
     }
@@ -357,6 +352,12 @@ class SearchViewModel @Inject constructor(val repository: SearchRepository): Vie
                         it.copy(suggestions = suggestions, isSuggestionLoading = false)
                     }
                 }
+        }
+    }
+
+    private fun saveSearchQuery(query: String) {
+        if (query.isNotBlank()) {
+            viewModelScope.launch { repository.saveSearchHistory(query) }
         }
     }
 
@@ -523,7 +524,7 @@ fun SearchBar(
                 Icon(Icons.Default.Search, contentDescription = "Search")
             }
         },
-        placeholder = { Text("Search products...") },
+        placeholder = { Text("Type apple...") },
         singleLine = true,
     )
 }
