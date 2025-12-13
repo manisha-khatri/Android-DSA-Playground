@@ -1,6 +1,6 @@
 package com.example.systemdesign.interview.tesco
 
-/**
+import com.example.systemdesign.BuildConfig
 import android.app.Application
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,11 +16,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -40,6 +42,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -59,6 +62,8 @@ import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import coil.compose.rememberAsyncImagePainter
+import com.example.systemdesign.interview.tesco.mock.JsonAssetReader
+import com.example.systemdesign.interview.tesco.mock.MockSearchApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -67,6 +72,7 @@ import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -75,6 +81,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -85,6 +92,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import javax.inject.Inject
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 /**
@@ -141,55 +149,96 @@ class SearchRepositoryImpl @Inject constructor(
     val dao: SearchHistoryDao
 ): SearchRepository {
     override fun fetchSearchSuggestion(query: String): Flow<List<SearchSuggestion>> =
-        flow { emit(api.fetchSuggestions(query).take(5)) }
+        flow {
+            emit(api.fetchSuggestions(query).take(5))
+        }.flowOn(Dispatchers.IO)
 
     override fun fetchRecentSearches(): Flow<List<SearchSuggestion>> =
         dao.fetchSearchHistory().map { list ->
             list.map {
                 SearchSuggestion(text = it.suggestion)
-            }
+            }.take(5)
         }
 
     override fun fetchProducts(query: String): Flow<List<CategoryData>> = flow {
         dao.insertSearchHistory(SearchHistoryEntity(suggestion = query))
         emit(api.fetchProducts(query).categories)
-    }
+    }.flowOn(Dispatchers.IO)
 }
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class MockApi
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class RealApi
+
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    // ---------------- REAL API ----------------
     @Provides
     @Singleton
-    fun providesApiService(): SearchApiService =
+    @RealApi
+    fun provideRealApiService(): SearchApiService =
         Retrofit.Builder()
             .baseUrl("https://api.mockfly.dev/mocks/afc70459-bddc-4d16-b6b3-1b649eec78bc/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(SearchApiService::class.java)
 
-    @Singleton
+    // ---------------- MOCK API ----------------
     @Provides
-    fun providesDatabase(@ApplicationContext context: Context) =
+    @Singleton
+    @MockApi
+    fun provideMockApiService(
+        jsonAssetReader: JsonAssetReader
+    ): SearchApiService {
+        return MockSearchApiService(jsonAssetReader)
+    }
+
+    // ---------------- FINAL API (used everywhere) ----------------
+    @Provides
+    @Singleton
+    fun provideApiService(
+        @MockApi mockApi: SearchApiService,
+        @RealApi realApi: SearchApiService
+    ): SearchApiService {
+        return if (BuildConfig.USE_MOCK_API) mockApi else realApi
+    }
+
+    // ---------------- DATABASE ----------------
+    @Provides
+    @Singleton
+    fun providesDatabase(
+        @ApplicationContext context: Context
+    ): SearchDatabase =
         Room.databaseBuilder(
             context,
             SearchDatabase::class.java,
             "search_db"
-        ).fallbackToDestructiveMigration()
+        )
+            .fallbackToDestructiveMigration()
             .build()
 
     @Provides
-    fun provideHistory(db: SearchDatabase) =
-        db.searchHistoryDao()
+    fun provideHistory(
+        db: SearchDatabase
+    ): SearchHistoryDao = db.searchHistoryDao()
 
-    @Singleton
+    // ---------------- REPOSITORY ----------------
     @Provides
+    @Singleton
     fun providesRepository(
         api: SearchApiService,
         dao: SearchHistoryDao
-    ): SearchRepository = SearchRepositoryImpl(api, dao)
+    ): SearchRepository =
+        SearchRepositoryImpl(api, dao)
 }
+
 
 // ====================================================================================
 // Domain LAYER
@@ -208,7 +257,7 @@ data class Product(
     val name: String = "",
     val price: Double = 0.0,
     val imageUrl: String = "",
-    val category: String
+    val category: String = ""
 )
 
 data class SearchSuggestion(
@@ -228,8 +277,8 @@ interface SearchRepository {
 
 data class SearchUiState(
     val query: String = "",
+    val categorizedProducts: List<CategoryData> = emptyList(),
     val suggestions: List<SearchSuggestion> = emptyList(),
-    val products: List<Product> = emptyList(),
     val isProductLoading: Boolean = false,
     val isSuggestionLoading: Boolean = false,
     val error: String? = null
@@ -289,6 +338,7 @@ class SearchViewModel @Inject constructor(val repository: SearchRepository): Vie
     }
 
     fun onSuggestionClicked(suggestion: String) {
+        // saveSearchHistory(suggestion)
         _uiState.update { it.copy(query = suggestion, suggestions = emptyList(), isSuggestionLoading = false)}
         fetchProducts(suggestion)
     }
@@ -301,7 +351,7 @@ class SearchViewModel @Inject constructor(val repository: SearchRepository): Vie
                     _uiState.update { it.copy(isSuggestionLoading = true, suggestions = emptyList()) }
                 }
                 .catch { e ->
-                    _uiState.update { it.copy(isSuggestionLoading = false, error = e.message) }
+                    _uiState.update { it.copy(isSuggestionLoading = false, error = e.stackTraceToString()) }
                 }
                 .collect { suggestions ->
                     _uiState.update {
@@ -311,19 +361,26 @@ class SearchViewModel @Inject constructor(val repository: SearchRepository): Vie
         }
     }
 
-    private fun fetchProducts(suggestion: String) {
+    private fun fetchProducts(query: String) {
         productsJob?.cancel()
         productsJob = viewModelScope.launch {
-            repository.fetchProducts(suggestion)
+            repository.fetchProducts(query)
                 .onStart {
-                    _uiState.update { it.copy(isProductLoading = true, suggestions = emptyList()) }
+                    _uiState.update {
+                        it.copy(isProductLoading = true, categorizedProducts = emptyList())
+                    }
                 }
                 .catch { e ->
-                    _uiState.update { it.copy(isProductLoading = false, error = e.message) }
-                }
-                .collect { products ->
                     _uiState.update {
-                        it.copy(products = products, isProductLoading = false)
+                        it.copy(isProductLoading = false, error = e.stackTraceToString())
+                    }
+                }
+                .collect { categories ->
+                    _uiState.update {
+                        it.copy(
+                            categorizedProducts = categories,
+                            isProductLoading = false
+                        )
                     }
                 }
         }
@@ -337,7 +394,7 @@ class SearchViewModel @Inject constructor(val repository: SearchRepository): Vie
                     _uiState.update { it.copy(isSuggestionLoading = true, suggestions = emptyList()) }
                 }
                 .catch { e ->
-                    _uiState.update { it.copy(isSuggestionLoading = false, error = e.message) }
+                    _uiState.update { it.copy(isSuggestionLoading = false, error = e.stackTraceToString()) }
                 }
                 .collect { suggestions ->
                     _uiState.update {
@@ -382,62 +439,64 @@ fun SearchScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        //searchBar
+
+        // Search Bar
         SearchBar(
             query = state.query,
-            onQueryChange = { newQuery ->
-                viewModel.onEvent(SearchEvent.QueryChanged(newQuery))
-            },
-            onSearch = {
-                viewModel.onEvent(SearchEvent.SuggestionClicked(state.query))
-            },
-            onFocus = {
-                viewModel.onEvent(SearchEvent.SearchBarFocused)
-            }
+            onQueryChange = { viewModel.onEvent(SearchEvent.QueryChanged(it)) },
+            onSearch = { viewModel.onEvent(SearchEvent.SuggestionClicked(state.query)) },
+            onFocus = { viewModel.onEvent(SearchEvent.SearchBarFocused) }
         )
 
         Spacer(Modifier.height(12.dp))
 
-        //Suggestion Progress
-        if(state.isSuggestionLoading) {
-            LinearProgressIndicator(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
-        }
+        // Suggestions
+        if (state.isSuggestionLoading)
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            )
 
-        //Suggestions List
-        if(!state.isSuggestionLoading && state.suggestions.isNotEmpty()) {
+        if (!state.isSuggestionLoading && state.suggestions.isNotEmpty()) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(16.dp),
+                elevation = CardDefaults.cardElevation(4.dp)
             ) {
                 SuggestionsList(
                     suggestions = state.suggestions,
-                    onSuggestionClicked = { suggestion ->
-                        viewModel.onEvent(SearchEvent.SuggestionClicked(suggestion))
+                    onSuggestionClicked = {
+                        viewModel.onEvent(SearchEvent.SuggestionClicked(it))
                     }
                 )
             }
         }
 
-        //Product Loading
-        if(state.isProductLoading) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) { CircularProgressIndicator() }
+        Spacer(Modifier.height(12.dp))
+
+        // Products List
+        when {
+            state.isProductLoading -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.Center
+                ) { CircularProgressIndicator() }
+            }
+
+            state.categorizedProducts.isNotEmpty() -> {
+                ProductList(
+                    categoryList = state.categorizedProducts,
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
 
-        //ProductList
-        if(!state.isProductLoading && state.products.isNotEmpty()) {
-            ProductList(products = state.products)
-        }
-
-        // Error Message
+        // Error
         state.error?.let {
-            Text(
-                text = it,
-                color = Color.Red,
-                modifier = Modifier.padding(top = 12.dp)
-            )
+            Text(text = it, color = Color.Red)
         }
     }
 }
@@ -490,58 +549,92 @@ fun SuggestionsList(
 }
 
 @Composable
-fun ProductList(products: List<Product>) {
-    LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(8.dp)
+fun ProductList(
+    categoryList: List<CategoryData>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        items(products) { product ->
-            ProductCard(product)
+        categoryList.forEach { categoryData ->
+
+            // Category title
+            item {
+                Text(
+                    text = categoryData.category.uppercase(),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+            }
+
+            // Grid
+            items(categoryData.products.chunked(2)) { rowItems ->
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    rowItems.forEach { product ->
+                        ProductCard(
+                            product = product,
+                            modifier = Modifier
+                                .weight(1f)
+                        )
+                    }
+
+                    // If only 1 item, fill empty space
+                    if (rowItems.size == 1) {
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
-fun ProductCard(product: Product) {
+fun ProductCard(
+    product: Product,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(0.75f), // taller card for image + text
-        elevation = CardDefaults.cardElevation(6.dp),
-        shape = RoundedCornerShape(12.dp)
+        modifier = modifier
+            .aspectRatio(0.85f),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(8.dp)
     ) {
         Column(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            //image
+
             Image(
                 painter = rememberAsyncImagePainter(product.imageUrl),
                 contentDescription = product.name,
-                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp)
+                    .height(140.dp)
+                    .clip(RoundedCornerShape(12.dp)),
+                contentScale = ContentScale.Crop
             )
 
-            // Product Name
+            Spacer(Modifier.height(8.dp))
+
             Text(
-                text = product.name.orEmpty(),
+                text = product.name,
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 2
             )
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(Modifier.height(4.dp))
 
-            // Product Price
             Text(
-                text = "₹${product.price ?: 0.0}",
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    color = MaterialTheme.colorScheme.primary,
-                    fontSize = 16.sp
+                text = "₹${product.price}",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
         }
@@ -564,6 +657,3 @@ class MainActivity: ComponentActivity() {
 
 @HiltAndroidApp
 class TescoApplication: Application()
-
-
-**/

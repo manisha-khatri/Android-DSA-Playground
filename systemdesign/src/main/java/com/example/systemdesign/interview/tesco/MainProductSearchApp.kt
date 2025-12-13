@@ -1,5 +1,6 @@
 package com.example.systemdesign.interview.tesco
 
+/**
 import android.app.Application
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -564,4 +565,4 @@ class MainActivity: ComponentActivity() {
 @HiltAndroidApp
 class TescoApplication: Application()
 
-
+**/
