@@ -1,4 +1,5 @@
 package com.example.systemdesign.interview.tesco.mock
+/*
 
 import android.content.Context
 import com.example.systemdesign.interview.tesco.CategorizedProductResponse
@@ -45,4 +46,4 @@ class MockSearchApiService @Inject constructor(
         val json = jsonReader.readJson(fileName)
         return gson.fromJson(json, CategorizedProductResponse::class.java)
     }
-}
+}*/

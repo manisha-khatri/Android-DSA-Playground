@@ -1,6 +1,17 @@
 package com.example.systemdesign.interview.agoda
 
 /**
+Home --> ProductList --> ProductDetail
+
+"How does Clean Architecture fit into designing an app with three screens
+— Home, List, and Details?
+Explain how you would structure the app, what modules you would create,
+and how you'd apply MVVM and theming. Just outline the interfaces and modules;
+no need for full implementation. We can discuss the details later."
+ */
+
+/*
+
 import android.app.Application
 import android.os.Bundle
 import androidx.compose.foundation.lazy.items
@@ -42,7 +53,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -58,16 +68,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import javax.inject.Inject
 import javax.inject.Singleton
-
-/**
- Home --> ProductList --> ProductDetail
-
- "How does Clean Architecture fit into designing an app with three screens
- — Home, List, and Details?
- Explain how you would structure the app, what modules you would create,
- and how you'd apply MVVM and theming. Just outline the interfaces and modules;
- no need for full implementation. We can discuss the details later."
-*/
 
 // ====================================================================================
 // DATA LAYER
@@ -416,4 +416,4 @@ class MainActivity: ComponentActivity() {
 @HiltAndroidApp
 class ProductApp: Application()
 
-**/
+*/

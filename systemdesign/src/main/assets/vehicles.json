@@ -1,0 +1,79 @@
+{
+  "vehicles": [
+    {
+      "id": "v1",
+      "name": "Swift Dzire",
+      "price": 2500.0
+    },
+    {
+      "id": "v2",
+      "name": "Hyundai i20",
+      "price": 3000.0
+    },
+    {
+      "id": "v3",
+      "name": "Toyota Innova",
+      "price": 4500.0
+    },
+    {
+      "id": "v4",
+      "name": "Honda City",
+      "price": 3500.0
+    },
+    {
+      "id": "v5",
+      "name": "Maruti Baleno",
+      "price": 2800.0
+    },
+    {
+      "id": "v6",
+      "name": "Hyundai Creta",
+      "price": 4000.0
+    },
+    {
+      "id": "v7",
+      "name": "Kia Seltos",
+      "price": 4200.0
+    },
+    {
+      "id": "v8",
+      "name": "Mahindra XUV300",
+      "price": 3800.0
+    },
+    {
+      "id": "v9",
+      "name": "Tata Nexon",
+      "price": 3600.0
+    },
+    {
+      "id": "v10",
+      "name": "Skoda Slavia",
+      "price": 3700.0
+    },
+    {
+      "id": "v11",
+      "name": "Volkswagen Virtus",
+      "price": 3900.0
+    },
+    {
+      "id": "v12",
+      "name": "Toyota Fortuner",
+      "price": 6500.0
+    },
+    {
+      "id": "v13",
+      "name": "Mahindra Scorpio",
+      "price": 6000.0
+    },
+    {
+      "id": "v14",
+      "name": "Renault Kwid",
+      "price": 2000.0
+    },
+    {
+      "id": "v15",
+      "name": "Maruti Alto",
+      "price": 1800.0
+    }
+  ]
+}

@@ -141,8 +141,9 @@ dependencies {
     androidTestImplementation(libs.turbine)
 
     // Paging
-    implementation(libs.androidx.paging.runtime)
-    implementation(libs.androidx.paging.compose)
+    implementation ("androidx.paging:paging-compose:1.0.0-alpha12")
+    implementation ("androidx.paging:paging-runtime:3.0.1")
+
 
     implementation(libs.androidx.biometric)
     implementation(libs.androidx.security.crypto)

@@ -1,4 +1,13 @@
 package com.example.systemdesign.interview.tesco
+/**
+Design the business logic for a product search feature that supports multiple categories.
+When a user comes back to the search screen and does not type anything, the system should
+show their previous search suggestions.
+Also handle ambiguous search terms, for example the word “apple”, which can refer to a
+fruit or a mobile phone brand, and return results for both types appropriately.
+ */
+
+/**
 
 import com.example.systemdesign.BuildConfig
 import android.app.Application
@@ -88,14 +97,6 @@ import retrofit2.http.GET
 import javax.inject.Inject
 import javax.inject.Qualifier
 import javax.inject.Singleton
-
-/**
-Design the business logic for a product search feature that supports multiple categories.
-When a user comes back to the search screen and does not type anything, the system should
-show their previous search suggestions.
-Also handle ambiguous search terms, for example the word “apple”, which can refer to a
-fruit or a mobile phone brand, and return results for both types appropriately.
- */
 
 // ====================================================================================
 // Data LAYER
@@ -657,3 +658,4 @@ class MainActivity: ComponentActivity() {
 
 @HiltAndroidApp
 class TescoApplication: Application()
+**/

@@ -1,6 +1,13 @@
 package com.example.systemdesign.interview
 
-/*
+/**
+Share the code and design where you need to make  call Network call to get 10 images each time UI and  show image in a
+form of list by its index  0 image, 1 image, 2 image.. etc
+ */
+
+/**
+
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -51,12 +58,6 @@ import kotlin.apply
 import kotlin.collections.map
 import kotlin.jvm.java
 
-/**
-Share the code and design where you need to make  call Network call to get 10 images each time UI and  show image in a
-form of list by its index  0 image, 1 image, 2 image.. etc
-
- */
-
 
 // ---------------- Data ----------------
 
@@ -75,40 +76,47 @@ data class ImageDto(
 
 fun ImageDto.toDomain() = ImageItem(id, url)
 
-class ImagePagingSource(val api: ImageApiService): PagingSource<Int, ImageItem>() {
-    override fun getRefreshKey(state: PagingState<Int, ImageItem>): Int? {
-        val anchorPosition = state.anchorPosition
-        if(anchorPosition!= null) {
-            val anchorPage = state.closestPageToPosition(anchorPosition)
-            return if(anchorPage?.prevKey != null) anchorPage.prevKey?.plus(1)
-            else if(anchorPage?.nextKey != null) anchorPage.nextKey?.minus(1)
-            else null
-        } else return null
-    }
+class ImagePagingSource(
+    private val api: ImageApiService
+) : PagingSource<Int, ImageItem>() {
+
+    override fun getRefreshKey(state: PagingState<Int, ImageItem>): Int? =
+        state.anchorPosition?.let { position ->
+            state.closestPageToPosition(position)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(position)?.nextKey?.minus(1)
+        }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ImageItem> {
         return try {
             val page = params.key ?: 1
-            val response = api.fetchImages(page, 10).map { it.toDomain() }
+            val images = api.fetchImages(
+                page = page,
+                limit = params.loadSize
+            ).map { it.toDomain() }
+
             LoadResult.Page(
-                data = response,
-                prevKey = if(page == 1) null else page-1,
-                nextKey = if(response.isEmpty()) null else page+1
+                data = images,
+                prevKey = if (page == 1) null else page - 1,
+                nextKey = if (images.isEmpty()) null else page + 1
             )
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             LoadResult.Error(e)
         }
     }
-
 }
 
-class ImageRepositoryImpl @Inject constructor(val api: ImageApiService): ImageRepository {
-    override fun fetchImages(): Flow<PagingData<ImageItem>> = Pager(
-        config = PagingConfig(pageSize = 10),
-        pagingSourceFactory = { ImagePagingSource(api) }
-    ).flow
-}
+class ImageRepositoryImpl @Inject constructor(private val api: ImageApiService) : ImageRepository {
 
+    override fun fetchImages(): Flow<PagingData<ImageItem>> =
+        Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                prefetchDistance = 2,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { ImagePagingSource(api) }
+        ).flow
+}
 
 // ---------------- Domain ----------------
 
@@ -131,44 +139,53 @@ class ImageViewModel @Inject constructor(repository: ImageRepository): ViewModel
 }
 
 @Composable
-fun ImageListScreen(viewModel: ImageViewModel = hiltViewModel()) {
+fun ImageListScreen(
+    viewModel: ImageViewModel = hiltViewModel()
+) {
     val images = viewModel.images.collectAsLazyPagingItems()
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(images.itemCount) { index ->
-            val imageItem = images[index]
-            if(imageItem != null) {
-                ImageRow(index, imageItem.url)
+        items(
+            count = images.itemCount,
+            key = { index -> images[index]?.id ?: index }
+        ) { index ->
+            images[index]?.let { item ->
+                ImageRow(
+                    index = index,
+                    url = item.url
+                )
             }
         }
 
-        images.loadState.apply {
-            when {
-                append is LoadState.Loading -> {
-                    item {
-                        Box(
-                            modifier = Modifier.fillMaxWidth().padding(16.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
-                    }
+        when {
+            images.loadState.refresh is LoadState.Loading -> {
+                item {
+                    CenteredLoader()
                 }
-                refresh is LoadState.Loading -> {
-                    item {
-                        Box(
-                            modifier = Modifier.fillMaxWidth().padding(32.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
-                    }
+            }
+            images.loadState.append is LoadState.Loading -> {
+                item {
+                    CenteredLoader()
                 }
-                append is LoadState.Error -> {
-                    item { Text("Error loading more items") }
+            }
+            images.loadState.append is LoadState.Error -> {
+                item {
+                    Text("Error loading more images")
                 }
             }
         }
+    }
+}
+
+@Composable
+fun CenteredLoader() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
     }
 }
 
@@ -207,8 +224,8 @@ class ImagesMainActivity : ComponentActivity() {
     }
 }
 
-/*@HiltAndroidApp
-class ImagesApp: Application()*/
+@HiltAndroidApp
+class ImagesApp: Application()
 
 
 // ---------------- di ----------------
@@ -248,4 +265,4 @@ object ImagesAppModule {
     fun providesImageRepository(api: ImageApiService): ImageRepository = ImageRepositoryImpl(api)
 }
 
-*/
+        **/
