@@ -139,13 +139,8 @@ interface ItemApi {
     ): ItemResponse
 }
 
-class ItemPagingSource(
-    private val api: ItemApi
-) : PagingSource<String, Item>() {
-
-    override suspend fun load(
-        params: LoadParams<String>
-    ): LoadResult<String, Item> {
+class ItemPagingSource(private val api: ItemApi) : PagingSource<String, Item>() {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, Item> {
         return try {
             val response = api.getItems(
                 limit = params.loadSize,
@@ -179,10 +174,7 @@ data class ItemResponse(
     val nextCursor: String?
 )
 
-class ItemRepository @Inject constructor(
-    private val api: ItemApi
-) {
-
+class ItemRepository @Inject constructor(private val api: ItemApi) {
     fun getItems(): Flow<PagingData<Item>> {
         return Pager(
             config = PagingConfig(
@@ -194,7 +186,6 @@ class ItemRepository @Inject constructor(
     }
 }
 
-
 // ui
 data class ItemUiState(
     val isLoading: Boolean = false,
@@ -205,9 +196,6 @@ data class ItemUiState(
 class ItemViewModel @Inject constructor(
     repository: ItemRepository
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(ItemUiState())
-    val uiState: StateFlow<ItemUiState> = _uiState
-
     val pagingDataFlow: Flow<PagingData<Item>> =
         repository.getItems()
             .cachedIn(viewModelScope)
@@ -220,15 +208,11 @@ fun ItemScreen(
     val items = viewModel.pagingDataFlow.collectAsLazyPagingItems()
 
     LazyColumn {
-        // ✅ CORRECT USAGE: Uses the specialized 'items' extension function
         items(items) { item ->
             item?.let {
                 ItemRow(it)
             }
         }
-
-        // 💡 IMPROVEMENT: Handle Load States directly inside LazyColumn
-        // This block replaces your original items.apply { ... } block for clarity
 
         // Handle initial load/refresh loading state
         when (val state = items.loadState.refresh) {
