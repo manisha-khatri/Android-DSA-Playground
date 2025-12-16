@@ -19,6 +19,15 @@ fun doNetworkCall(onSuccess: (String) -> Unit, onError:(Throwable)-> Unit)
     }
 }
 
+fun add(a: Int, b: Int,  c: (Int, Int) -> Int) : Int { // Parameter as a function
+    return c(a,b)
+}
+
+fun add2(a: Int, b: Int): (Int, Int) -> Int { // Returning function from function
+    return { c,d ->
+        c.plus(d)
+    }
+}
 
 fun main() {
     println(calculate(2, 3, {x, y -> x + y}))
@@ -35,6 +44,12 @@ fun main() {
             println("❌ Error: ${error.message}")
         }
     )
+
+    var result = add(1,2) {a,b -> a.plus(b) }
+    println(result)
+
+    var result2 = add2(1,2)
+    println(result2(3,4))
 
 
 }
