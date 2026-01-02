@@ -6,7 +6,6 @@ form of list by its index  0 image, 1 image, 2 image.. etc
  */
 
 /**
-
 import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -265,4 +264,4 @@ object ImagesAppModule {
     fun providesImageRepository(api: ImageApiService): ImageRepository = ImageRepositoryImpl(api)
 }
 
-        **/
+**/

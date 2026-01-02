@@ -1,4 +1,5 @@
 package com.example.systemdesign.prep
+/*
 
 import androidx.paging.compose.items
 import androidx.compose.foundation.lazy.LazyColumn
@@ -50,6 +51,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.delay
 import java.io.IOException
 
+*/
 /**
 📱 Sample App: Cursor Pagination with Paging 3
 What this app shows:
@@ -63,7 +65,8 @@ What this app shows:
 "nextCursor": "101"
 }
 
- */
+ *//*
+
 //mocking
 
 // This delay simulates network latency
@@ -117,11 +120,13 @@ class MockItemApi : ItemApi {
         }
 
         // Simulate an error on a specific page (e.g., page 3) for testing LoadState.Error
-        /*
+        */
+/*
         if (currentPage == 2) {
             throw IOException("Mock API Error on Page 3")
         }
-        */
+        *//*
+
 
         return ItemResponse(
             items = items,
@@ -143,8 +148,8 @@ class ItemPagingSource(private val api: ItemApi) : PagingSource<String, Item>() 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Item> {
         return try {
             val response = api.getItems(
-                limit = params.loadSize,
-                after = params.key
+                limit = params.loadSize, //
+                after = params.key // response.nextCursor, Initial load: params.key = null
             )
 
             LoadResult.Page(
@@ -161,7 +166,6 @@ class ItemPagingSource(private val api: ItemApi) : PagingSource<String, Item>() 
         state: PagingState<String, Item>
     ): String? = null
 }
-
 
 // Domain
 data class Item(
@@ -222,7 +226,9 @@ fun ItemScreen(
             is LoadState.Error -> {
                 item { ErrorItem("Refresh failed: ${state.error.message ?: "Unknown Error"}") }
             }
-            else -> { /* NotLoading */ }
+            else -> { */
+/* NotLoading *//*
+ }
         }
 
         // Handle append (load more) loading state
@@ -233,7 +239,9 @@ fun ItemScreen(
             is LoadState.Error -> {
                 item { ErrorItem("Load more failed: ${state.error.message ?: "Unknown Error"}") }
             }
-            else -> { /* NotLoading */ }
+            else -> { */
+/* NotLoading *//*
+ }
         }
     }
 }
@@ -307,3 +315,5 @@ class MainActivity : ComponentActivity() {
 @HiltAndroidApp
 class MyApp : Application()
 
+
+*/

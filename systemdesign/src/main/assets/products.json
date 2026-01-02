@@ -1,0 +1,38 @@
+[
+  {
+    "id": "p1",
+    "name": "iPhone 15",
+    "price": 79999.0,
+    "imageUrl": "https://picsum.photos/300?1",
+    "offer": "10% Cashback",
+    "rating": 4.7,
+    "availableQuantity": 5
+  },
+  {
+    "id": "p2",
+    "name": "Samsung Galaxy S24",
+    "price": 69999.0,
+    "imageUrl": "https://picsum.photos/300?2",
+    "offer": "No Cost EMI",
+    "rating": 4.6,
+    "availableQuantity": 8
+  },
+  {
+    "id": "p3",
+    "name": "MacBook Air M2",
+    "price": 114999.0,
+    "imageUrl": "https://picsum.photos/300?3",
+    "offer": "Student Discount",
+    "rating": 4.8,
+    "availableQuantity": 3
+  },
+  {
+    "id": "p4",
+    "name": "iPad Pro",
+    "price": 89999.0,
+    "imageUrl": "https://picsum.photos/300?4",
+    "offer": "Free Pencil",
+    "rating": 4.5,
+    "availableQuantity": 6
+  }
+]
