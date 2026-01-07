@@ -1,4 +1,5 @@
-package com.example.systemdesign.prep.phonepe
+package com.example.systemdesign.prep.phonepe.ecommerce
+/**
 
 import android.app.Application
 import android.content.Context
@@ -34,8 +35,8 @@ import androidx.navigation.navArgument
 import androidx.room.PrimaryKey
 import androidx.room.Room
 import com.example.systemdesign.BuildConfig
-import com.example.systemdesign.prep.phonepe.mock.JsonAssetReader
-import com.example.systemdesign.prep.phonepe.mock.MockProductApiService
+import com.example.systemdesign.prep.phonepe.ecommerce.mock.JsonAssetReader
+import com.example.systemdesign.prep.phonepe.ecommerce.mock.MockProductApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -496,3 +497,5 @@ object AppModule {
     ): ProductRepository =
         ProductRepositoryImpl(dao, api)
 }
+
+        **/

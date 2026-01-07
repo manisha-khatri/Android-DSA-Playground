@@ -1,4 +1,5 @@
-package com.example.systemdesign.prep.phonepe.mock
+package com.example.systemdesign.prep.phonepe.ecommerce.mock
+/**
 
 import android.util.Log
 import com.google.gson.Gson
@@ -7,9 +8,9 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 import dagger.hilt.android.qualifiers.ApplicationContext
 import android.content.Context
-import com.example.systemdesign.prep.phonepe.ApiService
-import com.example.systemdesign.prep.phonepe.HomePageData
-import com.example.systemdesign.prep.phonepe.Product
+import com.example.systemdesign.prep.phonepe.ecommerce.ApiService
+import com.example.systemdesign.prep.phonepe.ecommerce.HomePageData
+import com.example.systemdesign.prep.phonepe.ecommerce.Product
 
 class JsonAssetReader @Inject constructor(
     @ApplicationContext private val context: Context
@@ -53,3 +54,4 @@ class MockProductApiService @Inject constructor(
         Log.d("MockApi", "Checkout success with ${products.size} products")
     }
 }
+**/

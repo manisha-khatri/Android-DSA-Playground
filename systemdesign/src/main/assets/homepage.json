@@ -6,78 +6,38 @@
   },
   "recommendedProductsTitle": "Recommended for you",
   "recommendedProducts": [
-    {
-      "id": "p1",
-      "name": "iPhone 15",
-      "price": 79999.0,
-      "imageUrl": "https://picsum.photos/200?1",
-      "availableQuantity": 5
-    },
-    {
-      "id": "p2",
-      "name": "Samsung Galaxy S24",
-      "price": 69999.0,
-      "imageUrl": "https://picsum.photos/200?2",
-      "availableQuantity": 8
-    },
-    {
-      "id": "p5",
-      "name": "Google Pixel 8",
-      "price": 64999.0,
-      "imageUrl": "https://picsum.photos/200?5",
-      "availableQuantity": 10
-    },
-    {
-      "id": "p6",
-      "name": "OnePlus 12",
-      "price": 59999.0,
-      "imageUrl": "https://picsum.photos/200?6",
-      "availableQuantity": 7
-    }
+    { "id": "r1", "name": "iPhone 15", "price": 79999, "imageUrl": "https://picsum.photos/200?1", "availableQuantity": 5 },
+    { "id": "r2", "name": "Samsung Galaxy S24", "price": 69999, "imageUrl": "https://picsum.photos/200?2", "availableQuantity": 8 },
+    { "id": "r3", "name": "Google Pixel 8", "price": 64999, "imageUrl": "https://picsum.photos/200?3", "availableQuantity": 10 },
+    { "id": "r4", "name": "OnePlus 12", "price": 59999, "imageUrl": "https://picsum.photos/200?4", "availableQuantity": 7 },
+    { "id": "r5", "name": "iPhone 14", "price": 69999, "imageUrl": "https://picsum.photos/200?5", "availableQuantity": 6 },
+    { "id": "r6", "name": "Samsung Galaxy Z Flip 5", "price": 89999, "imageUrl": "https://picsum.photos/200?6", "availableQuantity": 4 },
+    { "id": "r7", "name": "Nothing Phone (2)", "price": 44999, "imageUrl": "https://picsum.photos/200?7", "availableQuantity": 9 },
+    { "id": "r8", "name": "Vivo X100 Pro", "price": 89999, "imageUrl": "https://picsum.photos/200?8", "availableQuantity": 3 },
+    { "id": "r9", "name": "iQOO 12", "price": 52999, "imageUrl": "https://picsum.photos/200?9", "availableQuantity": 11 },
+    { "id": "r10", "name": "Realme GT 5 Pro", "price": 49999, "imageUrl": "https://picsum.photos/200?10", "availableQuantity": 14 },
+    { "id": "r11", "name": "Motorola Edge 40", "price": 29999, "imageUrl": "https://picsum.photos/200?11", "availableQuantity": 15 },
+    { "id": "r12", "name": "Samsung Galaxy A55", "price": 38999, "imageUrl": "https://picsum.photos/200?12", "availableQuantity": 20 },
+    { "id": "r13", "name": "Redmi Note 13 Pro+", "price": 31999, "imageUrl": "https://picsum.photos/200?13", "availableQuantity": 18 },
+    { "id": "r14", "name": "Pixel 7a", "price": 43999, "imageUrl": "https://picsum.photos/200?14", "availableQuantity": 10 },
+    { "id": "r15", "name": "OnePlus Nord CE 3", "price": 26999, "imageUrl": "https://picsum.photos/200?15", "availableQuantity": 22 }
   ],
   "productListTitle": "All Products",
   "productList": [
-    {
-      "id": "p3",
-      "name": "MacBook Air M2",
-      "price": 114999.0,
-      "imageUrl": "https://picsum.photos/200?3",
-      "availableQuantity": 3
-    },
-    {
-      "id": "p4",
-      "name": "iPad Pro",
-      "price": 89999.0,
-      "imageUrl": "https://picsum.photos/200?4",
-      "availableQuantity": 6
-    },
-    {
-      "id": "p7",
-      "name": "Sony WH-1000XM5 Headphones",
-      "price": 29999.0,
-      "imageUrl": "https://picsum.photos/200?7",
-      "availableQuantity": 12
-    },
-    {
-      "id": "p8",
-      "name": "Apple Watch Series 9",
-      "price": 41999.0,
-      "imageUrl": "https://picsum.photos/200?8",
-      "availableQuantity": 9
-    },
-    {
-      "id": "p9",
-      "name": "Dell XPS 13",
-      "price": 124999.0,
-      "imageUrl": "https://picsum.photos/200?9",
-      "availableQuantity": 4
-    },
-    {
-      "id": "p10",
-      "name": "Samsung Galaxy Tab S9",
-      "price": 74999.0,
-      "imageUrl": "https://picsum.photos/200?10",
-      "availableQuantity": 5
-    }
+    { "id": "p1", "name": "MacBook Air M2", "price": 114999, "imageUrl": "https://picsum.photos/200?16", "availableQuantity": 3 },
+    { "id": "p2", "name": "MacBook Pro M3", "price": 189999, "imageUrl": "https://picsum.photos/200?17", "availableQuantity": 2 },
+    { "id": "p3", "name": "Dell XPS 13", "price": 124999, "imageUrl": "https://picsum.photos/200?18", "availableQuantity": 4 },
+    { "id": "p4", "name": "HP Spectre x360", "price": 139999, "imageUrl": "https://picsum.photos/200?19", "availableQuantity": 3 },
+    { "id": "p5", "name": "iPad Pro M2", "price": 89999, "imageUrl": "https://picsum.photos/200?20", "availableQuantity": 6 },
+    { "id": "p6", "name": "Samsung Galaxy Tab S9", "price": 74999, "imageUrl": "https://picsum.photos/200?21", "availableQuantity": 5 },
+    { "id": "p7", "name": "Apple Watch Series 9", "price": 41999, "imageUrl": "https://picsum.photos/200?22", "availableQuantity": 9 },
+    { "id": "p8", "name": "Samsung Galaxy Watch 6", "price": 35999, "imageUrl": "https://picsum.photos/200?23", "availableQuantity": 8 },
+    { "id": "p9", "name": "Sony WH-1000XM5", "price": 29999, "imageUrl": "https://picsum.photos/200?24", "availableQuantity": 12 },
+    { "id": "p10", "name": "AirPods Pro (2nd Gen)", "price": 24999, "imageUrl": "https://picsum.photos/200?25", "availableQuantity": 14 },
+    { "id": "p11", "name": "Logitech MX Master 3S", "price": 9999, "imageUrl": "https://picsum.photos/200?26", "availableQuantity": 25 },
+    { "id": "p12", "name": "Keychron K8 Pro Keyboard", "price": 10999, "imageUrl": "https://picsum.photos/200?27", "availableQuantity": 17 },
+    { "id": "p13", "name": "Samsung 4K Monitor", "price": 32999, "imageUrl": "https://picsum.photos/200?28", "availableQuantity": 7 },
+    { "id": "p14", "name": "LG Ultrawide Monitor", "price": 44999, "imageUrl": "https://picsum.photos/200?29", "availableQuantity": 6 },
+    { "id": "p15", "name": "JBL Flip 6 Speaker", "price": 12999, "imageUrl": "https://picsum.photos/200?30", "availableQuantity": 20 }
   ]
 }

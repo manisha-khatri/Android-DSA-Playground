@@ -1,0 +1,142 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "id": 872585,
+      "title": "Oppenheimer",
+      "overview": "The story of J. Robert Oppenheimer...",
+      "poster_path": "/ptpr0kGAckfQkJeJIt8st5dglvd.jpg",
+      "backdrop_path": "/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg",
+      "release_date": "2023-07-19",
+      "vote_average": 8.2
+    },
+    {
+      "id": 603692,
+      "title": "John Wick: Chapter 4",
+      "overview": "John Wick uncovers a path to defeating The High Table.",
+      "poster_path": "/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",
+      "backdrop_path": "/h8gHn0OzBoaefsYseUByqsmEDMY.jpg",
+      "release_date": "2023-03-22",
+      "vote_average": 7.9
+    },
+    {
+      "id": 502356,
+      "title": "The Super Mario Bros. Movie",
+      "overview": "Mario and Luigi embark on a journey in the Mushroom Kingdom.",
+      "poster_path": "/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",
+      "backdrop_path": "/9n2tJBplPbgR2ca05hS5CKXwP2c.jpg",
+      "release_date": "2023-04-05",
+      "vote_average": 7.4
+    },
+    {
+      "id": 640146,
+      "title": "Ant-Man and the Wasp: Quantumania",
+      "overview": "Scott Lang and Hope Van Dyne explore the Quantum Realm.",
+      "poster_path": "/ngl2FKBlU4fhbdsrtdom9LVLBXw.jpg",
+      "backdrop_path": "/3GQKYh6Trm8pxd2AypovoYQf4Ay.jpg",
+      "release_date": "2023-02-15",
+      "vote_average": 6.5
+    },
+    {
+      "id": 447365,
+      "title": "Guardians of the Galaxy Vol. 3",
+      "overview": "The Guardians fight to protect Rocket and the universe.",
+      "poster_path": "/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg",
+      "backdrop_path": "/uTQNC1Rr89ghZ8g4Q3G8mTvlX2p.jpg",
+      "release_date": "2023-05-03",
+      "vote_average": 8.0
+    },
+    {
+      "id": 569094,
+      "title": "Spider-Man: Across the Spider-Verse",
+      "overview": "Miles Morales embarks on a multiversal adventure.",
+      "poster_path": "/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+      "backdrop_path": "/14Zy4ZJ0b6y6tZ0Kjs1pK1hZVQY.jpg",
+      "release_date": "2023-06-01",
+      "vote_average": 8.6
+    },
+    {
+      "id": 346698,
+      "title": "Barbie",
+      "overview": "Barbie begins a journey of self-discovery.",
+      "poster_path": "/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg",
+      "backdrop_path": "/nHf61UzkfFno5X1ofIhugCPus2R.jpg",
+      "release_date": "2023-07-21",
+      "vote_average": 7.3
+    },
+    {
+      "id": 385687,
+      "title": "Fast X",
+      "overview": "Dom Toretto faces the most lethal opponent yet.",
+      "poster_path": "/fiVW06jE7z9YnO4trhaMEdclSiC.jpg",
+      "backdrop_path": "/4XM8DUTQb3lhLemJC51Jx4a2EuA.jpg",
+      "release_date": "2023-05-17",
+      "vote_average": 6.9
+    },
+    {
+      "id": 667538,
+      "title": "Transformers: Rise of the Beasts",
+      "overview": "Optimus Prime returns with new allies and enemies.",
+      "poster_path": "/gPbM0MK8CP8A174rmUwGsADNYKD.jpg",
+      "backdrop_path": "/bz66a19bR6BKsbY8gSZCM4etJiK.jpg",
+      "release_date": "2023-06-06",
+      "vote_average": 7.1
+    },
+    {
+      "id": 766507,
+      "title": "Prey",
+      "overview": "A skilled Comanche warrior fights a mysterious predator.",
+      "poster_path": "/ujr5pztc1oitbe7ViMUOilFaJ7s.jpg",
+      "backdrop_path": "/nTpK8o5pA9PSWqgF5h0Y0zZl4hH.jpg",
+      "release_date": "2022-08-02",
+      "vote_average": 7.7
+    },
+    {
+      "id": 594767,
+      "title": "Shazam! Fury of the Gods",
+      "overview": "Billy Batson and his foster siblings face ancient gods.",
+      "poster_path": "/A3ZbZsmsvNGdprRi2lKgGEeVLEH.jpg",
+      "backdrop_path": "/sGE6N1vJjxZLkOJEXdIOqjEXygK.jpg",
+      "release_date": "2023-03-15",
+      "vote_average": 6.6
+    },
+    {
+      "id": 460465,
+      "title": "Mortal Kombat",
+      "overview": "Earthrealm champions fight to stop Outworld.",
+      "poster_path": "/nkayOAUBUu4mMvyNf9iHSUiPjF1.jpg",
+      "backdrop_path": "/9yBVqNruk6Ykrwc32qrK2TIE5xw.jpg",
+      "release_date": "2021-04-07",
+      "vote_average": 7.0
+    },
+    {
+      "id": 338953,
+      "title": "Fantastic Beasts: The Secrets of Dumbledore",
+      "overview": "Dumbledore assembles a team to stop Grindelwald.",
+      "poster_path": "/8ZbybiGYe8XM4WGmGlhF0ec5R7u.jpg",
+      "backdrop_path": "/zGLHX92Gk96O1DJvLil7ObJTbaL.jpg",
+      "release_date": "2022-04-06",
+      "vote_average": 6.8
+    },
+    {
+      "id": 799155,
+      "title": "The Nun II",
+      "overview": "Sister Irene confronts the demonic Valak once again.",
+      "poster_path": "/5gzzkR7y3hnY8AD1wXjCnVlHba5.jpg",
+      "backdrop_path": "/r7Dfg9aRZ78gJsmDlCirIIlNH3d.jpg",
+      "release_date": "2023-09-06",
+      "vote_average": 6.4
+    },
+    {
+      "id": 872906,
+      "title": "Mission: Impossible – Dead Reckoning Part One",
+      "overview": "Ethan Hunt races against time to stop a new global threat.",
+      "poster_path": "/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
+      "backdrop_path": "/7bWxAsNPv9CXHOhZbJVlj2KxgfP.jpg",
+      "release_date": "2023-07-12",
+      "vote_average": 8.1
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 15
+}

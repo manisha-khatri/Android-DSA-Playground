@@ -1,0 +1,28 @@
+[
+  {
+    "id": 872585,
+    "title": "Oppenheimer",
+    "overview": "The story of J. Robert Oppenheimer...",
+    "runtime": 180,
+    "genres": [
+      { "id": 18, "name": "Drama" },
+      { "id": 36, "name": "History" }
+    ],
+    "release_date": "2023-07-19",
+    "vote_average": 8.2,
+    "poster_path": "/ptpr0kGAckfQkJeJIt8st5dglvd.jpg"
+  },
+  {
+    "id": 603692,
+    "title": "John Wick: Chapter 4",
+    "overview": "John Wick uncovers a path to defeating The High Table.",
+    "runtime": 169,
+    "genres": [
+      { "id": 28, "name": "Action" },
+      { "id": 53, "name": "Thriller" }
+    ],
+    "release_date": "2023-03-22",
+    "vote_average": 7.9,
+    "poster_path": "/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg"
+  }
+]
