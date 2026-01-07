@@ -1,5 +1,6 @@
-package com.example.systemdesign.prep.phonepe.moviedb
+package com.example.systemdesign.prep.phonepe.moviedb.basic
 
+/**
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
@@ -52,8 +53,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import coil.compose.AsyncImage
 import com.example.systemdesign.BuildConfig
-import com.example.systemdesign.prep.phonepe.moviedb.mock.JsonAssetReader
-import com.example.systemdesign.prep.phonepe.moviedb.mock.MockMovieApiService
+import com.example.systemdesign.prep.phonepe.moviedb.basic.JsonAssetReader
+import com.example.systemdesign.prep.phonepe.moviedb.basic.MockMovieApiService
 import com.google.gson.annotations.SerializedName
 import dagger.Module
 import dagger.Provides
@@ -584,3 +585,4 @@ object AppModule {
         MovieRepositoryImpl(dao, api)
 }
 
+**/
