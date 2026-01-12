@@ -1,9 +1,10 @@
-package com.example.systemdesign.prep.phonepe.moviedb
-
+package com.example.systemdesign.prep.phonepe.moviedb.pagination
+/**
+import androidx.paging.compose.itemKey
+import androidx.paging.compose.itemContentType
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -41,6 +42,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadState
+import androidx.paging.LoadType
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import androidx.paging.RemoteMediator
+import androidx.paging.cachedIn
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Entity
@@ -49,10 +61,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.withTransaction
 import coil.compose.AsyncImage
 import com.example.systemdesign.BuildConfig
-import com.example.systemdesign.prep.phonepe.moviedb.pagination.JsonAssetReader
-import com.example.systemdesign.prep.phonepe.moviedb.pagination.MockMovieApiService
 import com.google.gson.annotations.SerializedName
 import dagger.Module
 import dagger.Provides
@@ -67,12 +78,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
@@ -122,24 +130,27 @@ Features:
 
 // --------------------- DATA ----------------------
 
-data class MovieListResponse(
-    val page: Long,
-    val results: List<Movie>,
-    @SerializedName("total_pages")
-    val totalPages: Long,
-    @SerializedName("total_results")
-    val totalResults: Long,
-)
-
 @Entity(tableName = "movie")
 data class Movie(
     @PrimaryKey val id: Long,
     val title: String,
     val overview: String,
     @SerializedName("poster_path") val posterPath: String,
-    @SerializedName("backdrop_path") val backdropPath: String,
     @SerializedName("release_date") val releaseDate: String,
-    @SerializedName("vote_average") val voteAverage: Double,
+    @SerializedName("vote_average") val voteAverage: Double
+)
+
+data class MovieListResponse(
+    val page: Int,
+    val results: List<Movie>,
+    @SerializedName("total_pages") val totalPages: Int
+)
+
+@Entity(tableName = "remote_keys")
+data class RemoteKeys(
+    @PrimaryKey val movieId: Long,
+    val prevKey: Int?,
+    val nextKey: Int?
 )
 
 data class MovieDetail(
@@ -162,63 +173,136 @@ data class Genre(
 )
 
 interface MovieApiService {
-    @GET("/movie/popular")
-    suspend fun getPopularMovies(): MovieListResponse
+    @GET("movie/popular")
+    suspend fun getPopularMovies(@Query("page") page: Int): MovieListResponse
 
-    @GET("/movie/{movie_id}")
-    suspend fun getMovieDetails(@Path("movie_id") movieId: Long): MovieDetail
-
-    @GET("/search/movie")
+    @GET("search/movie")
     suspend fun searchMovies(@Query("query") query: String): MovieListResponse
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(@Path("movie_id") movieId: Long): MovieDetail
 }
 
 @Dao
 interface MovieDao {
-    @androidx.room.Query("SELECT * FROM movie")
-    fun getPopularMovies(): Flow<List<Movie>>
+    @androidx.room.Query("SELECT * FROM movie ORDER BY releaseDate DESC")
+    fun pagingSource(): PagingSource<Int, Movie>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovies(movie: List<Movie>)
+    suspend fun insertAll(movies: List<Movie>)
+
+    @androidx.room.Query("DELETE FROM movie")
+    suspend fun clearAll()
+}
+
+@Dao
+interface RemoteKeysDao {
+    @androidx.room.Query("SELECT * FROM remote_keys WHERE movieId = :movieId")
+    suspend fun remoteKeysMovieId(movieId: Long): RemoteKeys?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(remoteKeys: List<RemoteKeys>)
+
+    @androidx.room.Query("DELETE FROM remote_keys")
+    suspend fun clearRemoteKeys()
 }
 
 @Database(
-    version = 1,
-    entities = [Movie::class]
+    entities = [Movie::class, RemoteKeys::class],
+    version = 3
 )
 abstract class MovieDatabase : RoomDatabase() {
-    abstract fun getMovieDao(): MovieDao
+    abstract fun movieDao(): MovieDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
+}
+
+@OptIn(ExperimentalPagingApi::class)
+class MovieRemoteMediator(
+    private val api: MovieApiService,
+    private val db: MovieDatabase
+) : RemoteMediator<Int, Movie>() {
+
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, Movie>
+    ): MediatorResult {
+
+        val page = when (loadType) {
+            LoadType.REFRESH -> 1
+
+            LoadType.PREPEND ->
+                return MediatorResult.Success(endOfPaginationReached = true)
+
+            LoadType.APPEND -> {
+                val lastItem = state.lastItemOrNull()
+                   ?: return MediatorResult.Success(endOfPaginationReached = true)
+
+                db.remoteKeysDao()
+                    .remoteKeysMovieId(lastItem.id)
+                    ?.nextKey ?: return MediatorResult.Success(endOfPaginationReached = true)
+            }
+        }
+
+        try {
+            val response = api.getPopularMovies(page)
+            val movies = response.results
+            val endReached = movies.isEmpty()
+
+            db.withTransaction {
+                if (loadType == LoadType.REFRESH) {
+                    db.remoteKeysDao().clearRemoteKeys()
+                    db.movieDao().clearAll()
+                }
+
+                val keys = movies.map {
+                    RemoteKeys(
+                        movieId = it.id,
+                        prevKey = if (page == 1) null else page - 1,
+                        nextKey = if (endReached) null else page + 1
+                    )
+                }
+
+                db.remoteKeysDao().insertAll(keys)
+                db.movieDao().insertAll(movies)
+            }
+
+            return MediatorResult.Success(endReached)
+
+        } catch (e: Exception) {
+            return MediatorResult.Error(e)
+        }
+    }
 }
 
 class MovieRepositoryImpl @Inject constructor(
-    val dao: MovieDao,
-    val api: MovieApiService
+    private val db: MovieDatabase,
+    private val api: MovieApiService
 ) : MovieRepository {
-    override fun getPopularMovies(): Flow<List<Movie>> =
-        dao.getPopularMovies()
-            .onStart {
-                try {
-                    val movies = api.getPopularMovies()
-                    dao.insertMovies(movies.results)
-                } catch (e: Exception) {
-                    Log.e("MovieRepository", "Failed to refresh movies", e)
-                }
-            }
 
-    override suspend fun getMovieDetails(movieId: Long): MovieDetail {
-        return api.getMovieDetails(movieId)
-    }
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getPopularMovies(): Flow<PagingData<Movie>> =
+        Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            remoteMediator = MovieRemoteMediator(api, db),
+            pagingSourceFactory = { db.movieDao().pagingSource() }
+        ).flow
 
-    override suspend fun searchMovies(query: String): List<Movie> {
-        return api.searchMovies(query).results
-    }
+    override suspend fun searchMovies(query: String): List<Movie> =
+        api.searchMovies(query).results
+
+    override suspend fun getMovieDetails(movieId: Long): MovieDetail =
+        api.getMovieDetails(movieId)
 }
 
 // --------------------- DOMAIN ----------------------
 
 interface MovieRepository {
-    fun getPopularMovies(): Flow<List<Movie>>
-    suspend fun getMovieDetails(movieId: Long): MovieDetail
+    fun getPopularMovies(): Flow<PagingData<Movie>>
     suspend fun searchMovies(query: String): List<Movie>
+    suspend fun getMovieDetails(movieId: Long): MovieDetail
 }
 
 // --------------------- PRESENTATION ----------------------
@@ -233,32 +317,25 @@ sealed interface HomePageUiState {
 }
 
 @HiltViewModel
-class HomePageViewModel @Inject constructor(val repo: MovieRepository) : ViewModel() {
-    private val _searchQuery = MutableStateFlow("")
-    val uiState: StateFlow<HomePageUiState> =
-        _searchQuery
+class HomePageViewModel @Inject constructor(
+    private val repo: MovieRepository
+) : ViewModel() {
+
+    private val searchQuery = MutableStateFlow("")
+
+    val popularMovies: Flow<PagingData<Movie>> =
+        repo.getPopularMovies()
+            .cachedIn(viewModelScope)
+
+    val searchResults: StateFlow<List<Movie>> =
+        searchQuery
             .debounce(300)
-            .flatMapLatest { query ->
-                if (query.isBlank()) {
-                    repo.getPopularMovies()
-                } else {
-                    flow { emit(repo.searchMovies(query)) }
-                }
-            }
-            .map<List<Movie>, HomePageUiState> {
-                HomePageUiState.Success(it)
-            }
-            .catch {
-                emit(HomePageUiState.Error(it.message ?: "Something went wrong"))
-            }
-            .stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(5_000),
-                HomePageUiState.Loading
-            )
+            .filter { it.isNotBlank() }
+            .mapLatest { repo.searchMovies(it) }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     fun onSearch(query: String) {
-        _searchQuery.value = query
+        searchQuery.value = query
     }
 }
 
@@ -297,67 +374,73 @@ class MovieDetailViewModel @Inject constructor(
 @Composable
 fun HomePageScreen(
     viewModel: HomePageViewModel = hiltViewModel(),
-    onProductDetailClick: (Long) -> Unit
+    onMovieClick: (Long) -> Unit
 ) {
-    val state by viewModel.uiState.collectAsStateWithLifecycle()
-    var searchQuery by rememberSaveable { mutableStateOf("") }
+    var query by rememberSaveable { mutableStateOf("") }
+    val pagingMovies = viewModel.popularMovies.collectAsLazyPagingItems()
+    val searchResults by viewModel.searchResults.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize()) {
 
         OutlinedTextField(
-            value = searchQuery,
+            value = query,
             onValueChange = {
-                searchQuery = it
+                query = it
                 viewModel.onSearch(it)
             },
-            placeholder = { Text("Search Movies") },
+            placeholder = { Text("Search movies") },
             modifier = Modifier
-             .fillMaxWidth()
-             .padding(16.dp),
-            singleLine = true
+                .fillMaxWidth()
+                .padding(16.dp)
         )
 
-        when (val curState = state) {
-            is HomePageUiState.Error -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = curState.msg)
-                }
-            }
+        if (query.isBlank()) {
 
-            HomePageUiState.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-
-            is HomePageUiState.Success -> {
-                if (curState.movies.isEmpty()) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("No movies found")
+            LazyVerticalGrid(
+                modifier = Modifier.weight(1f),
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                items(
+                    count = pagingMovies.itemCount,
+                    key = pagingMovies.itemKey { it.id },
+                    contentType = pagingMovies.itemContentType { "movie" }
+                ) { index ->
+                    pagingMovies[index]?.let {
+                        MovieCard(it) { onMovieClick(it.id) }
                     }
-                } else {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
-                        contentPadding = PaddingValues(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        items(curState.movies) { movie ->
-                            MovieCard(
-                                movie,
-                                onClick = { onProductDetailClick(movie.id) }
-                            )
+                }
+
+                pagingMovies.apply {
+                    when (loadState.refresh) {
+                        is LoadState.Loading -> {
+                            item(span = { GridItemSpan(2) }) {
+                                Box(
+                                    Modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CircularProgressIndicator()
+                                }
+                            }
                         }
+                        is LoadState.Error -> {
+                            item(span = { GridItemSpan(2) }) {
+                                Text("Failed to load movies")
+                            }
+                        }
+                        else -> Unit
                     }
+                }
+            }
+
+        } else {
+            LazyVerticalGrid(
+                modifier = Modifier.weight(1f),
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                items(searchResults) {
+                    MovieCard(it) { onMovieClick(it.id) }
                 }
             }
         }
@@ -365,38 +448,23 @@ fun HomePageScreen(
 }
 
 @Composable
-fun MovieCard(
-    movie: Movie,
-    onClick: () -> Unit
-) {
+fun MovieCard(movie: Movie, onClick: () -> Unit) {
     Card(
         modifier = Modifier
-         .fillMaxWidth()
-         .clickable { onClick() }
+            .padding(8.dp)
+            .clickable { onClick() }
     ) {
-        Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
+        Column(Modifier.padding(8.dp)) {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w500/${movie.posterPath}",
-                contentDescription = null,
-                modifier = Modifier
-                 .fillMaxWidth()
-                 .height(160.dp)
+                model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                contentDescription = movie.title,
+                modifier = Modifier.height(160.dp)
             )
-            Text(
-                text = movie.title,
-                maxLines = 1,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = "Release: ${movie.releaseDate}",
-                style = MaterialTheme.typography.bodySmall
-            )
+            Text(movie.title, maxLines = 1)
         }
     }
 }
+
 
 @Composable
 fun MovieDetailScreen(
@@ -462,8 +530,8 @@ fun MovieDetailScreen(
 }
 
 object Routes {
-    const val HOME_PAGE = "HOME PAGE"
-    const val MOVIE_DETAIL = "MOVIE DETAIL"
+    const val HOME_PAGE = "home"
+    const val MOVIE_DETAIL = "movie_detail"
 }
 
 @Composable
@@ -476,8 +544,8 @@ fun AppNavGraph() {
     ) {
         composable(Routes.HOME_PAGE) {
             HomePageScreen(
-                onProductDetailClick = { movieId ->
-                    navController.navigate("${Routes.MOVIE_DETAIL}/${movieId}")
+                onMovieClick = { id ->
+                    navController.navigate("${Routes.MOVIE_DETAIL}/${id}")
                 }
             )
         }
@@ -507,7 +575,6 @@ class MainActivity : ComponentActivity() {
 
 @HiltAndroidApp
 class MovieDBApp : Application()
-
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class MockMovieApi
@@ -523,16 +590,21 @@ object AppModule {
     // ---------- ROOM ----------
     @Provides
     @Singleton
-    fun provideRoomDB(@ApplicationContext context: Context): MovieDatabase =
+    fun provideDb(
+        @ApplicationContext context: Context
+    ): MovieDatabase =
         Room.databaseBuilder(
             context,
             MovieDatabase::class.java,
             "movie_db"
         ).build()
 
+    // ---------- JSON ASSET READER ----------
     @Provides
     @Singleton
-    fun provideDao(db: MovieDatabase): MovieDao = db.getMovieDao()
+    fun provideJsonAssetReader(
+        @ApplicationContext context: Context
+    ): JsonAssetReader = JsonAssetReader(context)
 
     // ---------- REAL API ----------
     @Provides
@@ -554,13 +626,7 @@ object AppModule {
     ): MovieApiService =
         MockMovieApiService(jsonAssetReader)
 
-    @Provides
-    @Singleton
-    fun provideJsonAssetReader(
-        @ApplicationContext context: Context
-    ): JsonAssetReader = JsonAssetReader(context)
-
-    // ---------- API SWITCH ----------
+    // ---------- API SWITCH (ONLY unqualified binding) ----------
     @Provides
     @Singleton
     fun provideMovieApiService(
@@ -569,13 +635,11 @@ object AppModule {
     ): MovieApiService =
         if (BuildConfig.USE_MOCK_API) mockApi else realApi
 
-    // ---------- REPO ----------
+    // ---------- REPOSITORY ----------
     @Provides
     @Singleton
-    fun provideRepository(
-        dao: MovieDao,
-        api: MovieApiService
-    ): MovieRepository =
-        MovieRepositoryImpl(dao, api)
+    fun provideRepo(db: MovieDatabase, api: MovieApiService): MovieRepository =
+        MovieRepositoryImpl(db, api)
 }
 
+**/

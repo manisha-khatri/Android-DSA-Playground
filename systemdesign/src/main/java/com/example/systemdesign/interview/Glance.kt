@@ -79,11 +79,13 @@ class ImagePagingSource(
     private val api: ImageApiService
 ) : PagingSource<Int, ImageItem>() {
 
-    override fun getRefreshKey(state: PagingState<Int, ImageItem>): Int? =
-        state.anchorPosition?.let { position ->
-            state.closestPageToPosition(position)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(position)?.nextKey?.minus(1)
+    override fun getRefreshKey(state: PagingState<Int, ImageItem>): Int? {
+        return state.anchorPosition?.let { anchor ->
+            state.closestPageToPosition(anchor)?.let { page ->
+                page.prevKey?.plus(1) ?: page.nextKey?.minus(1)
+            }
         }
+    }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ImageItem> {
         return try {
@@ -105,7 +107,6 @@ class ImagePagingSource(
 }
 
 class ImageRepositoryImpl @Inject constructor(private val api: ImageApiService) : ImageRepository {
-
     override fun fetchImages(): Flow<PagingData<ImageItem>> =
         Pager(
             config = PagingConfig(
@@ -132,8 +133,8 @@ interface ImageRepository {
 
 @HiltViewModel
 class ImageViewModel @Inject constructor(repository: ImageRepository): ViewModel() {
-    val images: Flow<PagingData<ImageItem>> = repository
-        .fetchImages()
+    val images: Flow<PagingData<ImageItem>> =
+        repository.fetchImages()
         .cachedIn(viewModelScope)
 }
 
@@ -264,4 +265,4 @@ object ImagesAppModule {
     fun providesImageRepository(api: ImageApiService): ImageRepository = ImageRepositoryImpl(api)
 }
 
-**/
+ **/

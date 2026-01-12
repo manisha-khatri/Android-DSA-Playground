@@ -1,9 +1,6 @@
 package com.example.systemdesign.prep.phonepe.moviedb.basic
 /**
 import android.content.Context
-import com.example.systemdesign.prep.phonepe.moviedb.pagination.MovieApiService
-import com.example.systemdesign.prep.phonepe.moviedb.pagination.MovieDetail
-import com.example.systemdesign.prep.phonepe.moviedb.pagination.MovieListResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.qualifiers.ApplicationContext

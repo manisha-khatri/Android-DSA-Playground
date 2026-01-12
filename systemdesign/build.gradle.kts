@@ -100,7 +100,9 @@ dependencies {
     // Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    ksp(libs.room.compiler) // KSP for Room
+    implementation(libs.room.paging)
+
+    ksp(libs.room.compiler)
 
     // Glide
     implementation(libs.glide)
@@ -144,6 +146,8 @@ dependencies {
     implementation ("androidx.paging:paging-compose:1.0.0-alpha12")
     implementation ("androidx.paging:paging-runtime:3.0.1")
 
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
 
     implementation(libs.androidx.biometric)
     implementation(libs.androidx.security.crypto)

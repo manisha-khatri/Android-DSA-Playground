@@ -1,6 +1,6 @@
 package com.example.systemdesign.prep.phonepe.moviedb.basic
-
 /**
+
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
@@ -53,8 +53,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import coil.compose.AsyncImage
 import com.example.systemdesign.BuildConfig
-import com.example.systemdesign.prep.phonepe.moviedb.basic.JsonAssetReader
-import com.example.systemdesign.prep.phonepe.moviedb.basic.MockMovieApiService
 import com.google.gson.annotations.SerializedName
 import dagger.Module
 import dagger.Provides
@@ -73,6 +71,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -199,16 +198,23 @@ class MovieRepositoryImpl @Inject constructor(
     val dao: MovieDao,
     val api: MovieApiService
 ): MovieRepository {
-    override fun getPopularMovies(): Flow<List<Movie>> =
-        dao.getPopularMovies()
-            .onStart {
-                try {
-                    val movies = api.getPopularMovies()
-                    dao.insertMovies(movies.results)
-                } catch (e: Exception) {
-                    Log.e("MovieRepository", "Failed to refresh movies", e)
-                }
-            }
+    override fun getPopularMovies(): Flow<List<Movie>> = flow {
+        // 1. Emit what we have in DB immediately
+        val localMovies = dao.getPopularMovies().first()
+        emit(localMovies)
+
+        // 2. Try to refresh in the background
+        try {
+            val remoteMovies = api.getPopularMovies()
+            dao.insertMovies(remoteMovies.results)
+
+            // 3. Emit the updated data from DB
+            emitAll(dao.getPopularMovies())
+        } catch (e: Exception) {
+            // Log error, but UI still has the old 'localMovies'
+            Log.e("MovieRepository", "Sync failed", e)
+        }
+    }.flowOn(Dispatchers.IO) // Ensure database and network run on IO thread
 
     override suspend fun getMovieDetails(movieId: Long): MovieDetail {
         return api.getMovieDetails(movieId)
@@ -468,8 +474,8 @@ fun MovieDetailScreen(
 }
 
 object Routes {
-    const val HOME_PAGE = "HOME PAGE"
-    const val MOVIE_DETAIL = "MOVIE DETAIL"
+    const val HOME_PAGE = "home_page"
+    const val MOVIE_DETAIL = "detail_page"
 }
 
 @Composable
@@ -584,5 +590,6 @@ object AppModule {
     ): MovieRepository =
         MovieRepositoryImpl(dao, api)
 }
+
 
 **/

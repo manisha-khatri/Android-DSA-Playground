@@ -1,6 +1,6 @@
 package com.example.systemdesign.prep.phonepe.ecommerce
-/**
 
+/**
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
@@ -290,7 +290,6 @@ class ProductDetailsViewModel @Inject constructor(
                 } else {
                     repository.deleteFromCart(product)
                 }
-                // Optionally update local UI state here to show "Added" immediately
             } catch (e: Exception) {
                 // Handle cart error (e.g., via a Channel for one-time SnackBar events)
             }
@@ -497,5 +496,4 @@ object AppModule {
     ): ProductRepository =
         ProductRepositoryImpl(dao, api)
 }
-
-        **/
+**/

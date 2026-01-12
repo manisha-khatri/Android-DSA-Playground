@@ -125,15 +125,19 @@ class VehicleRepositoryImpl @Inject constructor(private val api: ApiService) : V
     override suspend fun getVehiclesWithRecommendation(): Result<VehiclesWithRecommendation> =
         runCatching {
             supervisorScope {
-                val recommendationDeferred = async {
-                    api.getRecommendation()
-                        .takeIf { it.isSuccessful }
-                        ?.body()
-                        ?.toDomain()
+                val vehiclesDeferred = async {
+                    api.getVehicles()
+                        .vehicles
+                        .map { it.toDomain() }
                 }
 
-                val vehiclesDeferred = async {
-                    api.getVehicles().vehicles.map { it.toDomain() }
+                val recommendationDeferred = async {
+                    runCatching {
+                        api.getRecommendation()
+                            .takeIf { it.isSuccessful }
+                            ?.body()
+                            ?.toDomain()
+                    }.getOrNull()
                 }
 
                 VehiclesWithRecommendation(
@@ -359,5 +363,4 @@ object VehicleApiModule {
 
 @HiltAndroidApp
 class VehicleApp: Application()
-
 **/
